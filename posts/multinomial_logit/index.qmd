@@ -1,0 +1,84 @@
+---
+title: "Marketing Science: Multinomial Logit & Latent Class Analysis"
+author: "Shuhei Kuwabara"
+date: "2025-11-13"  
+categories: [R, Marketing, Statistics]
+image: "latent.jpg" 
+description: "Segmentation and brand choice analysis using Latent Class Models."
+resources:
+  - report.qmd
+  - data/chapter_06_choice.csv
+---
+
+## Project Overview
+
+This project investigates consumer brand choice behavior using **Multinomial Logit** and **Latent Class Analysis (LCA)**. The analysis focuses on identifying distinct consumer segments to optimize pricing strategies and understand market heterogeneity.
+
+
+## Access the Files
+
+```{=html}
+<div class="file-list-group">
+  
+  <a href="report.html" class="file-list-item">
+    <div class="file-list-icon"><i class="fa-solid fa-file-lines"></i></div>
+    <div class="file-list-content">
+      <span class="file-list-title">View Full Report</span>
+      <span class="file-list-desc">Web-based interactive report with visualizations.</span>
+    </div>
+    <div class="file-list-arrow"><i class="fa-solid fa-chevron-right"></i></div>
+  </a>
+
+  <a href="report.qmd" class="file-list-item">
+    <div class="file-list-icon"><i class="fa-solid fa-code"></i></div>
+    <div class="file-list-content">
+      <span class="file-list-title">Source Code (.qmd)</span>
+      <span class="file-list-desc">Reproducible source code for this analysis.</span>
+    </div>
+    <div class="file-list-arrow"><i class="fa-solid fa-chevron-right"></i></div>
+  </a>
+
+  <a href="data/chapter_06_choice.csv" class="file-list-item">
+    <div class="file-list-icon"><i class="fa-solid fa-download"></i></div>
+    <div class="file-list-content">
+      <span class="file-list-title">Download Dataset</span>
+      <span class="file-list-desc">Original CSV data file.</span>
+    </div>
+    <div class="file-list-arrow"><i class="fa-solid fa-chevron-right"></i></div>
+  </a>
+
+  <a href="original.pdf" class="file-list-item">
+    <div class="file-list-icon"><i class="fa-solid fa-file-pdf"></i></div>
+    <div class="file-list-content">
+      <span class="file-list-title">Original Report (PDF)</span>
+      <span class="file-list-desc">Original submission in Japanese.</span>
+    </div>
+    <div class="file-list-arrow"><i class="fa-solid fa-chevron-right"></i></div>
+  </a>
+
+</div>
+```
+
+## Methodology
+This analysis moves beyond aggregate preferences by employing **Latent Class Analysis (LCA)** to uncover hidden segments within the consumer population.
+
+### 1. Baseline Modeling (Multinomial Logit)
+Initially, a standard Multinomial Logit (MNL) model was fitted to establish baseline average effects.
+
+Result: Price has a significant negative effect (-0.37), and feature ads have a positive effect (+0.49) on brand choice across the aggregate population.
+
+### 2. Identifying Heterogeneity (LCA)
+
+To capture market heterogeneity, I fitted Finite Mixture Models using the flexmix package, testing from k=1 to k=6 classes.
+
+Model Selection: Based on the Bayesian Information Criterion (BIC) and model interpretability, a 4-class model was selected.
+
+
+
+##  Tech Stack
+
+<span class="tech-badge">R</span>
+<span class="tech-badge">Multinomial Logit</span>
+<span class="tech-badge">Latent Class Analysis</span>
+<span class="tech-badge">tidyverse</span>
+<span class="tech-badge">mlogit</span>

@@ -1,0 +1,68 @@
+---
+title: "Sleep Health & Lifestyle Analysis"
+author: "Shuhei Kuwabara"
+date: "2026-01-22"
+categories: [R, Machine Learning, Regression, Classification]
+image: "regression.jpg"
+description: "Predicting sleep duration and quality using Elastic Net and Random Forest."
+resources:
+  - 62751.html
+  - 62751.qmd
+---
+
+## Project Overview
+
+This project explores the determinants of sleep health using a dataset of 374 individuals. It involves a comprehensive machine learning pipeline: from data cleaning and exploratory analysis (EDA) to building predictive models using **Regularized Regression (Elastic Net)** and **Random Forest Classifiers**.
+
+**Academic Achievement:** Submitted as a summative assessment for **DS202A: Data Science for Social Scientists** at the **London School of Economics (LSE)**.
+<br>
+<span style="color: #2c3e50; font-weight: 600;">Score: 80/100 (High Distinction / First Class Honours equivalent)</span>
+
+## Access the Files
+
+```{=html}
+<div class="file-list-group">
+  
+  <a href="62751.html" class="file-list-item">
+    <div class="file-list-icon"><i class="fa-solid fa-file-lines"></i></div>
+    <div class="file-list-content">
+      <span class="file-list-title">View Full Analysis Report</span>
+      <span class="file-list-desc">Detailed RMarkdown report with visualizations.</span>
+    </div>
+    <div class="file-list-arrow"><i class="fa-solid fa-chevron-right"></i></div>
+  </a>
+
+  <a href="62751.qmd" class="file-list-item" download>
+    <div class="file-list-icon"><i class="fa-solid fa-code"></i></div>
+    <div class="file-list-content">
+      <span class="file-list-title">Source Code (.qmd)</span>
+      <span class="file-list-desc">Raw Quarto file used to generate the analysis.</span>
+    </div>
+    <div class="file-list-arrow"><i class="fa-solid fa-chevron-right"></i></div>
+  </a>
+
+</div>
+
+```
+
+## Methodology 
+
+This analysis employs a rigorous data science pipeline to handle non-normal distributions and small sample sizes effectively.
+
+### 1. Data Processing
+Missing values were handled, and feature engineering was performed (e.g., splitting blood pressure). Crucially, the Yeo-Johnson transformation was applied to normalize skewed predictors like `physical_activity_level`, ensuring the validity of linear assumptions.
+
+### 2. Regression (Sleep Duration)
+
+I compared a baseline Linear Regression (R2 =0.870) against Elastic Net Regression tuned via 10-fold Cross-Validation. Elastic Net successfully reduced RMSE to 0.285, demonstrating that regularization improved generalization on this dataset.
+
+### 3. Classification (Sleep Quality)
+
+To classify sleep as adequate or inadequate, I deployed a Random Forest Classifier against a Logistic Regression baseline. The Random Forest model achieved ~99% accuracy and an ROC AUC of 1.00, identifying `stress_Level` as a critical determinant.
+
+## Tech Stack
+
+<span class="tech-badge">R</span> <span class="tech-badge">Elastic Net (glmnet)</span> <span class="tech-badge">Random Forest (ranger)</span> <span class="tech-badge">Yeo-Johnson Transformation</span> <span class="tech-badge">caret</span>
+
+
+ 

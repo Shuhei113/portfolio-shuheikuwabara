@@ -1,0 +1,28 @@
+---
+title: "Shuhei Kuwabara"
+image: icon.jpg
+about:
+  template: jolla
+  image-width: 20em
+  image-shape: round
+  links:
+    - icon: linkedin
+      text: LinkedIn
+      href: www.linkedin.com/in/shuhei-kuwabara-a04925399
+    - icon: github
+      text: Github
+      href: https://github.com/Shuhei113/portfolio-Shuhei
+    - icon: envelope
+      text: Contact me
+      href: mailto:shuhei519113@gmail.com
+---
+
+::: {style="text-align: left;"}
+Welcome! This portfolio introduces my academic background and interests.
+
+My academic focus lies at the intersection of advanced statistics and marketing science.
+
+<br> ![](hitotsubashi.jpg){width="35px" style="vertical-align: middle; margin-right: 10px;"} '27 <a href="https://www.hit-u.ac.jp/eng/" style="color: inherit; text-decoration: none;"> Hitotsubashi University</a> (Social Data Science)
+
+<br> ![](lse.jpg){width="35px" style="vertical-align: middle; margin-right: 10px;"} '26 <a href="https://www.lse.ac.uk" style="color: inherit; text-decoration: none;"> London School of Economics </a> (General Course, Statistics)
+:::

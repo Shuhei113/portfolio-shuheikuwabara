@@ -1,0 +1,65 @@
+---
+title: "Marketing Science: Survival & Factor Analysis"
+author: "Shuhei Kuwabara"
+date: "2026-01-23"
+categories: [R, Marketing, Statistics]
+image: "survival.jpg"
+description: "Predicting customer churn using Cox Proportional Hazards Model and Factor Analysis."
+resources:
+  - report.qmd
+  - original_report.pdf
+---
+
+## Project Overview
+
+This project analyzes customer churn using statistical modeling techniques. Completed as a final project for the Marketing Science course at Hitotsubashi University, the analysis aims to identify key risk factors and predict customer retention.
+
+## Access the Files
+
+```{=html}
+<div class="file-list-group">
+  
+  <a href="report.html" class="file-list-item">
+    <div class="file-list-icon"><i class="fa-solid fa-file-lines"></i></div>
+    <div class="file-list-content">
+      <span class="file-list-title">View Full Report</span>
+      <span class="file-list-desc">Web-based interactive report with visualizations.</span>
+    </div>
+    <div class="file-list-arrow"><i class="fa-solid fa-chevron-right"></i></div>
+  </a>
+
+  <a href="report.qmd" class="file-list-item" download>
+    <div class="file-list-icon"><i class="fa-solid fa-code"></i></div>
+    <div class="file-list-content">
+      <span class="file-list-title">Source Code (.qmd)</span>
+      <span class="file-list-desc">Reproducible source code for this analysis.</span>
+    </div>
+    <div class="file-list-arrow"><i class="fa-solid fa-chevron-right"></i></div>
+  </a>
+
+  <a href="original_report.pdf" class="file-list-item" download>
+    <div class="file-list-icon"><i class="fa-solid fa-file-pdf"></i></div>
+    <div class="file-list-content">
+      <span class="file-list-title">Original Report (PDF)</span>
+      <span class="file-list-desc">Original submission in Japanese.</span>
+    </div>
+    <div class="file-list-arrow"><i class="fa-solid fa-chevron-right"></i></div>
+  </a>
+
+</div>
+```
+
+## Methodology
+This analysis employs a two-step statistical approach to understand and predict customer churn.
+
+### 1. Dimension Reduction (Factor Analysis)
+
+First, **Factor Analysis** was applied to survey data to condense multiple customer satisfaction variables into interpretable latent factors, reducing dimensionality and avoiding multicollinearity.
+
+### 2. Churn Prediction (Survival Analysis)
+
+Using the extracted factors as covariates, a Cox Proportional Hazards Model was fitted to estimate the hazard ratios. This allows for the quantification of how each satisfaction factor impacts the probability of customer churn over time.
+
+## Tech Stack
+
+<span class="tech-badge">R</span> <span class="tech-badge">Cox Proportional Hazards</span> <span class="tech-badge">Factor Analysis</span> <span class="tech-badge">survival</span> <span class="tech-badge">psych</span> <span class="tech-badge">tidyverse</span>

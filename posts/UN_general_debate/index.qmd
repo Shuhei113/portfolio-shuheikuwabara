@@ -1,0 +1,63 @@
+---
+title: "Text Mining UN General Debates (1946-2024)"
+author: "Shuhei Kuwabara"
+date: "2026-01-23"
+categories: [R, NLP, Text Mining, Unsupervised Learning]
+image: "UN_debate.jpg"
+description: "Analyzing thematic shifts in 10,000+ UN speeches using LDA Topic Modeling and PCA."
+resources:
+  - 62751_2.html
+  - 62751_2.qmd
+---
+
+## Project Overview
+
+This project applies **Natural Language Processing (NLP)** techniques to analyze the evolution of international diplomatic discourse. Using a corpus of **10,952 speeches** from the UN General Assembly (1946–2024), the analysis explores how global priorities have shifted from post-war security concerns to modern sustainability agendas.
+
+**Academic Context:** Submitted as the W11+1 Summative Assessment for **DS202A: Data Science for Social Scientists** at the **London School of Economics (LSE)**.
+
+## Access the Files
+
+```{=html}
+<div class="file-list-group">
+  
+  <a href="62751_2.html" class="file-list-item">
+    <div class="file-list-icon"><i class="fa-solid fa-file-lines"></i></div>
+    <div class="file-list-content">
+      <span class="file-list-title">View Full Analysis Report</span>
+      <span class="file-list-desc">Comprehensive report including Text Similarity & LDA Topic Modeling.</span>
+    </div>
+    <div class="file-list-arrow"><i class="fa-solid fa-chevron-right"></i></div>
+  </a>
+
+  <a href="62751_2.qmd" class="file-list-item" download>
+    <div class="file-list-icon"><i class="fa-solid fa-code"></i></div>
+    <div class="file-list-content">
+      <span class="file-list-title">Source Code (.qmd)</span>
+      <span class="file-list-desc">Raw Quarto file containing the reproducible R code.</span>
+    </div>
+    <div class="file-list-arrow"><i class="fa-solid fa-chevron-right"></i></div>
+  </a>
+
+</div>
+```
+
+## Methodology
+By combining unsupervised learning with dimensionality reduction, this analysis uncovers macro-level trends in diplomatic history.
+
+### 1. Corpus Analysis & Anomaly Detection
+
+Using TF-IDF weighting and Cosine Similarity on a corpus of 10,952 speeches, I detected "Structural Anomalies" (e.g., historical verbosity peaks around 1960) and "Semantic Anomalies" where specific speeches significantly diverged from established national rhetorical styles.
+
+### 2. Topic Modeling (LDA)
+
+I applied **Latent Dirichlet Allocation (LDA)** with Gibbs sampling (k=8) to identify latent themes. The model successfully distinguished between historical topics like Decolonization/Apartheid and contemporary issues such as Climate Change/Sustainable Development.
+
+### 3. Dimensionality Reduction (PCA)
+Principal Component Analysis (PCA) was applied to the topic proportions to visualize temporal trajectories:
+ - PC1: Illustrated a shift from "Security & Institutions" to "Governance & Sustainability".
+ - PC2: Captured the rise and fall of "Geopolitical Conflict," peaking during the Cold War era (1970s/80s).
+ 
+## Tech Stack
+
+<span class="tech-badge">R</span> <span class="tech-badge">NLP (quanteda)</span> <span class="tech-badge">LDA (topicmodels)</span> <span class="tech-badge">PCA</span> <span class="tech-badge">Unsupervised Learning</span> <span class="tech-badge">ggplot2</span>

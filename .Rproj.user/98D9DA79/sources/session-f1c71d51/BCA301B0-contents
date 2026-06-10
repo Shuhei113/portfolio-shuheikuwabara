@@ -1,0 +1,10 @@
+---
+title: "Resume"
+format: html
+---
+
+
+<iframe width="800" height="800" src="Resume.pdf" style="border: 1px solid #eee;">
+    <p>Your browser does not support PDFs. 
+    <a href="Resume.pdf">Download the PDF</a>.</p>
+</iframe>

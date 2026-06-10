@@ -1,0 +1,50 @@
+{
+  "index.qmd": {
+    "index.html": "51e0a641"
+  },
+  "posts/post-with-code/index.qmd": {
+    "index.html": "c016ecbb"
+  },
+  "posts/welcome/index.qmd": {
+    "index.html": "738379de"
+  },
+  "about.qmd": {
+    "about.html": "526b37f7"
+  },
+  "resume.qmd": {
+    "resume.html": "1aad61ab"
+  },
+  "projects.qmd": {
+    "projects.html": "c54649fc"
+  },
+  "posts/survival_factor_analysis/index.qmd": {
+    "index.html": "3ae94109"
+  },
+  "posts/multinomial_logit/report.qmd": {
+    "report.html": "071e3861"
+  },
+  "posts/survival_factor_analysis/report.qmd": {
+    "report.html": "bb73ec54"
+  },
+  "posts/multinomial_logit/index.qmd": {
+    "index.html": "aaba73d4"
+  },
+  "posts/multinomial_logit/report.rmarkdown": {
+    "report.html": "ebdfaeab"
+  },
+  "posts/regression_classification/index.qmd": {
+    "index.html": "02a5109a"
+  },
+  "posts/regression_classification/62751.qmd": {
+    "62751.html": "d02cc806"
+  },
+  "posts/UN_general_debate/index.qmd": {
+    "index.html": "60ba1683"
+  },
+  "posts/UN_general_debate/62751_2.qmd": {
+    "62751_2.html": "80dd56e5"
+  },
+  "thingstoadd.qmd": {
+    "thingstoadd.html": "54005c92"
+  }
+}

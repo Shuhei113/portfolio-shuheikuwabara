@@ -1,0 +1,25 @@
+---
+title: "Marketing Science: Survival & Factor Analysis"
+author: "Shuhei Kuwabara"
+date: "2026-01-23"
+categories: [R, Marketing, Statistics]
+image: "survival.jpg"  # 同じフォルダにある画像をカードのサムネイルにする
+description: "Predicting customer churn using Cox Proportional Hazards Model."
+---
+
+## Project Overview
+
+This project analyzes customer churn using statistical modeling techniques. Completed as a final project for the Marketing Science course at Hitotsubashi University.
+
+### 📂 Access the Files
+
+-   **📊 [View Full Analysis Report (Web)](report.qmd)**
+    -   Includes full R code, data visualization, and interpretation.
+-   **📄 [Original Report (PDF)](original_report.pdf)**
+    -   Original submission in Japanese.
+
+### 🛠 Tech Stack
+
+-   **Language:** R
+-   **Models:** Cox Proportional Hazards Model, Factor Analysis
+-   **Libraries:** `survival`, `tidyverse`, `psych`

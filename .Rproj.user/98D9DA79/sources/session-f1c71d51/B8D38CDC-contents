@@ -1,0 +1,15 @@
+---
+title: "Projects"
+listing:
+  contents: 
+    - posts/multinomial_logit/index.qmd
+    - posts/survival_factor_analysis/index.qmd
+    - posts/regression_classification/index.qmd
+  type: default        
+  sort: false
+  categories: true
+  sort-ui: false
+  filter-ui: false
+page-layout: full
+title-block-banner: true
+---

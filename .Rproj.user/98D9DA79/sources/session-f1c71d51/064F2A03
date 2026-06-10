@@ -1,0 +1,32 @@
+{
+    "id": "064F2A03",
+    "path": "~/Shuhei Kuwabara portfolio/index.qmd",
+    "project_path": "index.qmd",
+    "type": "quarto_markdown",
+    "hash": "0",
+    "contents": "",
+    "dirty": false,
+    "created": 1769183204523.0,
+    "source_on_save": false,
+    "relative_order": 1,
+    "properties": {
+        "rmdVisualMode": "false",
+        "rmdVisualWrapConfigured": "true",
+        "source_window_id": "",
+        "Source": "Source",
+        "docOutlineVisible": "1",
+        "rmdVisualModeLocation": "2:136",
+        "rmdVisualCollapsedChunks": "",
+        "cursorPosition": "20,72",
+        "scrollLine": "0",
+        "docOutlineSize": "105"
+    },
+    "folds": "",
+    "lastKnownWriteTime": 1769261123,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1769261123740,
+    "read_only": false,
+    "read_only_alternatives": []
+}

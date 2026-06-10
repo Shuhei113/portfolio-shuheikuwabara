@@ -1,0 +1,10 @@
+{
+  "listingMap": {
+    "projects.qmd": [
+      "posts/multinomial_logit/index.qmd",
+      "posts/survival_factor_analysis/index.qmd",
+      "posts/regression_classification/index.qmd",
+      "posts/UN_general_debate/index.qmd"
+    ]
+  }
+}
