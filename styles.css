@@ -370,17 +370,34 @@ h3, .h3 {
 }
 
 /* ==========================================================================
-   9. トップページ（Home）所属セクションの完全最適化
+   9. トップページ（Home）所属セクションの完全最適化（発光エフェクト版）
    ========================================================================== */
-/* 中央揃えのレイアウト内で、ロゴとテキストの塊を美しく配置 */
+/* 通常時：ごく薄いスケルトン枠のカードとして中央に配置 */
 .home-affiliation {
   display: inline-flex !important; 
   align-items: center !important;
   text-align: left !important;
-  margin: 15px auto !important;
+  margin: 12px auto !important;
   width: 100% !important;
-  max-width: 420px !important; /* 中央に綺麗に収まる横幅 */
-  gap: 15px !important;
+  max-width: 440px !important; 
+  gap: 18px !important;
+  padding: 12px 20px !important;               /* 内側に上品な余白を確保 */
+  background-color: rgba(255, 255, 255, 0.02) !important; /* 背景に溶け込む薄い透過 */
+  border: 1px solid rgba(255, 255, 255, 0.08) !important; /* 繊細な初期枠線 */
+  border-radius: 10px !important;              /* 角を丸めてモダンに */
+  transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), 
+              box-shadow 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), 
+              border-color 0.3s ease, 
+              background-color 0.3s ease !important;
+}
+
+/* ホバー時（Hover）：浮遊し、サイバーブルーに発光する演出 */
+.home-affiliation:hover {
+  transform: translateY(-5px) !important;      /* 上にしっかり浮かび上がる */
+  background-color: rgba(255, 255, 255, 0.07) !important; /* カードを少し明るく */
+  border-color: #00b4d8 !important;            /* 枠線がシアンブルーに変化 */
+  box-shadow: 0 10px 25px rgba(0, 180, 216, 0.25) !important; /* ブルーのネオン影を落とす */
+  cursor: pointer;
 }
 
 /* ロゴのサイズと形状の固定 */
@@ -402,15 +419,77 @@ h3, .h3 {
   color: #ffffff !important;
   text-decoration: none !important;
 }
-.home-text a:hover {
-  color: #00b4d8 !important;
-  text-decoration: underline !important;
-}
 
-/* 専攻名のテキスト（シアンブルーに変更） */
+/* 専攻名のテキスト（シアンブルー） */
 .home-text .sub-text {
   display: block !important;
   font-size: 0.9em !important;
   color: #00b4d8 !important;
   font-weight: 500 !important;
 }
+
+
+/* ナビゲーションメニューのリンクに下線アニメーションの準備 */
+.navbar-nav .nav-link {
+  position: relative !important;
+  transition: color 0.3s ease !important;
+}
+
+/* ホバー時に伸びる線の初期状態（透明・中央に縮小） */
+.navbar-nav .nav-link::after {
+  content: "" !important;
+  position: absolute !important;
+  width: 100% !important;
+  height: 2px !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  background-color: #00b4d8 !important; /* シアンブルー */
+  transform: scaleX(0) !important;
+  transition: transform 0.3s ease !important;
+}
+
+/* マウスホバー時に線を左右に100%展開して発光させる */
+.navbar-nav .nav-link:hover::after {
+  transform: scaleX(1) !important;
+  box-shadow: 0 0 8px #00b4d8 !important; /* ネオン発光 */
+}
+
+
+
+/* 通常時のボタン：枠線を少し控えめにしておく */
+.about-links .about-link, .btn-outline-dark {
+  border: 1px solid rgba(0, 180, 216, 0.3) !important;
+  background-color: rgba(255, 255, 255, 0.02) !important;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+}
+
+/* ホバー時のボタン：強烈なサイバー発光 */
+.about-links .about-link:hover, .btn-outline-dark:hover {
+  background-color: rgba(0, 180, 216, 0.15) !important; /* 内側を薄いブルーに */
+  border-color: #00b4d8 !important;                     /* 枠線を完全なシアンに */
+  box-shadow: 0 0 15px rgba(0, 180, 216, 0.6), 
+              inset 0 0 10px rgba(0, 180, 216, 0.3) !important; /* 内外両方への発光 */
+  transform: translateY(-3px) !important;
+}
+
+
+/* 箇条書きの行自体のホバー反応を設定 */
+.content ul li {
+  transition: all 0.25s ease !important;
+}
+
+/* ホバーした行の文字を純白にし、わずかに右へ動かす */
+.content ul li:hover {
+  color: #ffffff !important;
+  transform: translateX(4px) !important; /* 右に小さくスライド */
+}
+
+/* ホバーした行の先頭の「▪」だけを強力にネオン発光させる */
+.content ul li:hover::before {
+  color: #90e0ef !important; /* より明るい水色に変化 */
+  text-shadow: 0 0 8px #00b4d8, 0 0 15px #00b4d8 !important; /* 光の層を重ねる */
+}
+
+
+
+
