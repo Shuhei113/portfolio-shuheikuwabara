@@ -243,4 +243,27 @@ h2, .h2, h2.anchored, section h2, .level2 h2 {
   color: #ffffff !important;
 }
 
+/* ==========================================================================
+   6. 「Access the Files」（スマートリスト）の視認性徹底修正
+   ========================================================================== */
+/* 白いボックス内のテキスト（タイトル・説明文）を濃いグレーに強制固定 */
+.file-list-item * {
+  color: #2c3e50 !important;
+}
+
+/* マウスが乗ったとき（Hover）はよりはっきりとした黒にする */
+.file-list-item:hover * {
+  color: #000000 !important;
+}
+
+/* 右側の矢印アイコンの色が薄すぎる場合の調整 */
+.file-list-arrow {
+  color: #a0a0a0 !important;
+}
+
+/* 「Access the Files」などの見出しを完全に白化する */
+h2, h3, .h2, .h3, [id^="access-the-files"] {
+  color: #ffffff !important;
+}
+
 
