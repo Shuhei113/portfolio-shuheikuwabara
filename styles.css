@@ -430,19 +430,49 @@ h3, .h3 {
 
 
 /* ==========================================================================
-   10. マウス軌跡のオーラエフェクト（残像追従型バックライト）
-   ========================================================================== */
+   10. マウス軌跡のオーラエフェクト（残像追従型ネオ・ネオンライト）
+   ========================================================================= */
 #mouse-glow {
   position: fixed !important;
-  width: 500px !important; /* 光の拡散範囲の広さ */
-  height: 500px !important;
-  /* 中心から外側にかけて滑らかに消えていくシアン色のグラデーション */
-  background: radial-gradient(circle, rgba(0, 180, 216, 0.15) 0%, rgba(0, 180, 216, 0.05) 30%, rgba(0, 0, 0, 0) 70%) !important;
-  top: 0;
-  left: 0;
+  /* ぼんやり感をなくすため、サイズを少し絞って凝縮させる */
+  width: 150px !important; 
+  height: 150px !important;
+  top: 0; left: 0;
   transform: translate(-50%, -50%) !important;
-  pointer-events: none !important; /* マウスのクリックを一切邪魔しない設定 */
-  z-index: -1 !important;          /* 文字やカードの背後に光を配置 */
-  mix-blend-mode: screen !important; /* 背景画像と光を美しくブレンドする */
+  border-radius: 50% !important;
+  
+  /* --- DESIGN UPGRADE: 多層発光 --- */
+  background: transparent !important; /* ぼんやりしたグラデーションを消去 */
+  
+  /* 中心は白く輝くコア、外側へ向かってシアンの多層発光 */
+  border: 2px solid rgba(0, 180, 216, 1) !important; /* シャープなプラズマの輪 */
+  
+  box-shadow:
+    0 0 10px rgba(0, 180, 216, 1),           /* 内側コアの光 */
+    0 0 25px rgba(0, 180, 216, 0.8),         /* 中間のネオン */
+    0 0 50px rgba(0, 180, 216, 0.5),         /* 広範囲のオーラ */
+    inset 0 0 20px rgba(0, 180, 216, 0.6) !important; /* 内側へのプラズマ効果 */
+
+  /* --- ATTRIBUTES --- */
+  pointer-events: none !important; /* クリックを邪魔しない */
+  z-index: -1 !important;          /* 文字の背後へ */
+  mix-blend-mode: screen !important; /* 背景と美しくブレンド */
+  
+  /* --- ANIMATION: 動的な明滅（呼吸）を追加 --- */
+  animation: glow-breathe 2.0s infinite ease-in-out alternate;
+}
+
+/* 呼吸するネオンエフェクトのアニメーション定義 */
+@keyframes glow-breathe {
+  0% {
+    opacity: 0.8;
+    transform: translate(-50%, -50%) scale(1);
+    box-shadow: 0 0 10px rgba(0, 180, 216, 1), 0 0 25px rgba(0, 180, 216, 0.8), 0 0 50px rgba(0, 180, 216, 0.5), inset 0 0 20px rgba(0, 180, 216, 0.6);
+  }
+  100% {
+    opacity: 0.5;
+    transform: translate(-50%, -50%) scale(1.1); /* わずかに膨張する */
+    box-shadow: 0 0 20px rgba(0, 180, 216, 1), 0 0 40px rgba(0, 180, 216, 0.8), 0 0 80px rgba(0, 180, 216, 0.5), inset 0 0 30px rgba(0, 180, 216, 0.6);
+  }
 }
 

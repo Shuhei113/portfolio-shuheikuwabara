@@ -1,0 +1,1948 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.32">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Shuhei Kuwabara">
+
+<title>Survival Analysis and Factor Analysis – Shuhei Kuwabara</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-d24c3880db9ce3ca4ea2d5bb002bea1f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<link href="../../site_libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet">
+<script src="../../site_libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+<script src="../../site_libs/viz-1.8.2/viz.js"></script>
+<link href="../../site_libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet">
+<script src="../../site_libs/grViz-binding-1.0.11/grViz.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  
+  <script>
+    (function () {
+      var script = document.createElement("script");
+      script.type = "text/javascript";
+      script.src  = "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js";
+      document.getElementsByTagName("head")[0].appendChild(script);
+    })();
+  </script>
+
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="floating nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Shuhei Kuwabara</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../projects.html"> 
+<span class="menu-text">Projects</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../resume.html"> 
+<span class="menu-text">Resume</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/Shuhei113/portfolio-Shuhei"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Survival Analysis and Factor Analysis</h1>
+                      </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Shuhei Kuwabara </p>
+            </div>
+    </div>
+      
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#part1.-survival-analysis" id="toc-part1.-survival-analysis" class="nav-link active" data-scroll-target="#part1.-survival-analysis">Part1. Survival Analysis</a>
+  <ul class="collapse">
+  <li><a href="#preparation-for-subsequent-analyses" id="toc-preparation-for-subsequent-analyses" class="nav-link" data-scroll-target="#preparation-for-subsequent-analyses">1. Preparation for Subsequent Analyses</a>
+  <ul class="collapse">
+  <li><a href="#loading-the-dataset" id="toc-loading-the-dataset" class="nav-link" data-scroll-target="#loading-the-dataset">1.1 Loading the Dataset</a></li>
+  <li><a href="#loading-required-packages" id="toc-loading-required-packages" class="nav-link" data-scroll-target="#loading-required-packages">1.2 Loading Required Packages</a></li>
+  </ul></li>
+  <li><a href="#effect-of-direct-mail-phm" id="toc-effect-of-direct-mail-phm" class="nav-link" data-scroll-target="#effect-of-direct-mail-phm">2. Effect of Direct Mail (PHM)</a>
+  <ul class="collapse">
+  <li><a href="#exploratory-data-analysis" id="toc-exploratory-data-analysis" class="nav-link" data-scroll-target="#exploratory-data-analysis">2.1 Exploratory Data Analysis</a></li>
+  <li><a href="#estimation-of-the-proportional-hazards-model" id="toc-estimation-of-the-proportional-hazards-model" class="nav-link" data-scroll-target="#estimation-of-the-proportional-hazards-model">2.2 Estimation of the Proportional Hazards Model</a></li>
+  </ul></li>
+  <li><a href="#demographic-and-behavioral-characteristics-phm" id="toc-demographic-and-behavioral-characteristics-phm" class="nav-link" data-scroll-target="#demographic-and-behavioral-characteristics-phm">3. Demographic and Behavioral Characteristics PHM</a></li>
+  </ul></li>
+  <li><a href="#part2.-factor-analysis" id="toc-part2.-factor-analysis" class="nav-link" data-scroll-target="#part2.-factor-analysis">Part2. Factor Analysis</a>
+  <ul class="collapse">
+  <li><a href="#preparation-for-subsequent-analyses-1" id="toc-preparation-for-subsequent-analyses-1" class="nav-link" data-scroll-target="#preparation-for-subsequent-analyses-1">1. Preparation for Subsequent Analyses</a>
+  <ul class="collapse">
+  <li><a href="#loading-the-dataset-1" id="toc-loading-the-dataset-1" class="nav-link" data-scroll-target="#loading-the-dataset-1">1.1 Loading the Dataset</a></li>
+  <li><a href="#loading-required-packages-1" id="toc-loading-required-packages-1" class="nav-link" data-scroll-target="#loading-required-packages-1">1.2 Loading Required Packages</a></li>
+  <li><a href="#calculation-methods-for-reliability-and-validity-metrics" id="toc-calculation-methods-for-reliability-and-validity-metrics" class="nav-link" data-scroll-target="#calculation-methods-for-reliability-and-validity-metrics">1.3 Calculation Methods for Reliability and Validity Metrics</a></li>
+  </ul></li>
+  <li><a href="#confirmatory-factor-analysis-one-factor-model" id="toc-confirmatory-factor-analysis-one-factor-model" class="nav-link" data-scroll-target="#confirmatory-factor-analysis-one-factor-model">2. Confirmatory Factor Analysis (One-Factor Model)</a>
+  <ul class="collapse">
+  <li><a href="#one-factor-cfa" id="toc-one-factor-cfa" class="nav-link" data-scroll-target="#one-factor-cfa">2.1 One-Factor CFA</a></li>
+  <li><a href="#two-factor-cfa" id="toc-two-factor-cfa" class="nav-link" data-scroll-target="#two-factor-cfa">2.2 Two-Factor CFA</a></li>
+  </ul></li>
+  <li><a href="#comparison-of-models" id="toc-comparison-of-models" class="nav-link" data-scroll-target="#comparison-of-models">2.3 Comparison of Models</a></li>
+  <li><a href="#confirmatory-factor-analysis-with-two-factors-excluding-lube4" id="toc-confirmatory-factor-analysis-with-two-factors-excluding-lube4" class="nav-link" data-scroll-target="#confirmatory-factor-analysis-with-two-factors-excluding-lube4">3. Confirmatory Factor Analysis with Two Factors Excluding LUBE4</a>
+  <ul class="collapse">
+  <li><a href="#two-factor-cfa-excluding-lube4" id="toc-two-factor-cfa-excluding-lube4" class="nav-link" data-scroll-target="#two-factor-cfa-excluding-lube4">3.1 Two-Factor CFA Excluding LUBE4</a></li>
+  <li><a href="#comparison-of-the-two-factor-models" id="toc-comparison-of-the-two-factor-models" class="nav-link" data-scroll-target="#comparison-of-the-two-factor-models">3.2 Comparison of the Two-Factor Models</a></li>
+  </ul></li>
+  </ul></li>
+  </ul>
+</nav>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<section id="part1.-survival-analysis" class="level1">
+<h1>Part1. Survival Analysis</h1>
+<section id="preparation-for-subsequent-analyses" class="level2">
+<h2 class="anchored" data-anchor-id="preparation-for-subsequent-analyses">1. Preparation for Subsequent Analyses</h2>
+<section id="loading-the-dataset" class="level3">
+<h3 class="anchored" data-anchor-id="loading-the-dataset">1.1 Loading the Dataset</h3>
+<p>The workspace is initialized by clearing all existing objects to ensure a reproducible environment. Subsequently, the dataset (<code>chapter_09_churn_data.csv</code>) is loaded from the <code>data/</code> directory. The <code>head()</code> outcome verifies that the data structure has been imported correctly.</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>())</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>data_chap09_churn <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"data/chapter_09_churn_data.csv"</span>, <span class="at">header =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(data_chap09_churn)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Cid Duration Event DM Sex Age Freq Amount
+1   1       27     1  0   1  38    2   8.53
+2   2       31     1  1   0  47    2   8.37
+3   3       36     1  1   0  54    4   8.28
+4   4       35     1  1   1  65    2   8.50
+5   5       31     1  0   0  17    2   8.28
+6   6       27     1  1   1  41    4   8.25</code></pre>
+</div>
+</div>
+</section>
+<section id="loading-required-packages" class="level3">
+<h3 class="anchored" data-anchor-id="loading-required-packages">1.2 Loading Required Packages</h3>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages(c("survival", "flexsurv", "survminer","dplyr","stargazer","broom","readr"))</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survival)    </span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(flexsurv)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survminer)  </span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)       </span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stargazer)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)      </span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)      </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+</section>
+<section id="effect-of-direct-mail-phm" class="level2">
+<h2 class="anchored" data-anchor-id="effect-of-direct-mail-phm">2. Effect of Direct Mail (PHM)</h2>
+<section id="exploratory-data-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="exploratory-data-analysis">2.1 Exploratory Data Analysis</h3>
+<p>Prior to utilizing the proportional hazards model to estimate the differences in churn duration based on DM status, a preliminary analysis is performed.</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(<span class="fu">subset</span>(data_chap09_churn, Event <span class="sc">==</span> <span class="dv">0</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 23</code></pre>
+</div>
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(data_chap09_churn[data_chap09_churn<span class="sc">$</span>Event <span class="sc">==</span> <span class="dv">1</span>,]<span class="sc">$</span>Duration)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   3.00   23.00   31.00   30.79   39.00   54.00 </code></pre>
+</div>
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(data_chap09_churn<span class="sc">$</span>Duration, <span class="at">main =</span> <span class="st">''</span>,</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Duration"</span>, <span class="at">ylab =</span> <span class="st">"Number of Customers"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="report_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>dur_DM <span class="ot">&lt;-</span> data_chap09_churn[data_chap09_churn<span class="sc">$</span>DM <span class="sc">==</span> <span class="dv">1</span>,<span class="dv">2</span>]</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>dur_no_DM <span class="ot">&lt;-</span> data_chap09_churn[data_chap09_churn<span class="sc">$</span>DM <span class="sc">==</span> <span class="dv">0</span>,<span class="dv">2</span>]</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(dur_DM,dur_no_DM,</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">names =</span> <span class="fu">c</span>(<span class="st">"DM"</span>, <span class="st">"No DM"</span>), <span class="at">ylab =</span> <span class="st">"Duration"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="report_files/figure-html/unnamed-chunk-2-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The <code>summary</code> statistics reveal that <strong>23</strong> customers remained active throughout the observation period. Out of the total <strong>1,000</strong> customers, <strong>977</strong> churn events were observed, ranging from day <strong>3</strong> to day <strong>54</strong>. The median survival time was identified as <strong>31</strong> days, indicating a concentration of customer attrition around this point.</p>
+<p>Furthermore, the data was stratified by Direct Mail (DM) reception status to visualize the distribution via a boxplot. The analysis indicates that the group receiving DM exhibits <strong>slightly higher</strong> median and quartile values compared to the non-recipient group. This observation suggests that <em>receiving DM may be associated with prolonged customer retention</em>.</p>
+</section>
+<section id="estimation-of-the-proportional-hazards-model" class="level3">
+<h3 class="anchored" data-anchor-id="estimation-of-the-proportional-hazards-model">2.2 Estimation of the Proportional Hazards Model</h3>
+<p>The <strong>Cox proportional hazards model (PHM)</strong> is utilized to quantify the relationship between the reception of Direct Mail (DM) and customer churn duration.</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>fit_DM <span class="ot">&lt;-</span> <span class="fu">flexsurvreg</span>(</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">Surv</span>(Duration, Event) <span class="sc">~</span> DM,</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> data_chap09_churn,</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">dist =</span> <span class="st">"weibullPH"</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>coef_tbl_DM <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(fit_DM<span class="sc">$</span>res) <span class="sc">%&gt;%</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  tibble<span class="sc">::</span><span class="fu">rownames_to_column</span>(<span class="st">"variable"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(variable <span class="sc">%in%</span> <span class="fu">names</span>(<span class="fu">coef</span>(fit_DM)))</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>coef_tbl_DM <span class="ot">&lt;-</span> coef_tbl_DM <span class="sc">%&gt;%</span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">HR =</span> <span class="fu">exp</span>(est),</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">HR_se =</span> HR<span class="sc">*</span>se,</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">HR_L95 =</span> <span class="fu">exp</span>(est <span class="sc">-</span> <span class="fl">1.96</span> <span class="sc">*</span> se),</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">HR_U95 =</span> <span class="fu">exp</span>(est <span class="sc">+</span> <span class="fl">1.96</span> <span class="sc">*</span> se)</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(variable, <span class="at">coef =</span> est, <span class="at">se.coef=</span>se, HR, HR_se, HR_L95, HR_U95)</span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(coef_tbl_DM, <span class="at">digits =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>  variable      coef  se.coef     HR    HR_se HR_L95 HR_U95
+1    shape  3.04e+00 7.79e-02 20.832 1.62e+00 17.883 24.268
+2    scale  2.24e-05 6.45e-06  1.000 6.45e-06  1.000  1.000
+3       DM -1.97e-01 6.41e-02  0.821 5.26e-02  0.724  0.931</code></pre>
+</div>
+</div>
+<p>The results indicate that the Hazard Ratio for DM recipients is <strong>0.821</strong> (95% CI: <strong>0.724</strong>–<strong>0.931</strong>). Since the 95% confidence interval excludes 1, a statistically significant effect is observed. This estimate implies that the instantaneous risk of churn for customers who received DM is approximately <strong>18%</strong> lower than for those who did not, assuming other conditions remain constant.</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(fit_DM, <span class="at">type =</span> <span class="st">"hazard"</span>, <span class="at">ci =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">DM =</span> <span class="dv">1</span>),</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">col =</span> <span class="st">"blue"</span>, <span class="at">lwd =</span> <span class="dv">2</span>,</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Duration"</span>, <span class="at">ylab =</span> <span class="st">"Hazard"</span>,</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">""</span>)</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(fit_DM, <span class="at">type =</span> <span class="st">"hazard"</span>, <span class="at">ci =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>     <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">DM =</span> <span class="dv">0</span>),</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>     <span class="at">col =</span> <span class="st">"red"</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"topleft"</span>, <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"DM"</span>, <span class="st">"no DM"</span>),</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">col =</span> <span class="fu">c</span>(<span class="st">"blue"</span>, <span class="st">"red"</span>), <span class="at">lwd =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="report_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The figure above illustrates the estimated hazard functions stratified by the status of DM reception. The hazard for customers who received DM is observed to be consistently lower than that for customers who did not receive DM across the entire timeline.</p>
+<p>Notably, the divergence between the two groups widens progressively during the latter half of the observation period (after day 30). This trend suggests that the receipt of DM exerts a suppressive effect on the risk of churn. Furthermore, the distinct separation of the 95% confidence intervals indicates that the difference between the two hazard functions is statistically significant.</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(fit_DM, <span class="at">type =</span> <span class="st">"survival"</span>, <span class="at">ci =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">DM =</span> <span class="dv">1</span>), <span class="at">col =</span> <span class="st">"blue"</span>)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(fit_DM, <span class="at">type =</span> <span class="st">"survival"</span>, <span class="at">ci =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">DM =</span> <span class="dv">0</span>), <span class="at">col =</span> <span class="st">"red"</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"bottomleft"</span>, <span class="fu">c</span>(<span class="st">"DM"</span>, <span class="st">"No DM"</span>), <span class="at">lwd =</span> <span class="dv">1</span>, <span class="at">col =</span> <span class="fu">c</span>(<span class="st">"blue"</span>,<span class="st">"red"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="report_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>This figure depicts the estimated survival functions stratified by the presence or absence of DM reception. The survival probability for DM recipients remains consistently higher than that for non-recipients, indicating that customers who received DM exhibit a stronger tendency for prolonged service retention.</p>
+<p>A marked divergence between the two groups becomes particularly apparent around the 30 to 40-day interval, suggesting that DM reception contributes to the mitigation of customer churn. Furthermore, the limited overlap between the 95% confidence intervals supports the conclusion that the observed difference in survival probabilities is statistically significant.</p>
+</section>
+</section>
+<section id="demographic-and-behavioral-characteristics-phm" class="level2">
+<h2 class="anchored" data-anchor-id="demographic-and-behavioral-characteristics-phm">3. Demographic and Behavioral Characteristics PHM</h2>
+<p>In the following code, a proportional hazards model based on the Weibull distribution is estimated, utilizing customer demographic attributes (<code>Sex</code>, <code>Age</code>) and behavioral characteristics (<code>Freq</code>, <code>Amount</code>) as explanatory variables. Subsequent to the model estimation, the influence of varying levels of variables that exhibited particularly significant hazard ratios on the survival and hazard functions is visualized.</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>fit_full <span class="ot">&lt;-</span> <span class="fu">flexsurvreg</span>(</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">Surv</span>(Duration, Event) <span class="sc">~</span>  Sex <span class="sc">+</span> Age <span class="sc">+</span> Freq <span class="sc">+</span> Amount,</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> data_chap09_churn,</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">dist =</span> <span class="st">"weibullPH"</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>coef_tbl_full <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(fit_full<span class="sc">$</span>res) <span class="sc">%&gt;%</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>  tibble<span class="sc">::</span><span class="fu">rownames_to_column</span>(<span class="st">"variable"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(variable <span class="sc">%in%</span> <span class="fu">names</span>(<span class="fu">coef</span>(fit_full)))</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>coef_tbl_full <span class="ot">&lt;-</span> coef_tbl_full <span class="sc">%&gt;%</span></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">HR =</span> <span class="fu">exp</span>(est),</span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">HR_se =</span> HR<span class="sc">*</span>se,</span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">HR_L95 =</span> <span class="fu">exp</span>(est <span class="sc">-</span> <span class="fl">1.96</span> <span class="sc">*</span> se),</span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">HR_U95 =</span> <span class="fu">exp</span>(est <span class="sc">+</span> <span class="fl">1.96</span> <span class="sc">*</span> se)</span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(variable, <span class="at">coef =</span> est, <span class="at">se.coef=</span>se, HR, HR_se, HR_L95, HR_U95)</span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(coef_tbl_full, <span class="at">digits =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>  variable      coef  se.coef     HR    HR_se HR_L95 HR_U95
+1    shape  3.25e+00 8.25e-02 25.820 2.13e+00 21.964 30.353
+2    scale  8.59e-05 8.46e-05  1.000 8.46e-05  1.000  1.000
+3      Sex -5.04e-02 6.75e-02  0.951 6.42e-02  0.833  1.085
+4      Age -2.46e-02 2.06e-03  0.976 2.01e-03  0.972  0.980
+5     Freq -1.54e-01 2.64e-02  0.857 2.26e-02  0.814  0.903
+6   Amount -8.66e-02 1.14e-01  0.917 1.05e-01  0.733  1.147</code></pre>
+</div>
+</div>
+<p>Both age(<code>Age</code>) and purchase frequency(<code>Freq</code>) were identified as statistically significant factors influencing churn risk. Specifically, the Hazard Ratio (HR) for <code>Age</code> was estimated at <strong>0.976</strong> (95% CI: <strong>0.972</strong>–<strong>0.980</strong>), implying that each additional year of age corresponds to an approximate <strong>2.4% reduction</strong> in the instantaneous risk of churn. Similarly, the HR for <code>Freq</code> was calculated as <strong>0.857</strong> (95% CI: <strong>0.814</strong>–<strong>0.903</strong>), indicating that a single unit increase in purchase frequency is associated with a <strong>14.3% decrease</strong> in churn risk. Since the 95% confidence intervals for both variables exclude the null value of 1, these effects are confirmed to be statistically significant. Conversely, the HR for gender(<code>Sex</code>) was <strong>0.951</strong> (95% CI: <strong>0.833–1.085</strong>), and for purchase amount(<code>Amount</code>) was <strong>0.917</strong> (95% CI: <strong>0.733</strong>–<strong>1.147</strong>). As these intervals encompass 1, no statistically significant impact was observed for these variables, suggesting that their influence on customer churn is limited within the context of this model.</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(fit_full, <span class="at">type =</span> <span class="st">"survival"</span>, <span class="at">ci =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">Sex =</span> <span class="fu">mean</span>(data_chap09_churn<span class="sc">$</span>Sex),</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>                          <span class="at">Age =</span> <span class="dv">20</span>,</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>                          <span class="at">Freq =</span> <span class="fu">mean</span>(data_chap09_churn<span class="sc">$</span>Freq),</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>                          <span class="at">Amount =</span> <span class="fu">mean</span>(data_chap09_churn<span class="sc">$</span>Amount)),</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">col =</span> <span class="st">"blue"</span>, <span class="at">lwd =</span> <span class="dv">2</span>,</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Duration"</span>, <span class="at">ylab =</span> <span class="st">"Survival Probability"</span>,</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Survival Function (age)"</span>)</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(fit_full, <span class="at">type =</span> <span class="st">"survival"</span>, <span class="at">ci =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>     <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">Sex =</span> <span class="fu">mean</span>(data_chap09_churn<span class="sc">$</span>Sex),</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>                          <span class="at">Age =</span> <span class="dv">40</span>,</span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>                          <span class="at">Freq =</span> <span class="fu">mean</span>(data_chap09_churn<span class="sc">$</span>Freq),</span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>                          <span class="at">Amount =</span> <span class="fu">mean</span>(data_chap09_churn<span class="sc">$</span>Amount)),</span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>     <span class="at">col =</span> <span class="st">"red"</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"bottomleft"</span>, <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"age:20"</span>, <span class="st">"age:40"</span>), </span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>       <span class="at">col =</span> <span class="fu">c</span>(<span class="st">"blue"</span>, <span class="st">"red"</span>), <span class="at">lwd =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="report_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(fit_full, <span class="at">type =</span> <span class="st">"hazard"</span>, <span class="at">ci =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">Sex =</span> <span class="fu">mean</span>(data_chap09_churn<span class="sc">$</span>Sex),</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>                          <span class="at">Age =</span> <span class="dv">20</span>,</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>                          <span class="at">Freq =</span> <span class="fu">mean</span>(data_chap09_churn<span class="sc">$</span>Freq),</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>                          <span class="at">Amount =</span> <span class="fu">mean</span>(data_chap09_churn<span class="sc">$</span>Amount)),</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">col =</span> <span class="st">"blue"</span>, <span class="at">lwd =</span> <span class="dv">2</span>,</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Duration"</span>, <span class="at">ylab =</span> <span class="st">"Hazard"</span>,</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Hazard Function (age)"</span>)</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(fit_full, <span class="at">type =</span> <span class="st">"hazard"</span>, <span class="at">ci =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>     <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">Sex =</span> <span class="fu">mean</span>(data_chap09_churn<span class="sc">$</span>Sex),</span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>                          <span class="at">Age =</span> <span class="dv">40</span>,</span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>                          <span class="at">Freq =</span> <span class="fu">mean</span>(data_chap09_churn<span class="sc">$</span>Freq),</span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>                          <span class="at">Amount =</span> <span class="fu">mean</span>(data_chap09_churn<span class="sc">$</span>Amount)),</span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>     <span class="at">col =</span> <span class="st">"red"</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"bottomright"</span>, <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"age:20"</span>, <span class="st">"age:40"</span>), </span>
+<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a>       <span class="at">col =</span> <span class="fu">c</span>(<span class="st">"blue"</span>, <span class="st">"red"</span>), <span class="at">lwd =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="report_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>These graphs illustrate the estimated survival functions and the hazard functions for customers aged <strong>20</strong> (representing the younger demographic) and <strong>40</strong> (representing the middle-aged demographic). A comparative analysis of these indicates that the younger demographic exhibits a consistently higher risk of churn and a correspondingly lower survival probability at any given time point.</p>
+<p>Notably, the divergence between the two cohorts expands during the latter half of the observation period, providing visual confirmation that the tendency for customer attrition becomes more moderate as age increases. This observation is fully consistent with the estimated Hazard Ratio (HR = <strong>0.976</strong>, 95% CI: <strong>0.972</strong>–<strong>0.980</strong>), thereby corroborating the conclusion that advancing age serves as a significant factor in suppressing churn risk.</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>colors <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"red"</span>, <span class="st">"orange"</span>, <span class="st">"green"</span>, <span class="st">"blue"</span>, <span class="st">"purple"</span>)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>labels <span class="ot">&lt;-</span> <span class="fu">paste</span>(<span class="st">"Freq ="</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>)</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(fit_full, <span class="at">type =</span> <span class="st">"hazard"</span>, <span class="at">ci =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">Sex =</span> <span class="fu">mean</span>(data_chap09_churn<span class="sc">$</span>Sex),</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>                          <span class="at">Age =</span> <span class="fu">mean</span>(data_chap09_churn<span class="sc">$</span>Age),</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>                          <span class="at">Freq =</span> <span class="dv">1</span>,</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>                          <span class="at">Amount =</span> <span class="fu">mean</span>(data_chap09_churn<span class="sc">$</span>Amount)),</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>     <span class="at">col =</span> colors[<span class="dv">1</span>], <span class="at">lwd =</span> <span class="dv">2</span>,</span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Duration"</span>, <span class="at">ylab =</span> <span class="st">"Hazard"</span>,</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Hazard Function (Freq)"</span>)</span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span><span class="dv">5</span>) {</span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(fit_full, <span class="at">type =</span> <span class="st">"hazard"</span>, <span class="at">ci =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>       <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">Sex =</span> <span class="fu">mean</span>(data_chap09_churn<span class="sc">$</span>Sex),</span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>                            <span class="at">Age =</span> <span class="fu">mean</span>(data_chap09_churn<span class="sc">$</span>Age),</span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>                            <span class="at">Freq =</span> i,</span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>                            <span class="at">Amount =</span> <span class="fu">mean</span>(data_chap09_churn<span class="sc">$</span>Amount)),</span>
+<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a>       <span class="at">col =</span> colors[i], <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"bottomright"</span>, <span class="at">legend =</span> labels, <span class="at">col =</span> colors, <span class="at">lwd =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="report_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(fit_full, <span class="at">type =</span> <span class="st">"survival"</span>, <span class="at">ci =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">Sex =</span> <span class="fu">mean</span>(data_chap09_churn<span class="sc">$</span>Sex),</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>                          <span class="at">Age =</span> <span class="fu">mean</span>(data_chap09_churn<span class="sc">$</span>Age),</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>                          <span class="at">Freq =</span> <span class="dv">1</span>,</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>                          <span class="at">Amount =</span> <span class="fu">mean</span>(data_chap09_churn<span class="sc">$</span>Amount)),</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">col =</span> colors[<span class="dv">1</span>], <span class="at">lwd =</span> <span class="dv">2</span>,</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Duration"</span>, <span class="at">ylab =</span> <span class="st">"Survival Probability"</span>,</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Survival Function (Freq)"</span>)</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span><span class="dv">5</span>) {</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(fit_full, <span class="at">type =</span> <span class="st">"survival"</span>, <span class="at">ci =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">Sex =</span> <span class="fu">mean</span>(data_chap09_churn<span class="sc">$</span>Sex),</span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>                            <span class="at">Age =</span> <span class="fu">mean</span>(data_chap09_churn<span class="sc">$</span>Age),</span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>                            <span class="at">Freq =</span> i,</span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>                            <span class="at">Amount =</span> <span class="fu">mean</span>(data_chap09_churn<span class="sc">$</span>Amount)),</span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>       <span class="at">col =</span> colors[i], <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"bottomleft"</span>, <span class="at">legend =</span> labels, <span class="at">col =</span> colors, <span class="at">lwd =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="report_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The figures above visualize the hazard and survival functions for customers with usage frequencies(<code>Freq</code>) ranging from 1 to 5. A comparative analysis of the survival functions reveals that customers with higher usage frequencies maintain consistently higher survival probabilities, indicating a tendency for prolonged service retention.</p>
+<p>Similarly, the hazard functions demonstrate that groups with higher frequencies experience lower churn hazards at any arbitrary time point, evidencing a suppressive effect on churn risk. This observation aligns with the previously estimated hazard ratios, suggesting that usage frequency serves as a proxy for customer loyalty and acts as a significant determinant in mitigating customer attrition.</p>
+</section>
+</section>
+<section id="part2.-factor-analysis" class="level1">
+<h1>Part2. Factor Analysis</h1>
+<section id="preparation-for-subsequent-analyses-1" class="level2">
+<h2 class="anchored" data-anchor-id="preparation-for-subsequent-analyses-1">1. Preparation for Subsequent Analyses</h2>
+<section id="loading-the-dataset-1" class="level3">
+<h3 class="anchored" data-anchor-id="loading-the-dataset-1">1.1 Loading the Dataset</h3>
+<p>The dataset (<code>chapter_11.csv</code>) is loaded from the <code>data/</code> directory. The <code>head()</code> outcome verifies that the data structure has been imported correctly.</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>())　</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>data_chap11 <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"data/chapter_11.csv"</span>, <span class="at">header =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(data_chap11)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>  LOV1 LOV2 LOV3 LOV4 LOV5 LOV6 LOV7 LOV8 LOV9 LUAT1 LUAT2 LUAT3 LUBE1 LUBE2
+1    5    4    5    6    5    7    7    6    6     5     5     5     3     3
+2    5    5    6    6    6    6    7    6    6     2     1     1     2     5
+3    5    6    6    6    6    6    6    6    6     3     3     3     3     3
+4    6    5    6    5    4    7    7    6    6     2     2     2     2     2
+5    2    3    2    2    2    6    6    6    3     3     2     4     5     4
+6    5    5    6    5    5    6    7    6    5     3     2     6     6     5
+  LUBE3 LUBE4 LUBE5 NFC1 NFC2 NFC3 NFC4 gen age
+1     6     6     4    6    6    7    7   0   1
+2     5     5     5    7    7    7    7   0   1
+3     3     6     6    5    6    6    6   0   0
+4     2     5     5    3    3    5    5   1   1
+5     4     4     5    5    5    5    5   1   1
+6     6     6     4    5    7    7    6   0   1</code></pre>
+</div>
+</div>
+</section>
+<section id="loading-required-packages-1" class="level3">
+<h3 class="anchored" data-anchor-id="loading-required-packages-1">1.2 Loading Required Packages</h3>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages(c("lavaan", "lavaanPlot", "psych", "dplyr", "semTools"))</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lavaan) </span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lavaanPlot)</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(psych)</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(semTools)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="calculation-methods-for-reliability-and-validity-metrics" class="level3">
+<h3 class="anchored" data-anchor-id="calculation-methods-for-reliability-and-validity-metrics">1.3 Calculation Methods for Reliability and Validity Metrics</h3>
+<p>To facilitate the subsequent computation of <strong>Cronbach’s alpha</strong>, Composite Reliability (<strong>CR</strong>), and Average Variance Extracted (<strong>AVE</strong>), the necessary functions are defined in advance.</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>alpha.coef <span class="ot">&lt;-</span> <span class="cf">function</span>(x){</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  z <span class="ot">&lt;-</span> (<span class="fu">ncol</span>(x) <span class="sc">/</span> (<span class="fu">ncol</span>(x) <span class="sc">-</span> <span class="dv">1</span>)) <span class="sc">*</span> </span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">1</span> <span class="sc">-</span> <span class="fu">sum</span>(<span class="fu">diag</span>(<span class="fu">var</span>(x))) <span class="sc">/</span> <span class="fu">var</span>(<span class="fu">rowSums</span>(x)))</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(z)</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>cr_ave <span class="ot">&lt;-</span> <span class="cf">function</span>(Flab, StdEst){</span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>  FL <span class="ot">&lt;-</span> StdEst[(StdEst[<span class="st">"lhs"</span>] <span class="sc">==</span> Flab) <span class="sc">&amp;</span> (StdEst[<span class="st">"op"</span>] <span class="sc">==</span> <span class="st">"=~"</span>),<span class="dv">3</span>]　</span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>  FLlist <span class="ot">&lt;-</span> <span class="fu">colSums</span>(<span class="fu">apply</span>(StdEst[<span class="st">"rhs"</span>], <span class="dv">1</span>, </span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>                          <span class="cf">function</span>(x,fl){x<span class="sc">==</span>fl},FL)) <span class="sc">&gt;</span> <span class="dv">0</span></span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>  Lm <span class="ot">&lt;-</span> StdEst[FLlist <span class="sc">&amp;</span> (StdEst[<span class="st">"op"</span>] <span class="sc">==</span> <span class="st">"=~"</span>), <span class="dv">4</span>]</span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>  e <span class="ot">&lt;-</span>  StdEst[FLlist <span class="sc">&amp;</span> (StdEst[<span class="st">"op"</span>] <span class="sc">==</span> <span class="st">"~~"</span>), <span class="dv">4</span>]</span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>  CR <span class="ot">&lt;-</span> <span class="fu">sum</span>(Lm)<span class="sc">^</span><span class="dv">2</span> <span class="sc">/</span> (<span class="fu">sum</span>(Lm)<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> <span class="fu">sum</span>(e))</span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>  AVE <span class="ot">&lt;-</span> <span class="fu">sum</span>(Lm<span class="sc">^</span><span class="dv">2</span>) <span class="sc">/</span> (<span class="fu">sum</span>(Lm<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> <span class="fu">sum</span>(e))</span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">c</span>(CR,AVE))</span>
+<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+</section>
+<section id="confirmatory-factor-analysis-one-factor-model" class="level2">
+<h2 class="anchored" data-anchor-id="confirmatory-factor-analysis-one-factor-model">2. Confirmatory Factor Analysis (One-Factor Model)</h2>
+<section id="one-factor-cfa" class="level3">
+<h3 class="anchored" data-anchor-id="one-factor-cfa">2.1 One-Factor CFA</h3>
+<p>A Confirmatory Factor Analysis (CFA) is conducted on a total of eight items, ranging from <code>LUAT1</code> to <code>LUBE5</code>, under the assumption that these variables are explained by a <strong>single</strong> latent factor, <code>LU</code>. The dataset <code>dat_lu</code> is constructed by extracting the target items (columns 10 through 17) from data_chap11. Estimation was performed utilizing the sem function from the lavaan package. Subsequently, model fit indices are generated using <code>fitMeasures</code>, and detailed parameter estimates were obtained via the <code>summary</code> function. Finally, the analysis proceeded to the visualization of results and the evaluation of both reliability and convergent validity.</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>dat_lu <span class="ot">&lt;-</span> data_chap11[,<span class="dv">10</span><span class="sc">:</span><span class="dv">17</span>]　</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(dat_lu)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>          LUAT1     LUAT2     LUAT3     LUBE1     LUBE2     LUBE3     LUBE4
+LUAT1 1.0000000 0.6863097 0.6530632 0.4216778 0.4153562 0.2854687 0.2182564
+LUAT2 0.6863097 1.0000000 0.7031984 0.3998382 0.4011859 0.3186372 0.1806116
+LUAT3 0.6530632 0.7031984 1.0000000 0.4230186 0.4658564 0.3360935 0.1492323
+LUBE1 0.4216778 0.3998382 0.4230186 1.0000000 0.8293229 0.6718840 0.3731311
+LUBE2 0.4153562 0.4011859 0.4658564 0.8293229 1.0000000 0.6780064 0.3638658
+LUBE3 0.2854687 0.3186372 0.3360935 0.6718840 0.6780064 1.0000000 0.4973186
+LUBE4 0.2182564 0.1806116 0.1492323 0.3731311 0.3638658 0.4973186 1.0000000
+LUBE5 0.4580084 0.4108389 0.4266380 0.4730922 0.5001806 0.4537937 0.4267252
+          LUBE5
+LUAT1 0.4580084
+LUAT2 0.4108389
+LUAT3 0.4266380
+LUBE1 0.4730922
+LUBE2 0.5001806
+LUBE3 0.4537937
+LUBE4 0.4267252
+LUBE5 1.0000000</code></pre>
+</div>
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">eigen</span>(<span class="fu">cor</span>(dat_lu))<span class="sc">$</span>values, <span class="at">type =</span> <span class="st">"b"</span>)</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="report_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Factor Determination
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The scree plot indicates that the first two eigenvalues exceed 1.0, suggesting that a <strong>two-factor structure</strong> might be statistically more appropriate for this dataset. However, as the assignment explicitly requires the implementation of a one-factor model, the following analysis proceeds under the assumption of a single latent factor.</p>
+</div>
+</div>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>model_cfa_1F <span class="ot">&lt;-</span> <span class="st">'</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="st">  LU =~ LUAT1 + LUAT2 + LUAT3 +</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="st">       LUBE1 + LUBE2 + LUBE3 + LUBE4 + LUBE5</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="st">'</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>result_cfa_1F <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(model_cfa_1F, <span class="at">data =</span> dat_lu)</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a><span class="fu">fitMeasures</span>(result_cfa_1F)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>                 npar                  fmin                 chisq 
+               16.000                 0.623               401.286 
+                   df                pvalue        baseline.chisq 
+               20.000                 0.000              1420.329 
+          baseline.df       baseline.pvalue                   cfi 
+               28.000                 0.000                 0.726 
+                  tli                  nnfi                   rfi 
+                0.617                 0.617                 0.604 
+                  nfi                  pnfi                   ifi 
+                0.717                 0.512                 0.728 
+                  rni                  logl     unrestricted.logl 
+                0.726             -4425.045             -4224.402 
+                  aic                   bic                ntotal 
+             8882.090              8942.483               322.000 
+                 bic2                 rmsea        rmsea.ci.lower 
+             8891.733                 0.243                 0.223 
+       rmsea.ci.upper        rmsea.ci.level          rmsea.pvalue 
+                0.264                 0.900                 0.000 
+       rmsea.close.h0 rmsea.notclose.pvalue     rmsea.notclose.h0 
+                0.050                 1.000                 0.080 
+                  rmr            rmr_nomean                  srmr 
+                0.336                 0.336                 0.130 
+         srmr_bentler   srmr_bentler_nomean                  crmr 
+                0.130                 0.130                 0.147 
+          crmr_nomean            srmr_mplus     srmr_mplus_nomean 
+                0.147                 0.130                 0.130 
+                cn_05                 cn_01                   gfi 
+               26.204                31.144                 0.734 
+                 agfi                  pgfi                   mfi 
+                0.521                 0.408                 0.553 
+                 ecvi 
+                1.346 </code></pre>
+</div>
+</div>
+<p>An examination of the model fit indices reveals that both <code>GFI</code> (0.734) and <code>AGFI</code> (0.521) fall below their respective recommended thresholds of 0.90 and 0.85, indicating that the overall model fit is inadequate. Furthermore, error metrics such as <code>RMSEA</code> (0.243) and <code>SRMR</code> (0.130) also fail to meet the established criteria. Consequently, it is concluded that the one-factor model does <strong>not</strong> demonstrate a satisfactory fit to the data, suggesting that a re-examination of the model structure is necessary.</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(result_cfa_1F, <span class="at">standardized =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>lavaan 0.6-21 ended normally after 30 iterations
+
+  Estimator                                         ML
+  Optimization method                           NLMINB
+  Number of model parameters                        16
+
+  Number of observations                           322
+
+Model Test User Model:
+                                                      
+  Test statistic                               401.286
+  Degrees of freedom                                20
+  P-value (Chi-square)                           0.000
+
+Parameter Estimates:
+
+  Standard errors                             Standard
+  Information                                 Expected
+  Information saturated (h1) model          Structured
+
+Latent Variables:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+  LU =~                                                                 
+    LUAT1             1.000                               0.861    0.538
+    LUAT2             0.953    0.125    7.619    0.000    0.821    0.528
+    LUAT3             1.069    0.134    7.962    0.000    0.921    0.562
+    LUBE1             1.802    0.175   10.271    0.000    1.552    0.881
+    LUBE2             1.738    0.168   10.325    0.000    1.497    0.894
+    LUBE3             1.452    0.153    9.467    0.000    1.251    0.745
+    LUBE4             0.810    0.119    6.784    0.000    0.698    0.451
+    LUBE5             1.178    0.142    8.282    0.000    1.015    0.596
+
+Variances:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+   .LUAT1             1.818    0.149   12.203    0.000    1.818    0.710
+   .LUAT2             1.747    0.143   12.230    0.000    1.747    0.722
+   .LUAT3             1.835    0.151   12.138    0.000    1.835    0.684
+   .LUBE1             0.692    0.084    8.234    0.000    0.692    0.223
+   .LUBE2             0.565    0.074    7.670    0.000    0.565    0.201
+   .LUBE3             1.251    0.112   11.170    0.000    1.251    0.444
+   .LUBE4             1.906    0.154   12.386    0.000    1.906    0.797
+   .LUBE5             1.866    0.155   12.030    0.000    1.866    0.644
+    LU                0.742    0.148    5.020    0.000    1.000    1.000</code></pre>
+</div>
+</div>
+<p>While factor <code>LU</code> demonstrates strong associations with certain observed variables, notably <code>LUBE1</code> (0.881) and <code>LUBE2</code> (0.894), it exhibits weaker associations with others, such as <code>LUBE4</code> (0.451) and <code>LUAT2</code> (0.528). Furthermore, all three items in the <code>LUAT</code> series display moderate factor loadings of approximately 0.5, necessitating a cautious interpretation regarding measurement validity. Overall, the analysis reveals a notable disparity in the contribution of individual items to the underlying factor structure.</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>fit_1F <span class="ot">&lt;-</span> <span class="fu">cfa</span>(model_cfa_1F, <span class="at">data =</span> dat_lu)</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lavaanPlot</span>(<span class="at">model =</span> fit_1F,</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">edge_options =</span> <span class="fu">list</span>(<span class="at">color =</span> <span class="st">"grey20"</span>),</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">coefs =</span> T, <span class="at">covs =</span> T, <span class="at">stand =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="grViz html-widget html-fill-item" id="htmlwidget-ef88dcf51cd0cee4ac59" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-ef88dcf51cd0cee4ac59">{"x":{"diagram":" digraph plot { \n graph [ overlap = true, fontsize = 10 ] \n node [ shape = box ] \n node [shape = box] \n LUAT1; LUAT2; LUAT3; LUBE1; LUBE2; LUBE3; LUBE4; LUBE5 \n node [shape = oval] \n LU \n \n edge [ color = grey20 ] \n  LU->LUAT1 [label = \"0.54\"] LU->LUAT2 [label = \"0.53\"] LU->LUAT3 [label = \"0.56\"] LU->LUBE1 [label = \"0.88\"] LU->LUBE2 [label = \"0.89\"] LU->LUBE3 [label = \"0.75\"] LU->LUBE4 [label = \"0.45\"] LU->LUBE5 [label = \"0.6\"] \n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<p>The figure above presents the path diagram of the one-factor CFA model, where <code>LU</code> serves as the single latent factor. In this structure, all eight items comprising the LUAT and LUBE series are modeled as being explained by factor loadings deriving from LU. The values annotating each arrow denote the standardized factor loadings (<code>Std.all</code>). Visual inspection confirms that while items such as LUBE1 and LUBE2 exhibit high loadings, the loading for LUBE4 is relatively low in comparison.</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">alpha.coef</span>(dat_lu)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.8690795</code></pre>
+</div>
+</div>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">standardizedSolution</span>(result_cfa_1F)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>     lhs op   rhs est.std    se      z pvalue ci.lower ci.upper
+1     LU =~ LUAT1   0.538 0.042 12.741      0    0.456    0.621
+2     LU =~ LUAT2   0.528 0.043 12.305      0    0.444    0.612
+3     LU =~ LUAT3   0.562 0.041 13.777      0    0.482    0.642
+4     LU =~ LUBE1   0.881 0.017 51.607      0    0.848    0.915
+5     LU =~ LUBE2   0.894 0.016 55.159      0    0.862    0.925
+6     LU =~ LUBE3   0.745 0.028 26.809      0    0.691    0.800
+7     LU =~ LUBE4   0.451 0.047  9.592      0    0.359    0.543
+8     LU =~ LUBE5   0.596 0.039 15.437      0    0.521    0.672
+9  LUAT1 ~~ LUAT1   0.710 0.045 15.609      0    0.621    0.799
+10 LUAT2 ~~ LUAT2   0.722 0.045 15.944      0    0.633    0.810
+11 LUAT3 ~~ LUAT3   0.684 0.046 14.902      0    0.594    0.774
+12 LUBE1 ~~ LUBE1   0.223 0.030  7.415      0    0.164    0.282
+13 LUBE2 ~~ LUBE2   0.201 0.029  6.949      0    0.144    0.258
+14 LUBE3 ~~ LUBE3   0.444 0.041 10.717      0    0.363    0.526
+15 LUBE4 ~~ LUBE4   0.797 0.042 18.786      0    0.714    0.880
+16 LUBE5 ~~ LUBE5   0.644 0.046 13.977      0    0.554    0.735
+17    LU ~~    LU   1.000 0.000     NA     NA    1.000    1.000</code></pre>
+</div>
+</div>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>std_est_1F <span class="ot">&lt;-</span> <span class="fu">standardizedSolution</span>(result_cfa_1F)</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cr_ave</span>(<span class="st">"LU"</span>, std_est_1F)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.8591867 0.4468463</code></pre>
+</div>
+</div>
+<p><strong>Cronbach’s alpha</strong> coefficient was <strong>0.869</strong>, significantly exceeding the generally accepted reliability threshold of 0.70; thus, the internal consistency among items is determined to be sufficiently high. Similarly, <strong>Composite Reliability (CR)</strong> was <strong>0.859</strong>, also surpassing the benchmark of 0.70, which demonstrates that the observed variables are stably explained by the common latent factor. Conversely, the <strong>Average Variance Extracted (AVE)</strong> was <strong>0.447</strong>, falling slightly below the standard cutoff of <strong>0.50</strong>. This result presents a concern regarding convergent validity, and it is possible that the low factor loading of <code>LUBE4</code> specifically contributed to this reduction in the AVE value.</p>
+</section>
+<section id="two-factor-cfa" class="level3">
+<h3 class="anchored" data-anchor-id="two-factor-cfa">2.2 Two-Factor CFA</h3>
+<p>For the purpose of comparison, a Confirmatory Factor Analysis was conducted under the assumption of a two-factor structure, following the exact same procedure.</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>model_cfa_2F <span class="ot">&lt;-</span> <span class="st">'</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="st">  AT =~ LUAT1 + LUAT2 + LUAT3</span></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a><span class="st">  BE =~ LUBE1 + LUBE2 + LUBE3 + LUBE4 + LUBE5</span></span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a><span class="st">'</span></span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>result_cfa_2F <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(model_cfa_2F, <span class="at">data =</span> dat_lu)</span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a><span class="fu">fitMeasures</span>(result_cfa_2F)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>                 npar                  fmin                 chisq 
+               17.000                 0.153                98.591 
+                   df                pvalue        baseline.chisq 
+               19.000                 0.000              1420.329 
+          baseline.df       baseline.pvalue                   cfi 
+               28.000                 0.000                 0.943 
+                  tli                  nnfi                   rfi 
+                0.916                 0.916                 0.898 
+                  nfi                  pnfi                   ifi 
+                0.931                 0.631                 0.943 
+                  rni                  logl     unrestricted.logl 
+                0.943             -4273.697             -4224.402 
+                  aic                   bic                ntotal 
+             8581.394              8645.561               322.000 
+                 bic2                 rmsea        rmsea.ci.lower 
+             8591.640                 0.114                 0.092 
+       rmsea.ci.upper        rmsea.ci.level          rmsea.pvalue 
+                0.137                 0.900                 0.000 
+       rmsea.close.h0 rmsea.notclose.pvalue     rmsea.notclose.h0 
+                0.050                 0.994                 0.080 
+                  rmr            rmr_nomean                  srmr 
+                0.177                 0.177                 0.066 
+         srmr_bentler   srmr_bentler_nomean                  crmr 
+                0.066                 0.066                 0.075 
+          crmr_nomean            srmr_mplus     srmr_mplus_nomean 
+                0.075                 0.066                 0.066 
+                cn_05                 cn_01                   gfi 
+               99.450               119.201                 0.931 
+                 agfi                  pgfi                   mfi 
+                0.869                 0.491                 0.884 
+                 ecvi 
+                0.412 </code></pre>
+</div>
+</div>
+<p>The goodness-of-fit indices for the two-factor model—<code>GFI</code> = 0.931 (≥ 0.90), <code>AGFI</code> = 0.869 (≥ 0.85), and <code>SRMR</code> = 0.066 (≤ 0.08)—satisfied the established criteria, indicating that the overall model fit is satisfactory. Conversely, the <code>RMSEA</code> value of 0.114 exceeded the recommended limit (≤ 0.1), which warrants caution. However, given that the other indices are generally favorable, this model is evaluated as exhibiting a <strong>superior fit</strong> compared to the one-factor model.</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(result_cfa_2F, <span class="at">standardized =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>lavaan 0.6-21 ended normally after 30 iterations
+
+  Estimator                                         ML
+  Optimization method                           NLMINB
+  Number of model parameters                        17
+
+  Number of observations                           322
+
+Model Test User Model:
+                                                      
+  Test statistic                                98.591
+  Degrees of freedom                                19
+  P-value (Chi-square)                           0.000
+
+Parameter Estimates:
+
+  Standard errors                             Standard
+  Information                                 Expected
+  Information saturated (h1) model          Structured
+
+Latent Variables:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+  AT =~                                                                 
+    LUAT1             1.000                               1.284    0.802
+    LUAT2             1.026    0.065   15.670    0.000    1.317    0.847
+    LUAT3             1.056    0.068   15.415    0.000    1.356    0.828
+  BE =~                                                                 
+    LUBE1             1.000                               1.581    0.897
+    LUBE2             0.965    0.043   22.562    0.000    1.524    0.910
+    LUBE3             0.802    0.048   16.729    0.000    1.267    0.755
+    LUBE4             0.441    0.053    8.382    0.000    0.698    0.451
+    LUBE5             0.613    0.055   11.148    0.000    0.969    0.570
+
+Covariances:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+  AT ~~                                                                 
+    BE                1.154    0.153    7.563    0.000    0.569    0.569
+
+Variances:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+   .LUAT1             0.912    0.100    9.125    0.000    0.912    0.356
+   .LUAT2             0.686    0.089    7.663    0.000    0.686    0.283
+   .LUAT3             0.845    0.101    8.346    0.000    0.845    0.315
+   .LUBE1             0.604    0.082    7.344    0.000    0.604    0.195
+   .LUBE2             0.483    0.073    6.650    0.000    0.483    0.172
+   .LUBE3             1.210    0.109   11.151    0.000    1.210    0.430
+   .LUBE4             1.906    0.154   12.402    0.000    1.906    0.797
+   .LUBE5             1.956    0.161   12.147    0.000    1.956    0.676
+    AT                1.649    0.201    8.205    0.000    1.000    1.000
+    BE                2.498    0.249   10.034    0.000    1.000    1.000</code></pre>
+</div>
+</div>
+<p>Factor <code>AT</code> exhibited high factor loadings (ranging from approximately 0.80 to 0.85) for all three items (LUAT1–LUAT3), confirming a sufficient association. Regarding the <code>BE</code> factor, while LUBE1–LUBE3 displayed high factor loadings, the loading for <code>LUBE4</code> was marginally low at <strong>0.451</strong>. Similar to the one-factor model, this necessitates a cautious evaluation regarding validity. Conversely, <code>LUBE2</code> and <code>LUBE1</code> demonstrated extremely high factor loadings (<strong>0.910</strong> and <strong>0.897</strong>, respectively), suggesting they can be interpreted as the core observed variables constituting the <code>BE</code> factor.</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>fit_2F <span class="ot">&lt;-</span> <span class="fu">cfa</span>(model_cfa_2F, <span class="at">data =</span> dat_lu)</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lavaanPlot</span>(<span class="at">model =</span> fit_2F,</span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">edge_options =</span> <span class="fu">list</span>(<span class="at">color =</span> <span class="st">"grey20"</span>),</span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">coefs =</span> T, <span class="at">covs =</span> T, <span class="at">stand =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="grViz html-widget html-fill-item" id="htmlwidget-0e809862d2ef26df6c67" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-0e809862d2ef26df6c67">{"x":{"diagram":" digraph plot { \n graph [ overlap = true, fontsize = 10 ] \n node [ shape = box ] \n node [shape = box] \n LUAT1; LUAT2; LUAT3; LUBE1; LUBE2; LUBE3; LUBE4; LUBE5 \n node [shape = oval] \n AT; BE \n \n edge [ color = grey20 ] \n  AT->LUAT1 [label = \"0.8\"] AT->LUAT2 [label = \"0.85\"] AT->LUAT3 [label = \"0.83\"] BE->LUBE1 [label = \"0.9\"] BE->LUBE2 [label = \"0.91\"] BE->LUBE3 [label = \"0.76\"] BE->LUBE4 [label = \"0.45\"] BE->LUBE5 [label = \"0.57\"] BE -> AT [label = \"0.57\", dir = \"both\"]\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<p>This figure presents the path diagram of the measurement model in which two latent factors, <code>AT</code> and <code>BE</code>, correspond to the eight items in the <code>LUAT</code> and <code>LUBE</code> series. In this model, the three items LUAT1 through LUAT3 are mapped to the AT factor, while the five items LUBE1 through LUBE5 are mapped to the BE factor. The values on each arrow represent the standardized factor loadings (<code>Std.all</code>). For the <code>BE</code> factor, <code>LUBE1</code> (0.90), <code>LUBE2</code> (0.91), and <code>LUBE3</code> (0.76) exhibit <strong>high</strong> loadings, indicating that they represent BE well. Conversely, <code>LUBE4</code> shows a somewhat <strong>low</strong> loading of 0.45, suggesting a weak association with <code>BE</code>. <code>LUBE5</code> also shows a relatively lower loading of 0.57, though this is considered within the acceptable range.</p>
+<p>Regarding the <code>AT</code> factor, all three items (LUAT1–LUAT3) demonstrate <strong>high</strong> factor loadings exceeding 0.80, confirming that AT is measured as a consistent construct. Furthermore, a correlation of approximately <strong>0.57</strong> exists between <code>AT</code> and <code>BE</code>, visually demonstrating that the two factors share a moderate positive association.</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">alpha.coef</span>(dat_lu[,<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.8644639</code></pre>
+</div>
+</div>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">alpha.coef</span>(dat_lu[,<span class="dv">4</span><span class="sc">:</span><span class="dv">8</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.8493303</code></pre>
+</div>
+</div>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">standardizedSolution</span>(result_cfa_2F)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>     lhs op   rhs est.std    se      z pvalue ci.lower ci.upper
+1     AT =~ LUAT1   0.802 0.026 30.791      0    0.751    0.854
+2     AT =~ LUAT2   0.847 0.023 36.036      0    0.801    0.893
+3     AT =~ LUAT3   0.828 0.025 33.720      0    0.780    0.876
+4     BE =~ LUBE1   0.897 0.016 55.385      0    0.866    0.929
+5     BE =~ LUBE2   0.910 0.015 58.892      0    0.880    0.940
+6     BE =~ LUBE3   0.755 0.027 28.112      0    0.703    0.808
+7     BE =~ LUBE4   0.451 0.047  9.625      0    0.359    0.543
+8     BE =~ LUBE5   0.570 0.040 14.168      0    0.491    0.648
+9  LUAT1 ~~ LUAT1   0.356 0.042  8.513      0    0.274    0.438
+10 LUAT2 ~~ LUAT2   0.283 0.040  7.121      0    0.205    0.361
+11 LUAT3 ~~ LUAT3   0.315 0.041  7.748      0    0.235    0.395
+12 LUBE1 ~~ LUBE1   0.195 0.029  6.691      0    0.138    0.252
+13 LUBE2 ~~ LUBE2   0.172 0.028  6.122      0    0.117    0.227
+14 LUBE3 ~~ LUBE3   0.430 0.041 10.591      0    0.350    0.509
+15 LUBE4 ~~ LUBE4   0.797 0.042 18.838      0    0.714    0.879
+16 LUBE5 ~~ LUBE5   0.676 0.046 14.749      0    0.586    0.765
+17    AT ~~    AT   1.000 0.000     NA     NA    1.000    1.000
+18    BE ~~    BE   1.000 0.000     NA     NA    1.000    1.000
+19    AT ~~    BE   0.569 0.045 12.706      0    0.481    0.656</code></pre>
+</div>
+</div>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>std_est_2F <span class="ot">&lt;-</span> <span class="fu">standardizedSolution</span>(result_cfa_2F)</span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cr_ave</span>(<span class="st">"AT"</span>, std_est_2F)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.8653893 0.6819309</code></pre>
+</div>
+</div>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cr_ave</span>(<span class="st">"BE"</span>, std_est_2F)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.8498482 0.5463049</code></pre>
+</div>
+</div>
+<p>For both latent factors <code>AT</code> and <code>BE</code>, <strong>Cronbach’s alpha</strong> coefficients and <strong>Composite Reliability (CR)</strong> were high, at approximately 0.85, well exceeding the threshold (≥ 0.70). This demonstrates that the observed variables within each factor possess high internal consistency and stably measure the same construct.</p>
+<p>Regarding convergent validity, the <strong>Average Variance Extracted (AVE)</strong> was 0.682 for <code>AT</code> and 0.546 for <code>BE</code>, both surpassing the benchmark of 0.50. In particular, <code>AT</code> exhibited a notably high value of 0.682, indicating that the observed variables strongly reflect the latent factor. Similarly, the <code>AVE</code> for <code>BE</code> (0.546) met the criterion, suggesting that convergent validity is maintained.</p>
+<p>Based on these results, it can be concluded that both <code>AT</code> and <code>BE</code> in the two-factor model satisfy sufficient standards in terms of both reliability and validity.</p>
+</section>
+</section>
+<section id="comparison-of-models" class="level2">
+<h2 class="anchored" data-anchor-id="comparison-of-models">2.3 Comparison of Models</h2>
+<p>Based on the results obtained, the one-factor and two-factor models are compared. First, as indicated in the previous sections, the two-factor model demonstrates a substantial improvement in goodness-of-fit indices. These comparisons are summarized in the table below.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Index</th>
+<th style="text-align: center;">1-Factor Model</th>
+<th style="text-align: center;">2-Factor Model</th>
+<th style="text-align: center;">Criteria</th>
+<th style="text-align: left;">Comments</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>GFI</strong></td>
+<td style="text-align: center;">0.734</td>
+<td style="text-align: center;"><strong>0.931</strong></td>
+<td style="text-align: center;"><span class="math inline">\(\ge\)</span> 0.90</td>
+<td style="text-align: left;">Improved in 2-Factor</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>AGFI</strong></td>
+<td style="text-align: center;">0.521</td>
+<td style="text-align: center;"><strong>0.869</strong></td>
+<td style="text-align: center;"><span class="math inline">\(\ge\)</span> 0.85</td>
+<td style="text-align: left;">Improved in 2-Factor</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>RMSEA</strong></td>
+<td style="text-align: center;">0.243</td>
+<td style="text-align: center;"><strong>0.114</strong></td>
+<td style="text-align: center;"><span class="math inline">\(\le\)</span> 0.10</td>
+<td style="text-align: left;">High in both, but improved</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>SRMR</strong></td>
+<td style="text-align: center;">0.130</td>
+<td style="text-align: center;"><strong>0.066</strong></td>
+<td style="text-align: center;"><span class="math inline">\(\le\)</span> 0.08</td>
+<td style="text-align: left;">Clearly improved</td>
+</tr>
+</tbody>
+</table>
+<p>Regarding factor loadings, the one-factor model exhibited some low values, particularly for <code>LUBE4</code> (0.451) and the <code>LUAT</code> items, indicating variation in the factor structure. In contrast, the two-factor model showed high factor loadings (<span class="math inline">\(\ge\)</span> 0.80) for <code>LUAT1</code>–<code>3</code> on the <code>AT</code> factor, and <code>LUBE1</code>–<code>3</code> were also strongly linked to <code>BE</code>. However, <code>LUBE4</code> remained somewhat low (0.451) even in the two-factor model, suggesting room for improvement.</p>
+<p>The comparison of reliability and validity metrics is presented in the following table.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Factor</th>
+<th style="text-align: center;">Model</th>
+<th style="text-align: center;"><span class="math inline">\(\alpha\)</span></th>
+<th style="text-align: center;">CR</th>
+<th style="text-align: center;">AVE</th>
+<th style="text-align: left;">Comments</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>LU</strong></td>
+<td style="text-align: center;">1-Factor</td>
+<td style="text-align: center;">0.869</td>
+<td style="text-align: center;">0.859</td>
+<td style="text-align: center;">0.447</td>
+<td style="text-align: left;">AVE below threshold; concern for convergent validity</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>AT</strong></td>
+<td style="text-align: center;">2-Factor</td>
+<td style="text-align: center;">0.864</td>
+<td style="text-align: center;">0.865</td>
+<td style="text-align: center;">0.682</td>
+<td style="text-align: left;">All indices are good</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>BE</strong></td>
+<td style="text-align: center;">2-Factor</td>
+<td style="text-align: center;">0.849</td>
+<td style="text-align: center;">0.850</td>
+<td style="text-align: center;">0.546</td>
+<td style="text-align: left;">All indices within acceptable range</td>
+</tr>
+</tbody>
+</table>
+<p>As indicated in the table above, both CR and AVE improved in the two-factor model. Notably, the AVE for the <code>AT</code> factor is very high at 0.682, reflecting an improvement in measurement precision.</p>
+<p>In conclusion, the two-factor model is evaluated as superior to the one-factor model across all dimensions: model fit indices, factor loading structure, reliability, and convergent validity. Specifically, structuring the <code>LUAT</code> series and <code>LUBE</code> series as separate factors (<code>AT</code> and <code>BE</code>) yields a more valid and interpretable measurement model.</p>
+</section>
+<section id="confirmatory-factor-analysis-with-two-factors-excluding-lube4" class="level2">
+<h2 class="anchored" data-anchor-id="confirmatory-factor-analysis-with-two-factors-excluding-lube4">3. Confirmatory Factor Analysis with Two Factors Excluding LUBE4</h2>
+<p>Following the same procedure as in the previous section, the model construction, estimation, assessment of goodness-of-fit indices, visualization of results, and evaluation of reliability and validity are conducted. Subsequently, a comparison with the original two-factor CFA and an interpretation of the results are performed.</p>
+<section id="two-factor-cfa-excluding-lube4" class="level3">
+<h3 class="anchored" data-anchor-id="two-factor-cfa-excluding-lube4">3.1 Two-Factor CFA Excluding LUBE4</h3>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>model_cfa_2F_trim <span class="ot">&lt;-</span> <span class="st">'</span></span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a><span class="st">  AT =~ LUAT1 + LUAT2 + LUAT3</span></span>
+<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a><span class="st">  BE =~ LUBE1 + LUBE2 + LUBE3 + LUBE5   </span></span>
+<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a><span class="st">'</span></span>
+<span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-6"><a href="#cb53-6" aria-hidden="true" tabindex="-1"></a>result_cfa_2F_trim <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(model_cfa_2F_trim, <span class="at">data =</span> dat_lu)</span>
+<span id="cb53-7"><a href="#cb53-7" aria-hidden="true" tabindex="-1"></a><span class="fu">fitMeasures</span>(result_cfa_2F_trim)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>                 npar                  fmin                 chisq 
+               15.000                 0.069                44.168 
+                   df                pvalue        baseline.chisq 
+               13.000                 0.000              1300.060 
+          baseline.df       baseline.pvalue                   cfi 
+               21.000                 0.000                 0.976 
+                  tli                  nnfi                   rfi 
+                0.961                 0.961                 0.945 
+                  nfi                  pnfi                   ifi 
+                0.966                 0.598                 0.976 
+                  rni                  logl     unrestricted.logl 
+                0.976             -3709.274             -3687.191 
+                  aic                   bic                ntotal 
+             7448.549              7505.167               322.000 
+                 bic2                 rmsea        rmsea.ci.lower 
+             7457.589                 0.086                 0.059 
+       rmsea.ci.upper        rmsea.ci.level          rmsea.pvalue 
+                0.115                 0.900                 0.016 
+       rmsea.close.h0 rmsea.notclose.pvalue     rmsea.notclose.h0 
+                0.050                 0.673                 0.080 
+                  rmr            rmr_nomean                  srmr 
+                0.163                 0.163                 0.060 
+         srmr_bentler   srmr_bentler_nomean                  crmr 
+                0.060                 0.060                 0.069 
+          crmr_nomean            srmr_mplus     srmr_mplus_nomean 
+                0.069                 0.060                 0.060 
+                cn_05                 cn_01                   gfi 
+              164.028               202.858                 0.965 
+                 agfi                  pgfi                   mfi 
+                0.924                 0.448                 0.953 
+                 ecvi 
+                0.230 </code></pre>
+</div>
+</div>
+<p>The model fit indices—<code>GFI</code> = 0.965 (≥ 0.90), <code>AGFI</code> = 0.924 (≥ 0.85), <code>RMSEA</code> = 0.086 (≤ 0.1), and <code>SRMR</code> = 0.06 (≤ 0.08)—all satisfy the established criteria. Consequently, it can be concluded that the overall model fit is excellent.</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(result_cfa_2F_trim, <span class="at">standardized =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>lavaan 0.6-21 ended normally after 30 iterations
+
+  Estimator                                         ML
+  Optimization method                           NLMINB
+  Number of model parameters                        15
+
+  Number of observations                           322
+
+Model Test User Model:
+                                                      
+  Test statistic                                44.168
+  Degrees of freedom                                13
+  P-value (Chi-square)                           0.000
+
+Parameter Estimates:
+
+  Standard errors                             Standard
+  Information                                 Expected
+  Information saturated (h1) model          Structured
+
+Latent Variables:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+  AT =~                                                                 
+    LUAT1             1.000                               1.283    0.802
+    LUAT2             1.026    0.066   15.656    0.000    1.317    0.846
+    LUAT3             1.058    0.069   15.419    0.000    1.357    0.829
+  BE =~                                                                 
+    LUBE1             1.000                               1.584    0.899
+    LUBE2             0.971    0.043   22.630    0.000    1.537    0.918
+    LUBE3             0.787    0.048   16.335    0.000    1.247    0.743
+    LUBE5             0.600    0.055   10.874    0.000    0.950    0.558
+
+Covariances:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+  AT ~~                                                                 
+    BE                1.157    0.153    7.567    0.000    0.569    0.569
+
+Variances:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+   .LUAT1             0.914    0.100    9.141    0.000    0.914    0.357
+   .LUAT2             0.687    0.090    7.680    0.000    0.687    0.284
+   .LUAT3             0.841    0.101    8.318    0.000    0.841    0.313
+   .LUBE1             0.594    0.084    7.075    0.000    0.594    0.192
+   .LUBE2             0.444    0.074    5.998    0.000    0.444    0.158
+   .LUBE3             1.262    0.112   11.284    0.000    1.262    0.448
+   .LUBE5             1.994    0.164   12.187    0.000    1.994    0.689
+    AT                1.647    0.201    8.198    0.000    1.000    1.000
+    BE                2.508    0.250   10.037    0.000    1.000    1.000</code></pre>
+</div>
+</div>
+<p>Factor <code>AT</code> exhibited high factor loadings (ranging from approximately 0.80 to 0.85) for all three items (<code>LUAT1</code>–<code>LUAT3</code>), confirming a sufficient association. Regarding the <code>BE</code> factor, while <code>LUBE1</code>–<code>LUBE3</code> displayed high factor loadings, the loading for LUBE5 was marginally low at 0.558. Similar to previous models, this necessitates a cautious evaluation regarding validity. However, regarding the other variables, even the lowest value observed was <code>LUBE3</code> (0.743), which maintains a favorable level; thus, the variables demonstrate a sufficient association with the two factors.</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>fit_2F_trim <span class="ot">&lt;-</span> <span class="fu">cfa</span>(model_cfa_2F_trim, <span class="at">data =</span> dat_lu)</span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lavaanPlot</span>(<span class="at">model =</span> fit_2F_trim,</span>
+<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">edge_options =</span> <span class="fu">list</span>(<span class="at">color =</span> <span class="st">"grey20"</span>),</span>
+<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">coefs =</span> T, <span class="at">covs =</span> T, <span class="at">stand =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="grViz html-widget html-fill-item" id="htmlwidget-d4bd9e5e95e3e5ff31d9" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-d4bd9e5e95e3e5ff31d9">{"x":{"diagram":" digraph plot { \n graph [ overlap = true, fontsize = 10 ] \n node [ shape = box ] \n node [shape = box] \n LUAT1; LUAT2; LUAT3; LUBE1; LUBE2; LUBE3; LUBE5 \n node [shape = oval] \n AT; BE \n \n edge [ color = grey20 ] \n  AT->LUAT1 [label = \"0.8\"] AT->LUAT2 [label = \"0.85\"] AT->LUAT3 [label = \"0.83\"] BE->LUBE1 [label = \"0.9\"] BE->LUBE2 [label = \"0.92\"] BE->LUBE3 [label = \"0.74\"] BE->LUBE5 [label = \"0.56\"] BE -> AT [label = \"0.57\", dir = \"both\"]\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<p>This structure indicates that the three items <code>LUAT1</code>–<code>LUAT3</code> correspond to the <code>AT</code> factor, while the items from the <code>LUBE</code> series (<code>LUBE1</code>–<code>LUBE5</code>) correspond to the <code>BE</code> factor. Consistent with the original two-factor model, <code>LUBE1</code> (0.90), <code>LUBE2</code> (0.92), and <code>LUBE3</code> (0.74) exhibit high loadings on the <code>BE</code> factor, indicating that they represent the construct well. Conversely, <code>LUBE5</code> shows a somewhat lower loading of 0.56. Regarding the <code>AT</code> factor, all three items (<code>LUAT1</code>–<code>LUAT3</code>) demonstrate high factor loadings exceeding 0.80, confirming that <code>AT</code> is measured as a consistent construct. Furthermore, a correlation of approximately 0.57 exists between <code>AT</code> and <code>BE</code>, remaining similar to the original two-factor model.</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="fu">alpha.coef</span>(dat_lu[,<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.8644639</code></pre>
+</div>
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu">alpha.coef</span>(dat_lu[, <span class="fu">c</span>(<span class="st">"LUBE1"</span>, <span class="st">"LUBE2"</span>, <span class="st">"LUBE3"</span>, <span class="st">"LUBE5"</span>)])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.8577357</code></pre>
+</div>
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(dat_lu)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>  LUAT1 LUAT2 LUAT3 LUBE1 LUBE2 LUBE3 LUBE4 LUBE5
+1     5     5     5     3     3     6     6     4
+2     2     1     1     2     5     5     5     5
+3     3     3     3     3     3     3     6     6
+4     2     2     2     2     2     2     5     5
+5     3     2     4     5     4     4     4     5
+6     3     2     6     6     5     6     6     4</code></pre>
+</div>
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="fu">standardizedSolution</span>(result_cfa_2F_trim)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>     lhs op   rhs est.std    se      z pvalue ci.lower ci.upper
+1     AT =~ LUAT1   0.802 0.026 30.735      0    0.751    0.853
+2     AT =~ LUAT2   0.846 0.024 35.992      0    0.800    0.892
+3     AT =~ LUAT3   0.829 0.024 33.830      0    0.781    0.877
+4     BE =~ LUBE1   0.899 0.016 54.715      0    0.867    0.931
+5     BE =~ LUBE2   0.918 0.015 59.517      0    0.887    0.948
+6     BE =~ LUBE3   0.743 0.028 26.719      0    0.688    0.797
+7     BE =~ LUBE5   0.558 0.041 13.650      0    0.478    0.638
+8  LUAT1 ~~ LUAT1   0.357 0.042  8.529      0    0.275    0.439
+9  LUAT2 ~~ LUAT2   0.284 0.040  7.136      0    0.206    0.362
+10 LUAT3 ~~ LUAT3   0.313 0.041  7.722      0    0.234    0.393
+11 LUBE1 ~~ LUBE1   0.192 0.030  6.481      0    0.134    0.249
+12 LUBE2 ~~ LUBE2   0.158 0.028  5.587      0    0.103    0.214
+13 LUBE3 ~~ LUBE3   0.448 0.041 10.848      0    0.367    0.529
+14 LUBE5 ~~ LUBE5   0.689 0.046 15.094      0    0.599    0.778
+15    AT ~~    AT   1.000 0.000     NA     NA    1.000    1.000
+16    BE ~~    BE   1.000 0.000     NA     NA    1.000    1.000
+17    AT ~~    BE   0.569 0.045 12.742      0    0.482    0.657</code></pre>
+</div>
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a>std_est_2F_trim <span class="ot">&lt;-</span> <span class="fu">standardizedSolution</span>(result_cfa_2F_trim)</span>
+<span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cr_ave</span>(<span class="st">"AT"</span>, std_est_2F_trim)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.8653737 0.6819034</code></pre>
+</div>
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cr_ave</span>(<span class="st">"BE"</span>, std_est_2F_trim)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.8673646 0.6284229</code></pre>
+</div>
+</div>
+<p>For both latent factors <code>AT</code> and <code>BE</code>, <strong>Cronbach’s alpha</strong> coefficients and <strong>Composite Reliability (CR)</strong> were high, at approximately 0.85, well exceeding the threshold (≥ 0.70). This demonstrates that the observed variables within each factor possess high internal consistency and stably measure the same construct.</p>
+<p>Regarding convergent validity, the <strong>Average Variance Extracted (AVE)</strong> was 0.682 for <code>AT</code> and 0.546 for <code>BE</code>, both surpassing the benchmark of 0.50. In particular, <code>AT</code> exhibited a notably high value of 0.682, indicating that the observed variables strongly reflect the latent factor. Similarly, the <strong>AVE</strong> for <code>BE</code> (0.546) met the criterion, suggesting that convergent validity is maintained.</p>
+<p>Based on these results, it can be concluded that both <code>AT</code> and <code>BE</code> in the two-factor model satisfy sufficient standards in terms of both reliability and validity.</p>
+</section>
+<section id="comparison-of-the-two-factor-models" class="level3">
+<h3 class="anchored" data-anchor-id="comparison-of-the-two-factor-models">3.2 Comparison of the Two-Factor Models</h3>
+<p>Based on the results obtained, the two-factor models (with and without <code>LUBE4</code>) are compared. First, as indicated in the previous sections, the latter model demonstrates an improvement in goodness-of-fit indices. These comparisons are summarized in the table below.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Index</th>
+<th style="text-align: center;">Original Model</th>
+<th style="text-align: center;">Model w/o LUBE4</th>
+<th style="text-align: center;">Criteria</th>
+<th style="text-align: left;">Comments</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>GFI</strong></td>
+<td style="text-align: center;">0.931</td>
+<td style="text-align: center;"><strong>0.965</strong></td>
+<td style="text-align: center;"><span class="math inline">\(\ge\)</span> 0.90</td>
+<td style="text-align: left;">Improved by removing LUBE4</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>AGFI</strong></td>
+<td style="text-align: center;">0.869</td>
+<td style="text-align: center;"><strong>0.924</strong></td>
+<td style="text-align: center;"><span class="math inline">\(\ge\)</span> 0.85</td>
+<td style="text-align: left;">Improved by removing LUBE4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>RMSEA</strong></td>
+<td style="text-align: center;">0.114</td>
+<td style="text-align: center;"><strong>0.086</strong></td>
+<td style="text-align: center;"><span class="math inline">\(\le\)</span> 0.10</td>
+<td style="text-align: left;">Clearly improved and cleared criteria</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>SRMR</strong></td>
+<td style="text-align: center;">0.066</td>
+<td style="text-align: center;"><strong>0.060</strong></td>
+<td style="text-align: center;"><span class="math inline">\(\le\)</span> 0.08</td>
+<td style="text-align: left;">Slightly improved</td>
+</tr>
+</tbody>
+</table>
+<p>Regarding factor loadings, in the original model, <code>LUBE4</code> was the lowest (0.451), introducing variability to the factor structure. However, by removing this item, <code>LUBE5</code> became the lowest loading (0.558), while all other items maintained high values of 0.74 or above.</p>
+<p>The comparison of reliability and validity metrics is presented in the following table.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Factor</th>
+<th style="text-align: center;">Model</th>
+<th style="text-align: center;"><span class="math inline">\(\alpha\)</span></th>
+<th style="text-align: center;">CR</th>
+<th style="text-align: center;">AVE</th>
+<th style="text-align: left;">Comments</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>AT</strong></td>
+<td style="text-align: center;">Before Removal</td>
+<td style="text-align: center;">0.864</td>
+<td style="text-align: center;">0.865</td>
+<td style="text-align: center;">0.682</td>
+<td style="text-align: left;">All indices are favorable</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>BE</strong></td>
+<td style="text-align: center;">Before Removal</td>
+<td style="text-align: center;">0.849</td>
+<td style="text-align: center;">0.850</td>
+<td style="text-align: center;">0.546</td>
+<td style="text-align: left;">All indices within acceptable range</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>AT</strong></td>
+<td style="text-align: center;">After Removal</td>
+<td style="text-align: center;">0.864</td>
+<td style="text-align: center;">0.865</td>
+<td style="text-align: center;">0.682</td>
+<td style="text-align: left;">All indices are favorable</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>BE</strong></td>
+<td style="text-align: center;">After Removal</td>
+<td style="text-align: center;">0.858</td>
+<td style="text-align: center;">0.867</td>
+<td style="text-align: center;">0.628</td>
+<td style="text-align: left;">All indices are favorable</td>
+</tr>
+</tbody>
+</table>
+<p>As shown in the table above, in the model excluding <code>LUBE4</code>, the Average Variance Extracted (AVE) for the <code>BE</code> factor improved significantly, confirming an enhancement in measurement precision. Consequently, values satisfying the established criteria were obtained for all aspects: fit indices, factor loading structure, reliability metrics, and convergent validity.</p>
+<p>In conclusion, it is evaluated that a valid CFA model has been successfully constructed, which adequately explains the seven observed variables (excluding <code>LUBE4</code>) using two latent factors, <code>AT</code> and <code>BE</code>.</p>
+
+
+</section>
+</section>
+</section>
+
+</main> <!-- /main -->
+<div id="mouse-glow"></div>
+<script>
+const glow = document.getElementById('mouse-glow');
+let mouseX = window.innerWidth / 2;
+let mouseY = window.innerHeight / 2;
+let glowX = mouseX;
+let glowY = mouseY;
+
+window.addEventListener('mousemove', (e) => {
+  mouseX = e.clientX;
+  mouseY = e.clientY;
+});
+
+function updateGlow() {
+  // 0.08という係数により、マウスの動きに対してあえて一瞬遅れる「残像感」を演出します
+  glowX += (mouseX - glowX) * 0.08;
+  glowY += (mouseY - glowY) * 0.08;
+  
+  glow.style.left = glowX + 'px';
+  glow.style.top = glowY + 'px';
+  
+  requestAnimationFrame(updateGlow);
+}
+updateGlow();
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
