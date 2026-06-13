@@ -2,7 +2,7 @@
    1. 背景画像の設定（ぼかし無し・そのままクッキリ表示）
    ========================================================================== */
 body {
-  background-image: url('bg-cyber.jpg');
+  background-image: url('background.jpg');
   background-size: cover;
   background-position: center center;
   background-attachment: fixed;
