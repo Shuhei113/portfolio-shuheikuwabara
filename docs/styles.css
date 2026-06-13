@@ -1,127 +1,63 @@
 /* ==========================================================================
-   1. 全体の背景設定（背景画像だけを高度にぼかす特殊設定）
+   1. 背景画像の設定（ぼかし無し・そのままクッキリ表示）
    ========================================================================== */
-@keyframes fadeIn {
-  0% { opacity: 0; }
-  100% { opacity: 1; }
-}
-
 body {
-  color: #f5f6fa !important; /* 全体の文字色を洗練された明るいグレーに */
-  min-height: 100vh;
-  animation: fadeIn 1.0s ease-in-out;
-  background-color: #0b132b; /* 万が一画像が読み込まれない全画面のベース色 */
-}
-
-/* 背景画像だけを文字の後ろで独立してぼかすおまじない */
-body::before {
-  content: "";
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
   background-image: url('bg-cyber.jpg');
   background-size: cover;
   background-position: center center;
+  background-attachment: fixed;
   background-repeat: no-repeat;
-  filter: blur(12px) brightness(0.5); /* 12ミリぼかし、文字を際立たせるため少し暗く調節 */
-  z-index: -1; /* 文字の裏側に配置 */
+  color: #ffffff !important; /* すべての基本文字を白に */
+  background-color: #0b132b;
 }
 
 /* ==========================================================================
-   2. レイアウト・コンテナの調整（白いカードの完全撤廃と透過）
+   2. 白いカードの残党を根こそぎ完全に透明化（透過）する
    ========================================================================== */
-/* 上部ナビゲーションバーをダークで未来的な半透明に変更 */
-.navbar {
-  background-color: rgba(11, 19, 43, 0.75) !important;
-  backdrop-filter: blur(10px); /* ナビゲーション自体も後ろを透過してぼかす */
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.navbar a, .navbar-title, .nav-link {
-  color: #ffffff !important; /* ナビゲーションの文字を白に */
-}
-
-/* コンテンツエリアの白い背景や影を完全に消し去る */
 #quarto-content, 
-.quarto-container,
-.quarto-layout-panel,
+.quarto-container, 
+main, 
 main.content,
-.about-profile,
-.about-links {
+.page-columns, 
+.about-entity, 
+.quarto-about-solana, 
+.quarto-about-marquee,
+.about-contents,
+.about-links,
+.quarto-layout-panel {
   background: transparent !important;
   background-color: transparent !important;
   box-shadow: none !important;
   border: none !important;
 }
 
-/* リンクや通常のテキストが暗い色で埋もれないための補正 */
+/* ==========================================================================
+   3. ナビゲーションバーとテキストカラーの調整
+   ========================================================================== */
+/* 上部のバーは少し暗めの半透明にしてテック感を出す */
+.navbar {
+  background-color: rgba(11, 19, 43, 0.8) !important;
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.navbar a, .navbar-title, .nav-link {
+  color: #ffffff !important;
+}
+
+/* サイト内の見出しやテキストをすべて白に統一 */
+p, span, li, h1, h2, h3, h4, .h1, .h2, .h3, .h4, .anchored {
+  color: #ffffff !important;
+}
+
+/* リンクだけは埋もれないように鮮やかなサイバーブルーに */
 a {
-  color: #4ea8de !important; /* リンクを鮮やかなサイバーブルーに */
+  color: #4ea8de !important;
+  text-decoration: none;
 }
 a:hover {
   color: #90e0ef !important;
-}
-
-/* 各種テキストブロックの文字白化 */
-p, span, li, h1, h3, h4 {
-  color: #f5f6fa !important;
-}
-
-
-/* ==========================================================================
-   3. 各種パーツのデザイン（プロジェクトカード・ボタン・バッジ）
-   ========================================================================== */
-/* プロジェクト一覧のカードホバー効果 */
-.quarto-grid-item {
-  background-color: #ffffff;
-  border: 1px solid #e5e5e5;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.quarto-grid-item:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 20px rgba(0,0,0,0.15);
-  border-color: #333;
-}
-
-/* 学術論文へのリンク等に使える汎用ボタン */
-.btn-link {
-  display: inline-block;
-  padding: 8px 16px;
-  margin-right: 10px;
-  margin-bottom: 10px;
-  border: 1px solid #333;
-  color: #333;
-  text-decoration: none;
-  border-radius: 5px;
-  transition: all 0.3s ease;
-  font-weight: 500;
-  background-color: transparent;
-}
-
-.btn-link:hover {
-  background-color: #333;
-  color: #fff;
-  text-decoration: none;
-}
-
-/* 使用した技術（R, Python, SQL等）を示すバッジ */
-.tech-badge {
-  display: inline-block;
-  padding: 4px 12px;
-  margin-right: 6px;
-  margin-bottom: 6px;
-  background-color: #333333;
-  color: #ffffff;
-  border-radius: 50px;
-  font-size: 0.75em;
-  letter-spacing: 0.5px;
-  font-family: monospace;
-  border: 1px solid #333;
+  text-decoration: underline;
 }
 
 /* ==========================================================================
