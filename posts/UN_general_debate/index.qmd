@@ -43,6 +43,7 @@ This project applies **Natural Language Processing (NLP)** techniques to analyze
 ```
 
 ## Methodology
+
 By combining unsupervised learning with dimensionality reduction, this analysis uncovers macro-level trends in diplomatic history.
 
 ### 1. Corpus Analysis & Anomaly Detection
@@ -54,10 +55,9 @@ Using TF-IDF weighting and Cosine Similarity on a corpus of 10,952 speeches, I d
 I applied **Latent Dirichlet Allocation (LDA)** with Gibbs sampling (k=8) to identify latent themes. The model successfully distinguished between historical topics like Decolonization/Apartheid and contemporary issues such as Climate Change/Sustainable Development.
 
 ### 3. Dimensionality Reduction (PCA)
-Principal Component Analysis (PCA) was applied to the topic proportions to visualize temporal trajectories:
- - PC1: Illustrated a shift from "Security & Institutions" to "Governance & Sustainability".
- - PC2: Captured the rise and fall of "Geopolitical Conflict," peaking during the Cold War era (1970s/80s).
- 
+
+Principal Component Analysis (PCA) was applied to the topic proportions to visualize temporal trajectories: - PC1: Illustrated a shift from "Security & Institutions" to "Governance & Sustainability". - PC2: Captured the rise and fall of "Geopolitical Conflict," peaking during the Cold War era (1970s/80s).
+
 ## Tech Stack
 
-<span class="tech-badge">R</span> <span class="tech-badge">NLP (quanteda)</span> <span class="tech-badge">LDA (topicmodels)</span> <span class="tech-badge">PCA</span> <span class="tech-badge">Unsupervised Learning</span> <span class="tech-badge">ggplot2</span>
+[R]{.tech-badge} [NLP (quanteda)]{.tech-badge} [LDA (topicmodels)]{.tech-badge} [PCA]{.tech-badge} [Unsupervised Learning]{.tech-badge} [ggplot2]{.tech-badge}

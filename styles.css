@@ -266,4 +266,59 @@ h2, h3, .h2, .h3, [id^="access-the-files"] {
   color: #ffffff !important;
 }
 
+/* ==========================================================================
+   7. プロジェクト個別ページの表示崩れ徹底修正（ダークモード最適化）
+   ========================================================================== */
+
+/* 1. Rの出力結果（データ表示など）の背景を黒透過にし、文字を白にする */
+.cell-output, 
+.cell-output-stdout, 
+.cell-output pre, 
+pre:not(.sourceCode) {
+  background-color: rgba(0, 0, 0, 0.5) !important; /* 50%不透明の黒背景 */
+  color: #f8f9fa !important;                        /* 文字を明るい白に */
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 8px !important;
+  padding: 15px !important;
+}
+
+/* 2. 入力コードブロック（ソースコード）自体の背景も少し引き締める */
+.sourceCode, 
+pre.sourceCode {
+  background-color: rgba(0, 0, 0, 0.4) !important; 
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 8px !important;
+}
+
+/* 3. 左側サイドバー（目次・TOC）の白い背景を完全に消去して透明にする */
+#quarto-sidebar, 
+.sidebar, 
+#TOC, 
+nav[role="doc-toc"],
+.quarto-secondary-nav,
+.quarto-sidebar-toggle {
+  background: transparent !important;
+  background-color: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* 4. 目次（TOC）内のリンク文字を白化し、ホバーでサイバーブルーにする */
+#TOC a, 
+.sidebar a, 
+.nav-link {
+  color: rgba(255, 255, 255, 0.65) !important; /* 通常時は少し落ち着いた白 */
+  transition: color 0.2s ease;
+}
+
+#TOC a:hover, 
+.sidebar a:hover, 
+#TOC .active,
+.sidebar .active {
+  color: #00b4d8 !important; /* マウスホバーや現在表示中のセクションは青く光らせる */
+  text-decoration: none !important;
+}
+
+
+
 

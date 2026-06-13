@@ -4049,6 +4049,39 @@ color: #a0a0a0 !important;
 h2, h3, .h2, .h3, [id^="access-the-files"] {
 color: #ffffff !important;
 }
+
+
+.cell-output, .cell-output-stdout, .cell-output pre, pre:not(.sourceCode) {
+background-color: rgba(0, 0, 0, 0.5) !important; 
+color: #f8f9fa !important; 
+border: 1px solid rgba(255, 255, 255, 0.1) !important;
+border-radius: 8px !important;
+padding: 15px !important;
+}
+
+.sourceCode, pre.sourceCode {
+background-color: rgba(0, 0, 0, 0.4) !important; border: 1px solid rgba(255, 255, 255, 0.1) !important;
+border-radius: 8px !important;
+}
+
+#quarto-sidebar, .sidebar, #TOC, nav[role="doc-toc"],
+.quarto-secondary-nav,
+.quarto-sidebar-toggle {
+background: transparent !important;
+background-color: transparent !important;
+border: none !important;
+box-shadow: none !important;
+}
+
+#TOC a, .sidebar a, .nav-link {
+color: rgba(255, 255, 255, 0.65) !important; 
+transition: color 0.2s ease;
+}
+#TOC a:hover, .sidebar a:hover, #TOC .active,
+.sidebar .active {
+color: #00b4d8 !important; 
+text-decoration: none !important;
+}
 </style>
 </head>
 
