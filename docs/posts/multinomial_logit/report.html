@@ -4008,6 +4008,25 @@ grid-template-columns: 1fr;
 
 h2, .h2, h2.anchored, section h2, .level2 h2 {
 padding-left: 15px !important; border-left: 5px solid #333 !important; border-bottom: none !important; color: #2c3e50 !important; margin-top: 50px !important; margin-bottom: 20px !important; font-weight: 700 !important;
+}
+
+
+.quarto-grid-item {
+background-color: rgba(255, 255, 255, 0.04) !important; border: 1px solid rgba(255, 255, 255, 0.1) !important;
+border-radius: 12px !important;
+transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), background-color 0.3s ease !important;
+}
+
+.quarto-grid-item:hover {
+transform: translateY(-8px) !important; 
+background-color: rgba(255, 255, 255, 0.12) !important; 
+border-color: #4ea8de !important; 
+box-shadow: 0 15px 35px rgba(78, 168, 222, 0.25) !important; 
+}
+
+.quarto-grid-item .listing-title,
+.quarto-grid-item .listing-description {
+color: #ffffff !important;
 }</style>
 </head>
 

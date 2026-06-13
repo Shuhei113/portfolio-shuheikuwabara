@@ -213,3 +213,31 @@ h2, .h2, h2.anchored, section h2, .level2 h2 {
   margin-bottom: 20px !important;         
   font-weight: 700 !important;
 }
+
+
+/* ==========================================================================
+   4. プロジェクトカードのホバーエフェクト（ダークモード最適化版）
+   ========================================================================== */
+/* 通常時のカードの状態：背景をわずかに透けさせて上品に配置 */
+.quarto-grid-item {
+  background-color: rgba(255, 255, 255, 0.04) !important; 
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 12px !important;
+  transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), 
+              box-shadow 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), 
+              background-color 0.3s ease !important;
+}
+
+/* マウスが乗ったとき（Hover）の動的な演出 */
+.quarto-grid-item:hover {
+  transform: translateY(-8px) !important; /* 上に浮かび上がる動き */
+  background-color: rgba(255, 255, 255, 0.12) !important; /* カード自体を少し明るく */
+  border-color: #4ea8de !important; /* 枠線をサイバーブルーに */
+  box-shadow: 0 15px 35px rgba(78, 168, 222, 0.25) !important; /* ブルーの美しい影を落とす */
+}
+
+/* カード内のテキストカラーの固定 */
+.quarto-grid-item .listing-title,
+.quarto-grid-item .listing-description {
+  color: #ffffff !important;
+}
