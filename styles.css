@@ -320,5 +320,52 @@ nav[role="doc-toc"],
 }
 
 
+/* ==========================================================================
+   8. Resumeページのディテール洗練化（フォント・マーカー・ロゴ調整）
+   ========================================================================== */
 
+/* 1. 大学ロゴ画像とテキストの美しい中央揃え */
+h3 img, .h3 img {
+  vertical-align: middle !important;
+  margin-right: 12px !important;
+  margin-top: -4px !important;
+  border-radius: 4px !important; /* ロゴの角を微かに丸めて馴染ませる */
+}
+
+/* 2. 大学名（h3）のフォントと余白の最適化 */
+h3, .h3 {
+  font-size: 1.35em !important;
+  letter-spacing: 0.5px !important;
+  margin-top: 35px !important;
+  margin-bottom: 15px !important;
+  font-weight: 700 !important;
+}
+
+/* 3. 箇条書き（リスト）のデフォルトの丸を消去 */
+.content ul {
+  list-style-type: none !important;
+  padding-left: 20px !important;
+}
+
+/* 4. リストの先頭にサイバーブルーのシャープなマーカーを配置 */
+.content ul li {
+  position: relative !important;
+  margin-bottom: 12px !important;
+  line-height: 1.6 !important;
+  color: #e2e8f0 !important; /* 本文をわずかに柔らかい白にして可読性を向上 */
+}
+
+.content ul li::before {
+  content: "▪" !important; /* シャープな四角形マーカー */
+  position: absolute !important;
+  left: -20px !important;
+  color: #00b4d8 !important; /* 見出しの線と同じシアンブルー */
+  font-size: 1.1em !important;
+  top: -1px !important;
+}
+
+/* 5. 右側の目次（TOC）タイトルの位置微調整 */
+#text-table-of-contents, .data-toggle {
+  border-left: 3px solid #00b4d8 !important;
+}
 
