@@ -1,57 +1,73 @@
 /* ==========================================================================
-   1. 全体の背景設定（サイバーブルー背景 ＆ 優雅なフェードイン）
+   1. 全体の背景設定（背景画像だけを高度にぼかす特殊設定）
    ========================================================================== */
-@keyframes zoomOutFade {
-  0% {
-    opacity: 0;
-    transform: scale(1.02);
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1);
-  }
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
 }
 
 body {
+  color: #f5f6fa !important; /* 全体の文字色を洗練された明るいグレーに */
+  min-height: 100vh;
+  animation: fadeIn 1.0s ease-in-out;
+  background-color: #0b132b; /* 万が一画像が読み込まれない全画面のベース色 */
+}
+
+/* 背景画像だけを文字の後ろで独立してぼかすおまじない */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
   background-image: url('bg-cyber.jpg');
   background-size: cover;
   background-position: center center;
-  background-attachment: fixed;
   background-repeat: no-repeat;
-  color: #2c3e50;
-  min-height: 100vh;
-  animation: zoomOutFade 1.2s cubic-bezier(0.16, 1, 0.3, 1);
-}
-/* ==========================================================================
-   2. レイアウト・コンテナの調整（背景を活かすフローティングカード化）
-   ========================================================================== */
-.navbar {
-  background-color: rgba(255, 255, 255, 0.90) !important;
-  backdrop-filter: blur(8px); /* ナビゲーションバーの背景を上品にぼかす */
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  filter: blur(12px) brightness(0.5); /* 12ミリぼかし、文字を際立たせるため少し暗く調節 */
+  z-index: -1; /* 文字の裏側に配置 */
 }
 
-/* 外側の広大な枠はすべて透明にして背景画像を100%見せる */
+/* ==========================================================================
+   2. レイアウト・コンテナの調整（白いカードの完全撤廃と透過）
+   ========================================================================== */
+/* 上部ナビゲーションバーをダークで未来的な半透明に変更 */
+.navbar {
+  background-color: rgba(11, 19, 43, 0.75) !important;
+  backdrop-filter: blur(10px); /* ナビゲーション自体も後ろを透過してぼかす */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.navbar a, .navbar-title, .nav-link {
+  color: #ffffff !important; /* ナビゲーションの文字を白に */
+}
+
+/* コンテンツエリアの白い背景や影を完全に消し去る */
 #quarto-content, 
 .quarto-container,
-.quarto-layout-panel {
-  background: transparent !important;
-  box-shadow: none !important;
-}
-
-/* 中央の文字やロゴが載る「本当に必要なコア部分」だけを白いカードとして浮かせる */
+.quarto-layout-panel,
 main.content,
 .about-profile,
 .about-links {
-  background-color: rgba(255, 255, 255, 0.94) !important; /* 視認性を保つ強めの白 */
-  border-radius: 16px !important;
-  padding: 40px !important;
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4) !important;   /* 強い影で背景から明確に浮かす */
-  margin-top: 40px !important;
-  margin-bottom: 40px !important;
-  max-width: 840px !important;                            /* 横幅を少しスリムにして左右の背景の露出を増やす */
-  margin-left: auto !important;
-  margin-right: auto !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
+/* リンクや通常のテキストが暗い色で埋もれないための補正 */
+a {
+  color: #4ea8de !important; /* リンクを鮮やかなサイバーブルーに */
+}
+a:hover {
+  color: #90e0ef !important;
+}
+
+/* 各種テキストブロックの文字白化 */
+p, span, li, h1, h3, h4 {
+  color: #f5f6fa !important;
 }
 
 
