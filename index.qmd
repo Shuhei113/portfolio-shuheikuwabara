@@ -8,7 +8,7 @@ about:
   links:
     - icon: linkedin
       text: LinkedIn
-      href: www.linkedin.com/in/shuhei-kuwabara-a04925399
+      href: https://www.linkedin.com/in/shuhei-kuwabara-a04925399
     - icon: github
       text: Github
       href: https://github.com/Shuhei113/portfolio-Shuhei
@@ -17,12 +17,21 @@ about:
       href: mailto:shuhei519113@gmail.com
 ---
 
-::: {style="text-align: left;"}
-Welcome! This portfolio introduces my academic background and interests.
-
+Welcome! This portfolio introduces my academic background and interests.  
 My academic focus lies at the intersection of advanced statistics and marketing science.
 
-<br> ![](hitotsubashi.jpg){width="35px" style="vertical-align: middle; margin-right: 10px;"} '27 <a href="https://www.hit-u.ac.jp/eng/" style="color: inherit; text-decoration: none;"> Hitotsubashi University</a> (Social Data Science)
+<div class="home-affiliation">
+  <img src="hitotsubashi.jpg" class="home-logo">
+  <div class="home-text">
+    ['27 Hitotsubashi University](https://www.hit-u.ac.jp/eng/)  
+    <span class="sub-text">Social Data Science</span>
+  </div>
+</div>
 
-<br> ![](lse.jpg){width="35px" style="vertical-align: middle; margin-right: 10px;"} '26 <a href="https://www.lse.ac.uk" style="color: inherit; text-decoration: none;"> London School of Economics </a> (General Course, Statistics)
-:::
+<div class="home-affiliation">
+  <img src="lse.jpg" class="home-logo">
+  <div class="home-text">
+    ['26 London School of Economics](https://www.lse.ac.uk)  
+    <span class="sub-text">General Course, Statistics</span>
+  </div>
+</div>
