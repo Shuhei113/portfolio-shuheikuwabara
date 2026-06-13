@@ -8,12 +8,13 @@ format:
 
 ## Education
 
-### **Hitotsubashi University** (Tokyo, Japan)
+### ![](hitotsubashi.jpg){width=35px} **Hitotsubashi University** (Tokyo, Japan)
+
 * **Bachelor of Science in Social Data Science** | Expected: March 2027
 * **Key Coursework:** Advanced Statistics, Econometrics, Data Structure and Algorithms, Machine Learning
 * **Academic Performance:** High GPA with consistent excellence in quantitative models
 
-### **London School of Economics and Political Science (LSE)** (London, UK)
+### ![](lse.jpg){width=35px} **London School of Economics and Political Science (LSE)** (London, UK)
 * **General Course (Study Abroad Program), Statistics** | September 2025 – June 2026
 * **Key Coursework:** Stochastic Processes, Linear Regression, Econometric Theory, Computational Statistics
 * **Academic Rigor:** Completed advanced, mathematically rigorous curriculums at a world-class institution
