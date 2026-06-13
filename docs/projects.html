@@ -355,6 +355,31 @@ Jan 23, 2026
 </div>
 <div class="listing-no-matching d-none">No matching items</div>
 </div></main> <!-- /main -->
+<div id="mouse-glow"></div>
+<script>
+const glow = document.getElementById('mouse-glow');
+let mouseX = window.innerWidth / 2;
+let mouseY = window.innerHeight / 2;
+let glowX = mouseX;
+let glowY = mouseY;
+
+window.addEventListener('mousemove', (e) => {
+  mouseX = e.clientX;
+  mouseY = e.clientY;
+});
+
+function updateGlow() {
+  // 0.08という係数により、マウスの動きに対してあえて一瞬遅れる「残像感」を演出します
+  glowX += (mouseX - glowX) * 0.08;
+  glowY += (mouseY - glowY) * 0.08;
+  
+  glow.style.left = glowX + 'px';
+  glow.style.top = glowY + 'px';
+  
+  requestAnimationFrame(updateGlow);
+}
+updateGlow();
+</script>
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";

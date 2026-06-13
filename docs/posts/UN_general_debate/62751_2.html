@@ -6114,6 +6114,20 @@ font-size: 0.9em !important;
 color: #00b4d8 !important;
 font-weight: 500 !important;
 }
+
+#mouse-glow {
+position: fixed !important;
+width: 500px !important; 
+height: 500px !important;
+
+background: radial-gradient(circle, rgba(0, 180, 216, 0.15) 0%, rgba(0, 180, 216, 0.05) 30%, rgba(0, 0, 0, 0) 70%) !important;
+top: 0;
+left: 0;
+transform: translate(-50%, -50%) !important;
+pointer-events: none !important; 
+z-index: -1 !important; 
+mix-blend-mode: screen !important; 
+}
 </style>
 </head>
 
@@ -8221,6 +8235,31 @@ Why Hierarchical Clustering
 </section>
 
 </main> <!-- /main -->
+<div id="mouse-glow"></div>
+<script>
+const glow = document.getElementById('mouse-glow');
+let mouseX = window.innerWidth / 2;
+let mouseY = window.innerHeight / 2;
+let glowX = mouseX;
+let glowY = mouseY;
+
+window.addEventListener('mousemove', (e) => {
+  mouseX = e.clientX;
+  mouseY = e.clientY;
+});
+
+function updateGlow() {
+  // 0.08という係数により、マウスの動きに対してあえて一瞬遅れる「残像感」を演出します
+  glowX += (mouseX - glowX) * 0.08;
+  glowY += (mouseY - glowY) * 0.08;
+  
+  glow.style.left = glowX + 'px';
+  glow.style.top = glowY + 'px';
+  
+  requestAnimationFrame(updateGlow);
+}
+updateGlow();
+</script>
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";

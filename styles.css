@@ -429,5 +429,20 @@ h3, .h3 {
 }
 
 
-
+/* ==========================================================================
+   10. マウス軌跡のオーラエフェクト（残像追従型バックライト）
+   ========================================================================== */
+#mouse-glow {
+  position: fixed !important;
+  width: 500px !important; /* 光の拡散範囲の広さ */
+  height: 500px !important;
+  /* 中心から外側にかけて滑らかに消えていくシアン色のグラデーション */
+  background: radial-gradient(circle, rgba(0, 180, 216, 0.15) 0%, rgba(0, 180, 216, 0.05) 30%, rgba(0, 0, 0, 0) 70%) !important;
+  top: 0;
+  left: 0;
+  transform: translate(-50%, -50%) !important;
+  pointer-events: none !important; /* マウスのクリックを一切邪魔しない設定 */
+  z-index: -1 !important;          /* 文字やカードの背後に光を配置 */
+  mix-blend-mode: screen !important; /* 背景画像と光を美しくブレンドする */
+}
 
