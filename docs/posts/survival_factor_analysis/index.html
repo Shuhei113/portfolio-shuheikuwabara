@@ -7,10 +7,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Shuhei Kuwabara">
-<meta name="dcterms.date" content="2025-11-13">
-<meta name="description" content="Segmentation and brand choice analysis using Latent Class Models.">
+<meta name="dcterms.date" content="2026-01-23">
+<meta name="description" content="Predicting customer churn using Cox Proportional Hazards Model and Factor Analysis.">
 
-<title>Marketing Science: Multinomial Logit &amp; Latent Class Analysis – Shuhei Kuwabara</title>
+<title>Marketing Science: Survival &amp; Factor Analysis – Shuhei Kuwabara</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -127,10 +127,10 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Marketing Science: Multinomial Logit &amp; Latent Class Analysis</h1>
+      <h1 class="title">Marketing Science: Survival &amp; Factor Analysis</h1>
                   <div>
         <div class="description">
-          Segmentation and brand choice analysis using Latent Class Models.
+          Predicting customer churn using Cox Proportional Hazards Model and Factor Analysis.
         </div>
       </div>
                           <div class="quarto-categories">
@@ -154,7 +154,7 @@ ul.task-list li input[type="checkbox"] {
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">November 13, 2025</p>
+        <p class="date">January 23, 2026</p>
       </div>
     </div>
     
@@ -175,7 +175,7 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="project-overview" class="level2">
 <h2 class="anchored" data-anchor-id="project-overview">Project Overview</h2>
-<p>This project investigates consumer brand choice behavior using <strong>Multinomial Logit</strong> and <strong>Latent Class Analysis (LCA)</strong>. The analysis focuses on identifying distinct consumer segments to optimize pricing strategies and understand market heterogeneity.</p>
+<p>This project analyzes customer churn using statistical modeling techniques. Completed as a final project for the Marketing Science course at Hitotsubashi University, the analysis aims to identify key risk factors and predict customer retention.</p>
 </section>
 <section id="access-the-files" class="level2">
 <h2 class="anchored" data-anchor-id="access-the-files">Access the Files</h2>
@@ -190,7 +190,7 @@ ul.task-list li input[type="checkbox"] {
     <div class="file-list-arrow"><i class="fa-solid fa-chevron-right"></i></div>
   </a>
 
-  <a href="../../posts/multinomial_logit/report.html" class="file-list-item">
+  <a href="../../posts/survival_factor_analysis/report.html" class="file-list-item" download="">
     <div class="file-list-icon"><i class="fa-solid fa-code"></i></div>
     <div class="file-list-content">
       <span class="file-list-title">Source Code (.qmd)</span>
@@ -199,16 +199,7 @@ ul.task-list li input[type="checkbox"] {
     <div class="file-list-arrow"><i class="fa-solid fa-chevron-right"></i></div>
   </a>
 
-  <a href="data/chapter_06_choice.csv" class="file-list-item">
-    <div class="file-list-icon"><i class="fa-solid fa-download"></i></div>
-    <div class="file-list-content">
-      <span class="file-list-title">Download Dataset</span>
-      <span class="file-list-desc">Original CSV data file.</span>
-    </div>
-    <div class="file-list-arrow"><i class="fa-solid fa-chevron-right"></i></div>
-  </a>
-
-  <a href="original.pdf" class="file-list-item">
+  <a href="original_report.pdf" class="file-list-item" download="">
     <div class="file-list-icon"><i class="fa-solid fa-file-pdf"></i></div>
     <div class="file-list-content">
       <span class="file-list-title">Original Report (PDF)</span>
@@ -221,50 +212,88 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="methodology" class="level2">
 <h2 class="anchored" data-anchor-id="methodology">Methodology</h2>
-<p>This analysis moves beyond aggregate preferences by employing <strong>Latent Class Analysis (LCA)</strong> to uncover hidden segments within the consumer population.</p>
-<section id="baseline-modeling-multinomial-logit" class="level3">
-<h3 class="anchored" data-anchor-id="baseline-modeling-multinomial-logit">1. Baseline Modeling (Multinomial Logit)</h3>
-<p>Initially, a standard Multinomial Logit (MNL) model was fitted to establish baseline average effects.</p>
-<p>Result: Price has a significant negative effect (-0.37), and feature ads have a positive effect (+0.49) on brand choice across the aggregate population.</p>
+<p>This analysis employs a two-step statistical approach to understand and predict customer churn.</p>
+<section id="dimension-reduction-factor-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="dimension-reduction-factor-analysis">1. Dimension Reduction (Factor Analysis)</h3>
+<p>First, <strong>Factor Analysis</strong> was applied to survey data to condense multiple customer satisfaction variables into interpretable latent factors, reducing dimensionality and avoiding multicollinearity.</p>
 </section>
-<section id="identifying-heterogeneity-lca" class="level3">
-<h3 class="anchored" data-anchor-id="identifying-heterogeneity-lca">2. Identifying Heterogeneity (LCA)</h3>
-<p>To capture market heterogeneity, I fitted Finite Mixture Models using the flexmix package, testing from k=1 to k=6 classes.</p>
-<p>Model Selection: Based on the Bayesian Information Criterion (BIC) and model interpretability, a 4-class model was selected.</p>
+<section id="churn-prediction-survival-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="churn-prediction-survival-analysis">2. Churn Prediction (Survival Analysis)</h3>
+<p>Using the extracted factors as covariates, a Cox Proportional Hazards Model was fitted to estimate the hazard ratios. This allows for the quantification of how each satisfaction factor impacts the probability of customer churn over time.</p>
 </section>
 </section>
 <section id="tech-stack" class="level2">
 <h2 class="anchored" data-anchor-id="tech-stack">Tech Stack</h2>
-<p><span class="tech-badge">R</span> <span class="tech-badge">Multinomial Logit</span> <span class="tech-badge">Latent Class Analysis</span> <span class="tech-badge">tidyverse</span> <span class="tech-badge">mlogit</span></p>
+<p><span class="tech-badge">R</span> <span class="tech-badge">Cox Proportional Hazards</span> <span class="tech-badge">Factor Analysis</span> <span class="tech-badge">survival</span> <span class="tech-badge">psych</span> <span class="tech-badge">tidyverse</span></p>
 
 
 </section>
 
 </main> <!-- /main -->
-<div id="mouse-glow"></div>
+<canvas id="mouse-trail"></canvas>
 <script>
-const glow = document.getElementById('mouse-glow');
-let mouseX = window.innerWidth / 2;
-let mouseY = window.innerHeight / 2;
-let glowX = mouseX;
-let glowY = mouseY;
+const canvas = document.getElementById('mouse-trail');
+const ctx = canvas.getContext('2d');
+
+let points = [];
+const maxPoints = 25; // 線の長さ（値を大きくすると残像が長く伸びます）
+let mouseX = 0;
+let mouseY = 0;
+let active = false;
+
+window.addEventListener('resize', resizeCanvas);
+function resizeCanvas() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+resizeCanvas();
 
 window.addEventListener('mousemove', (e) => {
   mouseX = e.clientX;
   mouseY = e.clientY;
+  active = true;
+  
+  points.push({ x: mouseX, y: mouseY });
+  if (points.length > maxPoints) {
+    points.shift();
+  }
 });
 
-function updateGlow() {
-  // 0.08という係数により、マウスの動きに対してあえて一瞬遅れる「残像感」を演出します
-  glowX += (mouseX - glowX) * 0.08;
-  glowY += (mouseY - glowY) * 0.08;
+function render() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
   
-  glow.style.left = glowX + 'px';
-  glow.style.top = glowY + 'px';
-  
-  requestAnimationFrame(updateGlow);
+  // マウスが止まっている時は、残像の末尾からシュッと自動消滅させる
+  if (!active && points.length > 0) {
+    points.shift();
+  }
+  active = false;
+
+  if (points.length > 1) {
+    for (let i = 1; i < points.length; i++) {
+      const p1 = points[i - 1];
+      const p2 = points[i];
+      const ratio = i / points.length; // 先端に近づくほど1に近づく比率
+
+      ctx.beginPath();
+      ctx.moveTo(p1.x, p1.y);
+      ctx.lineTo(p2.x, p2.y);
+
+      // 【重要】先端にいくほど太く、明るいシアンブルーにする計算
+      ctx.strokeStyle = `rgba(0, 180, 216, ${ratio})`;
+      ctx.lineWidth = ratio * 5; // 先端の最大太さ（5ピクセル）
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+
+      // 鋭い閃光を放つためのネオン効果
+      ctx.shadowBlur = 12;
+      ctx.shadowColor = '#00b4d8';
+
+      ctx.stroke();
+    }
+  }
+  requestAnimationFrame(render);
 }
-updateGlow();
+render();
 </script>
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {

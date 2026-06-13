@@ -1,0 +1,1223 @@
+---
+title: "DS202A - W11+1 Summative"
+author: "62751"
+date: "`r Sys.Date()`"
+format: html
+self-contained: true
+toc: true
+toc-location: left-body
+code-fold: show
+code-copy: true
+editor:
+  render-on-save: true
+  preview: true
+---
+
+# Setup
+
+First, the required R packages are loaded to support data preparation, corpus construction, text mining, and topic modeling in Parts A and B.
+
+```{r setup, warning=FALSE, message=FALSE}
+library(tidyr)
+library(ggplot2)
+library(tidyverse)
+library(tidytext)
+library(readr)
+library(quanteda)
+library(quanteda.textstats)
+library(topicmodels)
+library(plotly)
+```
+
+# Part A: Similarity and Anomalies in UN General Debate Speeches
+
+## Data Loading and Corpus Construction
+
+The following code locates and collects all UN General Assembly speech text files by iterating over a session-based folder structure, where `TXT` directory contains subfolders (e.g. `Session 01 - 1946`), each of which stores individual speech text files (e.g. `ARG_01_1946.txt`).
+
+```{r warning=FALSE, message=FALSE}
+base_path <- "data/TXT"
+
+session_dirs <- list.dirs(
+  path = base_path,
+  recursive = FALSE,
+  full.names = TRUE
+)
+
+length(session_dirs)
+head(session_dirs)
+
+txt_files <- unlist(
+  lapply(session_dirs, function(d) {
+    list.files(
+      path = d,
+      pattern = "\\.txt$",
+      full.names = TRUE
+    )
+  })
+)
+
+length(txt_files)
+head(txt_files)
+```
+
+The result of the `length()` checks shows that **79** session directories are detected, corresponding exactly to the 79 General Assembly years from 1946 to 2024. In addition, a total of **10,952** speech text files are collected. This is fully consistent with the dataset description, which reports **10,952** speeches from **202** countries, confirming that all expected speech files are correctly identified.
+
+```{r warning=FALSE, message=FALSE}
+speech_df <- tibble(
+  file_path = txt_files,
+  text = map_chr(txt_files, read_file)
+)
+
+glimpse(speech_df)
+```
+
+Each speech text file is read and combined into a tidy data frame, where each row corresponds to a single UN General Assembly speech. The output of `glimpse()` confirms that the data frame contains **10,952** rows and **two** columns (`file_path` and `text`).
+
+```{r warning=FALSE, message=FALSE}
+speech_df <- speech_df %>%
+  mutate(
+    folder = basename(dirname(file_path)),
+    session = as.integer(str_extract(folder, "\\d{2}")),
+    year = as.integer(str_extract(folder, "\\d{4}")),
+    country = str_extract(basename(file_path), "^[A-Z]{3}")
+  )
+```
+
+Session number(`session`), year(`year`), and country code(`country`) are extracted from the folder and file names and added to the data frame as metadata for subsequent analysis.
+
+```{r warning=FALSE, message=FALSE}
+corp_un <- corpus(speech_df, text_field = "text")
+
+docvars(corp_un, "year") <- speech_df$year
+docvars(corp_un, "session") <- speech_df$session
+docvars(corp_un, "country") <- speech_df$country
+
+summary(corp_un, n = 5)
+```
+
+The texts are converted into a quanteda corpus, with `year`, `session`, and `country` information stored as document-level variables. The corpus `summary` provides a preliminary overview of document length and structure.
+
+## Exploratory Analysis of the Corpus
+
+This part provides a descriptive overview of the UN General Debate corpus, focusing on variation in **document length** and **lexical diversity** across speeches. These patterns establish important baselines and motivate subsequent similarity and anomaly analyses by highlighting sources of heterogeneity that may influence textual comparisons.
+
+```{r warning=FALSE, message=FALSE}
+doc_stats <- summary(corp_un, n = ndoc(corp_un))
+
+doc_stats <- doc_stats %>%
+  as_tibble() %>%
+  select(
+    document = Text,
+    tokens = Tokens,
+    types = Types,
+    sentences = Sentences
+  )
+
+glimpse(doc_stats)
+```
+
+The corpus summary is converted into a tidy data frame containing basic document-level statistics for all speeches, including the number of `tokens`, unique word `types`, and `sentences`.
+
+```{r warning=FALSE, message=FALSE}
+ggplot(doc_stats, aes(x = tokens)) +
+  geom_histogram(bins = 50, fill = "#4C72B0", alpha = 0.8) +
+  labs(
+    title = "Right-Skewed Distribution of UN General Debate Speech Lengths",
+    x = "Number of tokens",
+    y = "Number of speeches"
+  ) +
+  theme_minimal()
+```
+
+Document length exhibits a pronounced **right-skew**, with most speeches clustered at moderate lengths and a small number of extremely long outliers. 
+
+```{r warning=FALSE, message=FALSE}
+ggplot(doc_stats, aes(x = sentences, y = tokens)) +
+  geom_point(alpha = 0.4) +
+  labs(
+    title = "Sentence Count Strongly Predicts Speech Length, with a Small Set of Extreme Outliers",
+    x = "Number of sentences",
+    y = "Number of tokens"
+  ) +
+  theme_minimal()
+```
+
+`sentences` and `tokens` are **strongly** correlated, but a small number of speeches deviate substantially from the main cluster. These extreme cases suggest candidates for anomalous speeches driven by exceptional verbosity.
+
+```{r warning=FALSE, message=FALSE}
+doc_stats_year <- doc_stats %>%
+  mutate(
+    year = docvars(corp_un, "year")
+  )
+
+yearly_tokens <- doc_stats_year %>%
+  group_by(year) %>%
+  summarise(
+    avg_tokens = mean(tokens),
+    median_tokens = median(tokens),
+    n_speeches = n()
+  )
+
+head(yearly_tokens)
+```
+
+The document-level statistics are then aggregated by `year` to compute **average** and **median** speech length, along with the number of speeches delivered each year. This yearly summary enables examination of **temporal trends** in speech length across the General Assembly.
+
+```{r warning=FALSE, message=FALSE}
+ggplot(yearly_tokens, aes(x = year, y = avg_tokens)) +
+  geom_line(color = "#C44E52") +
+  labs(
+    title = "Average UN General Debate Speech Length Peaks Around 1960 and Declines Thereafter",
+    x = "Year",
+    y = "Average number of tokens"
+  ) +
+  theme_minimal()
+```
+
+The average length of UN General Assembly speeches rises sharply from the **late 1940s** to around **1960**, where it reaches a clear peak, before stabilizing and then gradually declining from the **late 1980s** onward. This pronounced early increase and peak indicate that speech length varies substantially across historical periods.
+
+```{r warning=FALSE, message=FALSE}
+doc_stats_year <- doc_stats_year %>%
+  mutate(
+    ttr = types / tokens
+  )
+
+glimpse(doc_stats_year)
+```
+
+**Type–Token Ratio (TTR)** is computed for each speech as the ratio of `types` to `tokens`, providing a simple measure of **lexical diversity** that is less directly tied to document length than raw token counts. By associating `ttr` with `year`, this representation allows exploration of how lexical diversity varies across speeches and over time.
+
+```{r warning=FALSE, message=FALSE}
+ggplot(doc_stats_year, aes(x = ttr)) +
+  geom_histogram(bins = 50, fill = "steelblue", alpha = 0.7) +
+  labs(
+    title = "Type–Token Ratio Is Approximately Bell-Shaped",
+    x = "Type–Token Ratio",
+    y = "Number of speeches"
+  ) +
+  theme_minimal()
+
+ttr_by_year <- doc_stats_year %>%
+  group_by(year) %>%
+  summarise(
+    avg_ttr = mean(ttr, na.rm = TRUE)
+  )
+```
+
+The distribution of `ttr` is approximately **bell-shaped**, with most speeches concentrated within a relatively narrow range of lexical diversity. This suggests that while speech length varies substantially, the overall richness of vocabulary used in UN General Debate speeches is more stable.
+
+```{r warning=FALSE, message=FALSE}
+ggplot(ttr_by_year, aes(x = year, y = avg_ttr)) +
+  geom_line(color = "darkred") +
+  labs(
+    title = "Average Lexical Diversity Declines Until the 1960s, Then Rises Gradually Thereafter",
+    x = "Year",
+    y = "Average TTR"
+  ) +
+  theme_minimal()
+
+```
+
+Notably, the trough in average `ttr` around **1960** aligns with the peak in average document length observed earlier. This pattern is likely driven by length effects rather than substantive changes in vocabulary usage, highlighting the importance of interpreting lexical diversity measures jointly with document length.
+
+```{r warning=FALSE, message=FALSE}
+doc_stats_country <- doc_stats_year %>%
+  mutate(
+    country = docvars(corp_un, "country")
+  )
+
+top_countries <- doc_stats_country %>%
+  count(country, sort = TRUE) %>%
+  slice_head(n = 15) %>%
+  pull(country)
+
+country_tokens <- doc_stats_country %>%
+  filter(country %in% top_countries) %>%
+  group_by(country) %>%
+  summarise(avg_tokens = mean(tokens))
+
+ggplot(country_tokens, aes(x = reorder(country, avg_tokens), y = avg_tokens)) +
+  geom_col(fill = "#8172B2") +
+  coord_flip() +
+  labs(
+    title = "Average UN General Debate Speech Length Varies Widely Across Countries",
+    x = "Country",
+    y = "Average number of tokens"
+  ) +
+  theme_minimal()
+
+```
+
+The figure shows substantial cross-country variation in average speech length. Countries such as **India** and **the United States** tend to deliver longer speeches on average, while others cluster at lower token counts. These differences may reflect institutional speaking styles, and this heterogeneity motivates explicitly examining country-level patterns in subsequent analyses.
+
+## Document Similarity Analysis
+
+```{r warning=FALSE, message=FALSE}
+set.seed(123)
+sample_idx <- sample(seq_len(ndoc(corp_un)), 500)
+corp_sim <- corp_un[sample_idx]
+```
+
+Because pairwise similarity computation scales **quadratically** with the number of documents, computing cosine similarity on the full corpus of over 10,000 speeches would be computationally infeasible. To address this, a random set of **500** speeches was selected from the full corpus, and similarity analysis was conducted on the resulting sub-corpus (`corp_sim`).
+
+
+::: callout-note
+## Why random sampling
+
+Random sampling was adopted because it minimises prior assumptions in an exploratory similarity analysis where temporal and national structure are objects of investigation rather than design features.
+
+:::
+
+```{r warning=FALSE, message=FALSE}
+
+toks <- tokens(
+  corp_sim,
+  remove_punct = TRUE,
+  remove_numbers = TRUE
+) %>%
+  tokens_tolower() %>%
+  tokens_remove(stopwords("en"))
+
+head(toks)
+
+```
+
+Each sampled speech is converted into a sequence of cleaned tokens. The text is split into individual words, punctuation and numbers are removed, all tokens are lowercased, and common English stopwords are excluded. This preprocessing reduces noise and ensures that subsequent similarity measures are driven by meaningful lexical content.
+
+::: callout-note
+## Tokenisation example (`text2463`)
+
+After preprocessing, a formulaic diplomatic opening such as  
+“*It is a special pleasure for me to extend to you, Sir,*”  
+is reduced to meaningful tokens  
+**“special”, “pleasure”, “extend”, “sir”**.
+
+:::
+
+
+```{r warning=FALSE, message=FALSE}
+dfm_sim <- dfm(toks)
+head(dfm_sim)
+```
+
+The tokenized texts are converted into a **document–feature matrix (DFM)**, 
+which represents each speech as a vector of term frequencies and enables quantitative similarity comparisons.
+
+
+```{r warning=FALSE, message=FALSE}
+dfm_tfidf <- dfm_tfidf(dfm_sim)
+head(dfm_tfidf)
+```
+
+The DFM is weighted using **TF–IDF** to downweight terms that are common across many speeches and highlight words that are more distinctive of individual documents, improving the interpretability of similarity measures.
+
+
+```{r warning=FALSE, message=FALSE}
+sim_mat <- textstat_simil(
+  dfm_tfidf,
+  margin = "documents",
+  method = "cosine"
+)
+```
+
+
+
+**Cosine similarity** is applied to TF–IDF–weighted vectors to compare speeches based on shared lexical patterns rather than document length, which is appropriate given the substantial variation in speech length identified in the exploratory analysis.
+
+
+```{r warning=FALSE, message=FALSE}
+sim_df <- as.matrix(sim_mat) %>%
+  as_tibble(rownames = "doc1") %>%
+  pivot_longer(
+    -doc1,
+    names_to = "doc2",
+    values_to = "similarity"
+  ) %>%
+  filter(doc1 < doc2)
+
+glimpse(sim_df)
+```
+The similarity matrix is reshaped into a tidy long format, where each row corresponds to a unique pair of distinct speeches (`doc1` and `doc2`) and their **cosine similarity score**. By retaining only one ordering of each symmetric pair (`doc1 < doc2`), the 500-speech subsample yields **124,750** pairwise comparisons (500 choose 2), avoiding double-counting.
+
+```{r warning=FALSE, message=FALSE}
+doc_meta <- tibble(
+  document = docnames(corp_sim),
+  year = docvars(corp_sim, "year"),
+  country = docvars(corp_sim, "country")
+)
+
+sim_df <- sim_df %>%
+  left_join(doc_meta, by = c("doc1" = "document")) %>%
+  rename(year_1 = year, country_1 = country) %>%
+  left_join(doc_meta, by = c("doc2" = "document")) %>%
+  rename(year_2 = year, country_2 = country)
+
+glimpse(sim_df)
+```
+
+Document-level metadata (`year` and `country`) are merged onto each pairwise similarity score, 
+allowing similarity patterns to be examined in relation to shared temporal and national context.
+
+```{r warning=FALSE, message=FALSE}
+
+summary(sim_df$similarity)
+
+ggplot(sim_df, aes(x = similarity)) +
+  geom_histogram(bins = 50, fill = "#4C72B0", alpha = 0.8) +
+  labs(
+    title = "Most UN General Debate Speeches Are Only Weakly Similar to Each Other",
+    x = "Cosine similarity",
+    y = "Number of document pairs"
+  ) +
+  theme_minimal()
+
+```
+
+The distribution of cosine similarity scores is highly **right-skewed**, with most document pairs exhibiting very low similarity. The median similarity is approximately **0.048**, indicating that the majority of UN General Debate speeches share relatively little distinctive vocabulary once common diplomatic language is downweighted. However, the long right tail suggests the presence of strongly aligned speeches, likely reflecting shared temporal context, common agenda-setting issues, or repeated institutional language within specific periods or countries.
+
+
+```{r warning=FALSE, message=FALSE}
+top_similar <- sim_df %>%
+  arrange(desc(similarity)) %>%
+  slice_head(n = 10)
+
+top_similar
+```
+
+The most similar document pairs are overwhelmingly speeches delivered by the **same country** across different years. These high similarity scores suggest strong continuity in national diplomatic language, where recurring themes, policy priorities, and formulaic expressions persist over time. Only **one** of the top ten pairs involves **different countries**, indicating that temporal consistency within national discourse generally outweighs cross-national similarity in shaping high cosine similarity values.
+
+:::callout-note
+
+## A Rare Cross-National Similarity in 1982 (LAO–SDN)
+
+Both speeches emphasise international issues that were salient in the 1982 General Assembly, including Middle East–related conflicts and broader themes of sovereignty and international justice. The observed similarity likely reflects shared engagement with contemporaneous multilateral agendas.
+
+:::
+
+
+```{r warning=FALSE, message=FALSE}
+sim_df <- sim_df %>%
+  mutate(
+    same_year = year_1 == year_2,
+    same_country = country_1 == country_2
+  )
+
+```
+
+Each pairwise similarity score is labelled according to whether the two speeches were delivered in the same year and/or by the same country, enabling systematic comparison of temporal and national effects on textual similarity.
+
+
+```{r warning=FALSE, message=FALSE}
+sim_df %>%
+  group_by(same_country) %>%
+  summarise(
+    avg_similarity = mean(similarity),
+    median_similarity = median(similarity)
+  )
+
+sim_df %>%
+  count(same_country)
+
+
+ggplot(sim_df, aes(x = same_country, y = similarity)) +
+  geom_boxplot(fill = "#55A868") +
+  labs(
+    title = "Speeches by the Same Country Are Far More Similar Than Those Across Countries",
+    x = "Same country",
+    y = "Cosine similarity"
+  ) +
+  theme_minimal()
+
+```
+
+The box plot shows a pronounced difference in cosine similarity between speech pairs from the **same country** and those from **different countries**. Speeches delivered by the **same country** exhibit substantially **higher similarity**, with a median similarity of **0.21** compared to approximately **0.048** for cross-country pairs. It is important to note, however, that same-country pairs constitute a relatively small fraction of all document pairs in the sampled corpus (**676** out of **124,750**). 
+
+
+```{r warning=FALSE, message=FALSE}
+sim_df %>%
+  group_by(same_year) %>%
+  summarise(
+    avg_similarity = mean(similarity),
+    median_similarity = median(similarity)
+  )
+
+sim_df %>%
+  count(same_year)
+
+ggplot(sim_df, aes(x = same_year, y = similarity)) +
+  geom_boxplot(fill = "#DD8452") +
+  labs(
+    title = "Speeches Delivered in the Same Year Are More Similar Than Those from Different Years",
+    x = "Same year",
+    y = "Cosine similarity"
+  ) +
+  theme_minimal()
+```
+
+The box plot compares cosine similarity scores for speech pairs delivered in the **same year** versus **different years**. Speeches from the same year exhibit higher similarity on average and in the median (median = **0.073**) than speeches from different years (median = **0.048**). However, it is again worth noting that same-year pairs account for only **1,795** out of **124,750** document pairs in the sampled corpus. 
+
+
+```{r warning=FALSE, message=FALSE}
+top_pair <- top_similar %>%
+  slice(1) %>%
+  select(doc1, doc2)
+
+top_pair
+```
+
+```{r warning=FALSE, message=FALSE}
+dfm_pair <- dfm_tfidf[c(top_pair$doc1, top_pair$doc2), ]
+dfm_pair
+```
+
+```{r warning=FALSE, message=FALSE}
+pair_tidy <- tidy(dfm_pair)
+
+common_terms <- pair_tidy %>%
+  group_by(term) %>%
+  filter(n() == 2) %>%       
+  summarise(
+    avg_tfidf = mean(count),
+    .groups = "drop"
+  ) %>%
+  arrange(desc(avg_tfidf)) %>%
+  slice_head(n = 10)
+
+common_terms
+```
+
+Examining the most similar document pair reveals that high cosine similarity is driven not by generic diplomatic language, but by the repeated use of highly **specific**, **country-related terms**. Shared high-weight TF–IDF terms include country identifiers (**burkina**, **faso**), domestic references (**ouagadougou**, **blaise**), and stable diplomatic alignments (**china**, **taiwan**). This suggests that similarity in UN General Debate speeches reflects continuity in national self-representation and foreign policy positioning across years.
+
+## Detecting Anomalous Speeches
+
+```{r warning=FALSE, message=FALSE}
+length_stats <- doc_stats_country %>%
+  mutate(
+    z_tokens = (tokens - mean(tokens)) / sd(tokens)
+  )
+
+structural_anomalies <- length_stats %>%
+  arrange(desc(abs(z_tokens))) %>%   
+  slice_head(n = 10) %>%
+  select(
+    document, country, year,
+    tokens, z_tokens, types, sentences, ttr
+  )
+
+structural_anomalies
+```
+
+The table lists the ten most extreme structural anomalies, defined solely by **speech length**. All selected speeches have exceptionally high positive z-scores, indicating that they are far longer than the corpus average. These anomalies are concentrated in the **1950s** and **early 1960s**, particularly among speeches by **India**, **the Soviet Union**, and **Cuba**, which aligns with the peak in average document length observed around **1960** in the exploratory analysis.
+
+
+```{r warning=FALSE, message=FALSE}
+country_counts <- doc_meta %>%
+  count(country, name = "n_country_docs")
+
+year_counts <- doc_meta %>%
+  count(year, name = "n_year_docs")
+
+avg_similarity_by_doc <- sim_df %>%
+  pivot_longer(
+    cols = c(doc1, doc2),
+    names_to = "role",
+    values_to = "document"
+  ) %>%
+  group_by(document) %>%
+  summarise(
+    avg_similarity = mean(similarity),
+    .groups = "drop"
+  ) %>%
+  left_join(doc_meta, by = "document")
+
+semantic_isolation_anomalies <- avg_similarity_by_doc %>%
+  arrange(avg_similarity) %>%
+  slice_head(n = 10) %>%
+  left_join(country_counts, by = "country") %>%
+  left_join(year_counts, by = "year")
+
+semantic_isolation_anomalies
+```
+
+Although these speeches exhibit very low average similarity, the contextual counts indicate that several cases are based on sparse within-country comparisons. In particular, many anomalies come from countries with **only one** or **two** sampled speeches, suggesting that **semantic isolation** partly reflects **limited national context** rather than purely idiosyncratic content. For this reason, these cases are interpreted as candidate semantic anomalies, with conclusions conditioned on sampling coverage.
+
+
+```{r warning=FALSE, message=FALSE}
+ggplot(avg_similarity_by_doc, aes(x = avg_similarity)) +
+  geom_histogram(bins = 50, fill = "#4C72B0", alpha = 0.8) +
+  labs(
+    title = "Most Speeches Exhibit Moderate Similarity, with a Small Set of Semantically Isolated Outliers",
+    x = "Average cosine similarity to other speeches",
+    y = "Number of speeches"
+  ) +
+  theme_minimal()
+```
+
+The distribution of average cosine similarity is broadly unimodal, with most speeches concentrated around intermediate similarity values, but with noticeable local variation across the range. A small left tail of observations exhibits notably low average similarity, indicating semantic isolation relative to the rest of the corpus.
+
+```{r warning=FALSE, message=FALSE}
+country_context_similarity <- sim_df %>%
+  filter(same_country) %>%
+  pivot_longer(
+    cols = c(doc1, doc2),
+    names_to = "role",
+    values_to = "document"
+  ) %>%
+  group_by(document) %>%
+  summarise(
+    avg_similarity_country = mean(similarity),
+    .groups = "drop"
+  ) %>%
+  left_join(doc_meta, by = "document")
+
+country_context_anomalies <- country_context_similarity %>%
+  arrange(avg_similarity_country) %>%
+  slice_head(n = 10)
+
+country_context_anomalies
+```
+
+
+This table identifies speeches that are unusual relative to their own country’s **typical discourse**, as indicated by low average cosine similarity to other speeches from the same country. In several cases, multiple speeches from the same country share identical scores, reflecting the small number of within-country comparisons available in the random subsample. For example, the two Slovak speeches ranked highest appear isolated because only two Slovak speeches were sampled, and their low similarity reflects divergence between those two texts. These cases are therefore treated as candidate within-country anomalies and interpreted with caution.
+
+
+::: callout-note
+## Country-focused Anomaly Analysis
+
+A more robust way to assess within-country anomalies would be to restrict the analysis to a single country with sufficient temporal coverage and examine deviations relative to that country’s own historical discourse. The present analysis instead relies on a random subsample of speeches, which allows broad comparison across countries but limits the reliability of within-country similarity measures. 
+
+:::
+
+
+```{r warning=FALSE, message=FALSE}
+ggplot(country_context_similarity, aes(x = avg_similarity_country)) +
+  geom_histogram(bins = 40, fill = "#55A868", alpha = 0.8) +
+  labs(
+    title = "Most Speeches Cluster Around Moderate Within-Country Similarity, with Deviations at Both Extremes",
+    x = "Average similarity within same country",
+    y = "Number of speeches"
+  ) +
+  theme_minimal()
+```
+
+Most speeches exhibit moderate within-country similarity, while a smaller number show either very low or very high values. Low-similarity cases indicate potential deviations from a country’s usual discourse, whereas high-similarity cases reflect strong rhetorical continuity. These patterns highlight meaningful within-country variation, though estimates remain sensitive to sample size.
+
+```{r warning=FALSE, message=FALSE}
+year_context_similarity <- sim_df %>%
+  filter(same_year) %>%
+  pivot_longer(
+    cols = c(doc1, doc2),
+    names_to = "role",
+    values_to = "document"
+  ) %>%
+  group_by(document) %>%
+  summarise(
+    avg_similarity_year = mean(similarity),
+    .groups = "drop"
+  ) %>%
+  left_join(doc_meta, by = "document")
+
+year_context_anomalies <- year_context_similarity %>%
+  arrange(avg_similarity_year) %>%
+  slice_head(n = 10) %>%
+  left_join(
+    length_stats %>% 
+      select(document, tokens, z_tokens),
+    by = "document"
+  ) %>%
+  select(
+    document, country, year,
+    avg_similarity_year,
+    tokens, z_tokens
+  )
+
+year_context_anomalies
+
+```
+
+These speeches exhibit unusually low similarity to other speeches delivered in the **same year**, indicating potential deviations from contemporaneous diplomatic discourse. Importantly, their relatively moderate or short lengths suggest that this pattern is not driven by structural verbosity. The partial **overlap** with global semantic anomalies points to robust year-specific outliers, although interpretation should remain cautious given variation in annual sample sizes.
+
+```{r warning=FALSE, message=FALSE}
+ggplot(year_context_similarity, aes(x = avg_similarity_year)) +
+  geom_histogram(bins = 40, fill = "#DD8452", alpha = 0.8) +
+  labs(
+    title = "Within-Year Similarity Shows Wide Dispersion, with a Clear Lower Tail",
+    x = "Average similarity within same year",
+    y = "Number of speeches"
+  ) +
+  theme_minimal()
+```
+
+The distribution shows substantial dispersion in within-year similarity, indicating that speeches delivered in the same year vary widely in their semantic alignment. While most speeches cluster at moderate similarity levels, a clear lower tail is present, providing a natural basis for identifying year-specific contextual anomalies.
+
+```{r warning=FALSE, message=FALSE}
+anomaly_matrix <- tibble(
+  document = unique(c(
+    structural_anomalies$document,
+    semantic_isolation_anomalies$document,
+    country_context_anomalies$document,
+    year_context_anomalies$document
+  ))
+) %>%
+  mutate(
+    structural = document %in% structural_anomalies$document,
+    semantic   = document %in% semantic_isolation_anomalies$document,
+    country_ct = document %in% country_context_anomalies$document,
+    year_ct    = document %in% year_context_anomalies$document
+  )
+
+anomaly_matrix_long <- anomaly_matrix %>%
+  pivot_longer(
+    cols = -document,
+    names_to = "type",
+    values_to = "flag"
+  )
+
+ggplot(anomaly_matrix_long,
+       aes(x = type, y = document, fill = flag)) +
+  geom_tile(color = "white") +
+  scale_fill_manual(
+    values = c("TRUE" = "#D55E00", "FALSE" = "grey90"),
+    name = "Anomaly"
+  ) +
+  labs(
+    title = "Limited Overlap Across Different Types of Anomalies",
+    x = "Anomaly type",
+    y = "Document"
+  ) +
+  theme_minimal() +
+  theme(
+    axis.text.y = element_blank(),
+    axis.ticks.y = element_blank()
+  )
+
+```
+ 
+This figure summarises the **overlap** between different types of anomalies at the document level. Most speeches are flagged as anomalous under only **one** criterion, indicating that structural, semantic, and contextual anomalies capture largely **distinct** dimensions of deviation. This supports the analytical separation of anomaly types adopted in this section.
+
+
+## Discussion
+
+Part A used **similarity** and **anomaly** perspectives to characterise both typical and exceptional patterns in UN General Debate speeches. Rather than treating these as separate exercises, the analysis shows that each perspective captures a distinct but complementary dimension of diplomatic discourse.
+
+**Similarity analysis** reveals that national continuity is the primary source of textual alignment. Speeches by the same country remain lexically close across years, indicating stable rhetorical identities that outweigh shared temporal context. High similarity is driven by repeated, country-specific and policy-relevant language rather than generic diplomatic formulas.
+
+By contrast, **anomaly detection** highlights moments of deviation that are not visible from similarity alone. Structural anomalies reflect historically specific periods of heightened verbosity, while semantic and contextual anomalies capture speeches that diverge from contemporaneous or national discourse despite being structurally typical. The limited overlap between anomaly types demonstrates that deviation is multidimensional.
+
+Taken together, these findings suggest that UN General Debate discourse is simultaneously conservative and adaptive. National rhetorical styles exhibit strong continuity, yet departures emerge along multiple dimensions depending on historical context and reference frame. This underscores the value of combining similarity-based and anomaly-based approaches.
+
+# Part B: How Have the Dominant Thematic Frames of the UN General Debate Evolved Over Time?
+
+## Research Question and Motivation
+The UN General Debate provides a record of how states publicly frame global issues in a multilateral forum. Since each speech reflects national priorities, taken together, they reveal how the **international agenda** has evolved over time.
+
+This study asks: 
+
+> *How have the dominant thematic frames of UN General Debate speeches changed across decades, and to what extent do these shifts differ across countries?* 
+
+
+The focus is on long-run patterns in **thematic composition**. To address this question, the analysis relies on **unsupervised learning** methods that allow thematic structures to emerge inductively from the data.
+
+
+:::callout-note
+
+## Why Unsupervised Learning
+
+*Supervised learning* would require historically stable labels for speech themes, which are unavailable for UN General Debate speeches spanning nearly eight decades and would risk anachronistic interpretations. *Unsupervised learning* instead allows **latent thematic structure** to emerge from word co-occurrence patterns, enabling analysis of long-run changes in the semantic organisation of multilateral discourse.
+
+:::
+
+
+## Sampling Strategy
+
+```{r warning=FALSE, message=FALSE}
+set.seed(456)
+
+speech_sample <- speech_df %>%
+  mutate(decade = floor(year / 10) * 10) %>%
+  group_by(decade) %>%
+  sample_n(
+    size = min(200, n()),  
+    replace = FALSE
+  ) %>%
+  ungroup()
+
+corp_rq <- corpus(speech_sample, text_field = "text")
+
+docvars(corp_rq, "year")    <- speech_sample$year
+docvars(corp_rq, "country") <- speech_sample$country
+
+speech_sample %>%
+  summarise(
+    n_docs = n(),
+    min_year = min(year),
+    max_year = max(year),
+    n_decades = n_distinct(decade)
+  )
+```
+
+To ensure balanced temporal coverage, speeches were randomly sampled at the **decade level**, with up to **200** speeches drawn from each decade. The resulting corpus consists of **1,752** speeches spanning nine decades from 1946 to 2024, providing a **temporally balanced** subset for the subsequent research question analysis.
+
+## Topic Modeling 
+
+```{r warning=FALSE, message=FALSE}
+toks_rq <- tokens(
+  corp_rq,
+  remove_punct   = TRUE,
+  remove_numbers = TRUE
+) %>%
+  tokens_tolower() %>%
+  tokens_remove(stopwords("en"))
+
+dfm_rq <- dfm(toks_rq)
+
+dfm_rq <- dfm_trim(
+  dfm_rq,
+  min_termfreq = 20,
+  max_docfreq  = 0.5,
+  docfreq_type = "prop"
+)
+
+dfm_rq
+```
+
+The document–feature matrix contains **1,752** documents and **8,878** unique terms, with a sparsity of approximately **93%**. Prior to topic modeling, the feature space was reduced by trimming extremely rare terms (appearing fewer than **20 times** in the corpus) and highly ubiquitous terms (appearing in more than **50%** of documents). This step helps remove idiosyncratic noise and near-stopwords.
+
+
+```{r warning=FALSE, message=FALSE}
+dtm_rq <- convert(dfm_rq, to = "topicmodels")
+
+set.seed(789)
+
+lda_rq <- LDA(
+  dtm_rq,
+  k = 8,
+  method = "Gibbs",
+  control = list(
+    seed   = 789,
+    burnin = 100,
+    iter   = 500,
+    thin   = 20
+  )
+)
+```
+
+```{r warning=FALSE, message=FALSE}
+top_terms <- terms(lda_rq, 10)
+top_terms
+```
+
+
+Table: **Dominant Thematic Frames Identified in UN General Debate Speeches**
+
+| Topic | Interpreted Theme | Representative Top Terms |
+|------:|------------------|--------------------------|
+| 1 | Democracy and Regional Solidarity | america, american, democracy, latin, solidarity |
+| 2 | Multilateral Institutions and Procedures | co-operation, committee, commission, veto, permanent |
+| 3 | African Decolonisation and Apartheid | african, namibia, apartheid, liberation, colonial |
+| 4 | Middle East Conflict | arab, israel, palestine, palestinian, refugees |
+| 5 | Climate Change and Sustainable Development | climate, sustainable, poverty, health, reform |
+| 6 | Arms Control and Conflict Resolution | arms, treaty, settlement, aggression, cyprus |
+| 7 | Legal and Environmental Governance | treaty, convention, dialogue, environment, comprehensive |
+| 8 | Cold War and Great Power Rivalry | soviet, union, china, europe, armaments |
+
+The table summarises the eight latent topics identified using **Latent Dirichlet Allocation (LDA)** applied to the decade-stratified subsample of UN General Debate speeches. Topics were estimated using **Gibbs sampling**, with the number of topics fixed at **k = 8**. For each topic, the interpretation is based on the top ten highest-probability terms. These word clusters capture coherent thematic frames such as *Cold War rivalry*, *decolonisation*, *Middle East conflict*, and *climate governance*.
+
+::: callout-note
+## Why LDA
+
+LDA was selected over hard clustering methods because it models documents as probabilistic mixtures. This fits diplomatic speeches well, as they typically address multiple overlapping themes simultaneously.
+
+:::
+
+
+```{r warning=FALSE, message=FALSE}
+theta_mat <- posterior(lda_rq)$topics
+
+theta_rq <- as_tibble(theta_mat) %>%
+  mutate(
+    year   = docvars(corp_rq, "year"),
+    decade = floor(year / 10) * 10
+  )
+
+head(theta_rq)
+```
+
+The `head()` output reports the document–topic distributions inferred by the LDA model. Each row corresponds to a single General Debate speech, and each of the eight numeric columns represents the **posterior** probability that the speech is generated from a given topic(sum to one within each document). The variables `year` and `decade` are added to facilitate analysis of **temporal variation** in topic prevalence in subsequent analyses.
+
+```{r warning=FALSE, message=FALSE}
+theta_only <- as_tibble(theta_mat) 
+
+pca_theta <- prcomp(
+  theta_only,
+  center = TRUE,
+  scale. = TRUE
+)
+
+pca_df <- as_tibble(pca_theta$x) %>%
+  mutate(
+    year   = theta_rq$year,
+    decade = theta_rq$decade
+  )
+
+head(pca_df)
+```
+
+**Principal Component Analysis (PCA)** was applied to document-level topic proportion vectors to summarise the main axes of variation in relative thematic composition across speeches, providing a low-dimensional representation.
+
+
+```{r warning=FALSE, message=FALSE}
+scree_df <- tibble(
+  PC = seq_along(pca_theta$sdev),
+  variance = (pca_theta$sdev^2) / sum(pca_theta$sdev^2)
+)
+
+ggplot(scree_df, aes(x = PC, y = variance)) +
+  geom_line() +
+  geom_point() +
+  labs(
+    title = "Variance Concentrated in the First Two Principal Components",
+    x = "Principal Component",
+    y = "Proportion of Variance Explained"
+  ) +
+  theme_minimal()
+```
+
+```{r warning=FALSE, message=FALSE}
+summary(pca_theta)
+```
+
+The first two principal components jointly account for approximately **43%** of the total variance, capturing the dominant dimensions of thematic variation across speeches. For this reason, subsequent visualisations and analyses focus primarily on **PC1** and **PC2**.
+
+```{r warning=FALSE, message=FALSE}
+pca_loadings <- as_tibble(
+  pca_theta$rotation,
+  rownames = "topic"
+) %>%
+  select(topic, PC1, PC2)
+
+pca_loadings
+```
+
+```{r warning=FALSE, message=FALSE}
+pca_loadings %>%
+  select(topic, PC1, PC2) %>%
+  pivot_longer(
+    cols = starts_with("PC"),
+    names_to = "PC",
+    values_to = "loading"
+  ) %>%
+  ggplot(aes(x = topic, y = loading, fill = loading > 0)) +
+  geom_col(show.legend = FALSE) +
+  coord_flip() +
+  facet_wrap(~ PC, scales = "free_x") +
+  labs(
+    title = "Thematic Dimensions of UN Discourse: Governance vs Security and Geopolitical Conflict",
+    x = "Topic",
+    y = "Loading"
+  ) +
+  theme_minimal()
+```
+
+The PCA loadings show that **PC1** contrasts **governance** and **sustainability** themes (Topics 5 and 7) with **institution** and **security** focused discourse (Topics 2 and 6), while **PC2** reflects region specific **geopolitical issues**, notably African decolonisation and the Middle East conflict (Topics 3 and 4). Together, these components define an interpretable low dimensional space.
+
+
+## Temporal Evolution of Dominant Topics
+
+```{r warning=FALSE, message=FALSE}
+topic_by_decade <- theta_rq %>%
+  pivot_longer(
+    cols = `1`:`8`,
+    names_to = "topic",
+    values_to = "prob"
+  ) %>%
+  group_by(decade, topic) %>%
+  summarise(
+    avg_prob = mean(prob),
+    .groups = "drop"
+  )
+
+head(topic_by_decade)
+```
+
+These values represent the **mean topic prevalence** for **each decade**, computed by averaging posterior topic probabilities across documents. This aggregation allows systematic comparison of the relative prominence of thematic frames over time.
+
+```{r warning=FALSE, message=FALSE}
+ggplot(pca_df, aes(x = PC1, y = PC2, color = factor(decade))) +
+  geom_point(alpha = 0.6, size = 1.5) +
+  labs(
+    title = "Long-Run Reconfiguration of UN Discourse in Thematic Space",
+    x = "Principal Component 1",
+    y = "Principal Component 2",
+    color = "Decade"
+  ) +
+  theme_minimal()
+```
+
+This figure plots individual speeches in the two-dimensional PCA space, with colours indicating decades. Speeches from the same decade tend to cluster in similar regions of the PCA space, indicating that each period is characterised by a broadly shared thematic profile.
+
+```{r warning=FALSE, message=FALSE}
+pca_decade <- pca_df %>%
+  group_by(decade) %>%
+  summarise(
+    PC1 = mean(PC1),
+    PC2 = mean(PC2),
+    .groups = "drop"
+  )
+
+ggplot(pca_decade, aes(x = PC1, y = PC2, label = decade)) +
+  geom_point(size = 4, color = "steelblue") +
+  geom_path(group = 1, color = "grey70") +
+  geom_text(vjust = -0.8) +
+  labs(
+    title = "Decade-level Thematic Shifts in PCA Space",
+    x = "Principal Component 1",
+    y = "Principal Component 2"
+  ) +
+  theme_minimal()
+```
+
+The **decade-level averages** trace a clear temporal trajectory in the PCA space. 
+
+Along **PC1**, decades move steadily from lower to higher values over time, reflecting a long-run shift from early postwar concerns with multilateral institutions and Cold War rivalry toward development, governance, and sustainability.
+
+**PC2** rises from the 1940s and peaks in the 1970s and 1980s, reflecting the prominence of decolonisation, regional conflicts, and legal and normative agendas, before declining from the 1990s onward as these themes become less salient relative to other global priorities.　
+
+
+
+```{r warning=FALSE, message=FALSE}
+ggplot(topic_by_decade,
+       aes(x = decade, y = avg_prob, color = topic)) +
+  geom_line(linewidth = 1) +
+  geom_point(size = 2) +
+  labs(
+    title = "Decade-level Evolution of Topic Prevalence",
+    x = "Decade",
+    y = "Average Topic Proportion",
+    color = "Topic"
+  ) +
+  theme_minimal()
+```
+
+This figure highlights clear differences in the temporal dynamics of individual topics. 
+
+Climate Change and Sustainable Development (**Topic 5**) shows a largely monotonic increase, indicating a sustained and growing salience of environmental and development concerns over time. In contrast, Multilateral Institutions and Procedures (**Topic 2**) exhibits a steady decline, suggesting a gradual reduction in emphasis on institutional and procedural discourse such as committees, commissions, and veto politics.
+
+African Decolonisation and Apartheid (**Topic 3**) follows a distinct mid-period trajectory, rising sharply and peaking around the 1970s before declining thereafter. By comparison, Democracy and Regional Solidarity (**Topic 1**) remains relatively stable across decades, showing less pronounced variation than other thematic frames.
+
+Notably, these topic-level trends are consistent with the patterns observed in the PCA-based figures above.
+
+
+## Clustering Country–Decade Thematic Profiles
+
+```{r warning=FALSE, message=FALSE}
+topic_country_decade <- theta_rq %>%
+  mutate(country = docvars(corp_rq, "country")) %>%
+  pivot_longer(
+    cols = `1`:`8`,
+    names_to = "topic",
+    values_to = "prob"
+  ) %>%
+  group_by(country, decade, topic) %>%
+  summarise(
+    avg_prob = mean(prob),
+    .groups = "drop"
+  )
+
+head(topic_country_decade, 8)
+```
+
+This table reports average topic proportions by **country–decade**, summarising each country’s typical thematic profile in a given period.
+
+```{r warning=FALSE, message=FALSE}
+country_decade_mat <- topic_country_decade %>%
+  pivot_wider(
+    names_from  = topic,
+    values_from = avg_prob
+  ) %>%
+  drop_na() %>%                 
+  arrange(decade, country) %>%
+  unite("unit", country, decade, sep = "_") %>%
+  column_to_rownames("unit")
+
+dim(country_decade_mat)
+head(country_decade_mat)
+```
+
+The country–decade matrix was constructed by reshaping the aggregated data into a **wide format**, where each row corresponds to a unique country–decade unit and each column represents the average prevalence of a topic. This step converts document-level topic information into a structured feature matrix suitable for subsequent dimensionality reduction and clustering analyses.
+
+
+```{r warning=FALSE, message=FALSE}
+pca_cd <- prcomp(
+  country_decade_mat,
+  center = TRUE,
+  scale. = TRUE
+)
+
+summary(pca_cd)
+```
+
+```{r warning=FALSE, message=FALSE}
+scree_cd <- tibble(
+  PC = seq_along(pca_cd$sdev),
+  variance = (pca_cd$sdev^2) / sum(pca_cd$sdev^2)
+)
+
+ggplot(scree_cd, aes(x = PC, y = variance)) +
+  geom_line() +
+  geom_point() +
+  labs(
+    title = "Scree Plot of PCA on Country–Decade Topic Profiles",
+    x = "Principal Component",
+    y = "Proportion of Variance Explained"
+  ) +
+  theme_minimal()
+```
+
+The scree plot indicates that the first two principal components together explain around **44%** of the total variance. Subsequent components contribute progressively smaller increments, with no clear additional elbow beyond PC2. Focusing on **PC1** and **PC2** in the subsequent clustering and visual analyses is therefore well justified.
+
+
+::: callout-note
+
+## Similarity Across PCA Analyses
+
+Compared with the PCA applied to document-level topic proportions, the scree plot for country–decade profiles exhibits an almost identical shape. This suggests that the dominant structure of thematic variation is robust and remains stable across different levels of aggregation.
+
+:::
+
+
+
+```{r warning=FALSE, message=FALSE}
+pca_cd_df <- as_tibble(pca_cd$x[, 1:2], rownames = "unit") %>%
+  separate(unit, into = c("country", "decade"), sep = "_") %>%
+  mutate(decade = as.integer(decade))
+
+head(pca_cd_df)
+```
+
+Each country–decade unit is represented by its coordinates on **PC1** and **PC2**. This table reports these PC1 and PC2 scores, linking each thematic position in the reduced space to a specific country and decade.
+
+
+```{r warning=FALSE, message=FALSE}
+dist_cd <- dist(pca_cd_df %>% select(PC1, PC2), method = "euclidean")
+hc_cd <- hclust(dist_cd, method = "ward.D2")
+```
+
+```{r warning=FALSE, message=FALSE}
+pca_cd_df$cluster <- factor(cutree(hc_cd, k = 4))
+table(pca_cd_df$cluster, pca_cd_df$decade)
+```
+
+**Hierarchical clustering** based on the first two PCA dimensions yields four clusters of country–decade thematic profiles. Early decades are mainly associated with Clusters 1 and 3, while later decades shift toward Clusters 2 and 4. Although this pattern is strongly structured by time, some countries fall into different clusters than others in the same decade, indicating meaningful cross-national variation alongside the dominant temporal trend.
+
+:::callout-note
+
+## Why Hierarchical Clustering
+
+Hierarchical clustering was chosen to determine the cluster count (k) inductively from the dendrogram, rather than fixing it beforehand. 
+
+:::
+
+
+```{r warning=FALSE, message=FALSE}
+pca_cd_df <- pca_cd_df %>%
+  mutate(
+    hover_text = paste0(
+      "Country: ", country,
+      "<br>Decade: ", decade
+    )
+  )
+
+p <- ggplot(
+  pca_cd_df,
+  aes(
+    x = PC1,
+    y = PC2,
+    color = cluster,
+    text = hover_text
+  )
+) +
+  geom_point(size = 2, alpha = 0.8) +
+  labs(
+    title = "Country–Decade Thematic Clusters in PCA Space",
+    x = "Principal Component 1",
+    y = "Principal Component 2",
+    color = "Cluster"
+  ) +
+  theme_minimal()
+
+
+ggplotly(p, tooltip = "text")
+```
+
+This interactive PCA plot visualises country–decade thematic profiles, with points coloured by hierarchical cluster membership. The clusters form clearly separated regions in the low-dimensional space, indicating distinct combinations of dominant themes across country–decade units.
+
+At the same time, the interactive view reveals a small number of atypical cases within each cluster. For example, **ISR (2010)** in Cluster 1, **DNK (1940)** in Cluster 2, and **COL (1960)** in Cluster 4 appear temporally distant from most other members of their respective clusters. These observations, suggest that individual countries can exhibit decade-specific thematic profiles that diverge from the dominant temporal pattern.
+
+
+```{r warning=FALSE, message=FALSE}
+cluster_summary <- pca_cd_df %>%
+  group_by(cluster) %>%
+  summarise(
+    n_units = n(),
+    mean_PC1 = mean(PC1),
+    mean_PC2 = mean(PC2),
+    decades  = paste(sort(unique(decade)), collapse = ", ")
+  )
+
+cluster_summary
+```
+
+This summary characterises each cluster by its size and its average position in the PCA space. Clusters differ clearly in their mean PC1 and PC2 scores, indicating distinct thematic orientations, while all clusters span multiple decades rather than being confined to a single period. This reinforces the interpretation that clustering captures recurring thematic configurations that cut across time, even though their prevalence shifts across decades.
+
+
+```{r warning=FALSE, message=FALSE}
+pca_cd_df <- as_tibble(pca_cd$x[, 1:2], rownames = "unit") %>%
+  mutate(cluster = factor(cutree(hc_cd, k = 4)))
+
+country_decade_with_cluster <- country_decade_mat %>%
+  as_tibble(rownames = "unit") %>%
+  left_join(
+    pca_cd_df %>% select(unit, cluster),
+    by = "unit"
+  )
+
+
+cluster_topic_profiles <- country_decade_with_cluster %>%
+  group_by(cluster) %>%
+  summarise(across(`1`:`8`, mean))
+
+cluster_topic_profiles
+
+```
+
+
+This table reports the average topic composition within each cluster, obtained by averaging country–decade topic proportions across all units assigned to the same cluster. The clusters exhibit clear thematic profiles. **Cluster 1** emphasises multilateral institutions and security-related discourse, **Cluster 2** governance and legal–environmental themes, **Cluster 3** decolonisation and regional conflict, and **Cluster 4** climate change and sustainable development. 
+
+While clusters are broadly aligned with temporal shifts, notable exceptions highlight meaningful country-specific patterns. For example, **ISR in 2010** remains focused on institution and security relative to other countries in the same decade, reflecting persistent geopolitical constraints, whereas **DNK in the 1940s** already aligns with governance-oriented themes, consistent with a long-standing normative diplomatic tradition. These cases suggest that the clusters capture not only global temporal change but also enduring national orientations that shape how countries engage with evolving international agendas.
+
+
+## Limitations and Ethical Considerations
+
+The findings presented here should be interpreted in light of several **methodological** and **ethical constraints** inherent in the analytical design.
+
+From a **methodological** standpoint, the decade-level sampling and aggregation strategy necessarily smooths over within-decade variation and may obscure short-term rhetorical shifts linked to specific geopolitical events. Topic modeling outcomes are also sensitive to preprocessing decisions and to the number of topics specified, meaning that alternative specifications could yield somewhat different thematic delineations. Moreover, aggregation at the country–decade level abstracts from leadership turnover and internal political change, so the analysis captures dominant discursive orientations rather than the full heterogeneity of national speechmaking.
+
+**Ethical** and interpretive considerations call for caution. Because topic modeling and clustering are inductive, topic labels and cluster interpretations necessarily reflect researcher judgment and should not be read as fixed national characteristics. The analysis is therefore descriptive rather than evaluative. More broadly, clustering functions as a heuristic tool, and uncritical interpretation risks reinforcing essentialised or stereotypical readings of national discourse, underscoring the need for careful contextualisation.
+
+
+## Conclusion: Long-Run Thematic Shifts and Cross-National Variation in UN Discourse
+
+This study examined how the thematic composition of UN General Debate speeches has evolved over time and how these changes vary across countries. Using unsupervised learning methods, the analysis combined topic modeling, dimensionality reduction, and clustering to trace long-run patterns in multilateral discourse while accounting for cross-national heterogeneity.
+
+The results point to a clear reorientation of the international agenda. Early decades are dominated by multilateral institutions, Cold War rivalry, and security concerns, whereas later periods increasingly foreground development, governance, and sustainability. PCA-based analyses show that this shift follows a gradual and cumulative trajectory rather than abrupt breaks, with mid-period peaks reflecting the salience of decolonisation and regional conflict.
+
+At the same time, the country–decade analysis demonstrates that states do not move uniformly through thematic space. While temporal dynamics structure the overall pattern, hierarchical clustering reveals recurring thematic configurations and notable country-specific deviations. These findings suggest that enduring national orientations and geopolitical constraints mediate how countries engage with evolving global priorities.
+
+Taken together, the analysis shows that changes in UN General Debate discourse reflect both systemic temporal shifts and persistent cross-national differences. Unsupervised learning provides a coherent framework for capturing this dual structure, offering insight into how the international agenda evolves while remaining unevenly articulated across states.
+
+# Use of AI Tools
+
+ChatGPT was used to clarify methodological concepts discussed in the course and to assist with minor coding issues.
+
