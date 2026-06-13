@@ -1,126 +1,132 @@
-/* css styles */
-/* 青みのあるクールグレーから白へ */
+/* ==========================================================================
+   1. 全体の背景設定（サイバーブルー背景 ＆ 優雅なフェードイン）
+   ========================================================================== */
+@keyframes zoomOutFade {
+  0% {
+    opacity: 0;
+    transform: scale(1.02);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
 
 body {
-  /* 柔らかい砂浜のような、洗練されたグレージュの階調 */
-  background: #e4e9f2;
+  background-image: url('bg-cyber.jpg');
+  background-size: cover;
+  background-position: center center;
   background-attachment: fixed;
-  color: #2c3e50; /* 文字色も少し濃い紺色にすると締まります */
+  background-repeat: no-repeat;
+  color: #2c3e50;
   min-height: 100vh;
   animation: zoomOutFade 1.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* カードの背景は真っ白にして浮き立たせる */
+/* ==========================================================================
+   2. レイアウト・コンテナの調整（読みやすさのための白抜き化）
+   ========================================================================== */
+.navbar {
+  background-color: rgba(255, 255, 255, 0.95) !important;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+#quarto-content, 
+.quarto-container,
+.about-links {
+  background-color: rgba(255, 255, 255, 0.93) !important;
+  border-radius: 16px !important;
+  padding: 35px !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25) !important;
+  margin-top: 30px !important;
+  margin-bottom: 30px !important;
+}
+
+#quarto-margin-sidebar {
+  background: transparent !important;
+}
+
+/* ==========================================================================
+   3. 各種パーツのデザイン（プロジェクトカード・ボタン・バッジ）
+   ========================================================================== */
+/* プロジェクト一覧のカードホバー効果 */
 .quarto-grid-item {
   background-color: #ffffff;
   border: 1px solid #e5e5e5;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.05); /* ほんのり影をつける */
-}
-
-/* styles.css に追記 */
-
-/* 変化をなめらかにする設定 */
-.quarto-grid-item {
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-
-/* マウスが乗ったとき（Hover）の動き */
 .quarto-grid-item:hover {
-  transform: translateY(-5px); /* 上に5ピクセル移動 */
-  box-shadow: 0 10px 20px rgba(0,0,0,0.15); /* 影を落として浮遊感を出す */
-  border-color: #333; /* 枠線を少し濃くする */
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+  border-color: #333;
 }
 
-
-/* styles.css に追記 */
-
-/* わずかなズームアウト効果 */
-@keyframes zoomOutFade {
-  0% {
-    opacity: 0;
-    transform: scale(1.03); /* ほんの少し拡大した状態から */
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1); /* 定位置へ戻る */
-  }
-}
-
-body {
-  animation: zoomOutFade 1.2s cubic-bezier(0.16, 1, 0.3, 1); /* ゆっくり優雅に */
-}
-
-/* ボタンのデザイン */
+/* 学術論文へのリンク等に使える汎用ボタン */
 .btn-link {
   display: inline-block;
   padding: 8px 16px;
   margin-right: 10px;
   margin-bottom: 10px;
-  border: 1px solid #333; /* 細い黒枠 */
+  border: 1px solid #333;
   color: #333;
   text-decoration: none;
-  border-radius: 5px; /* 角を少し丸める */
+  border-radius: 5px;
   transition: all 0.3s ease;
   font-weight: 500;
   background-color: transparent;
 }
 
 .btn-link:hover {
-  background-color: #333; /* ホバーすると黒くなる */
+  background-color: #333;
   color: #fff;
   text-decoration: none;
 }
 
-
-
+/* 使用した技術（R, Python, SQL等）を示すバッジ */
 .tech-badge {
   display: inline-block;
   padding: 4px 12px;
   margin-right: 6px;
   margin-bottom: 6px;
-  background-color: #333333; /* 真っ黒ではなく濃いグレー */
-  color: #ffffff;            /* 白文字 */
-  border-radius: 50px;       /* 完全な丸（ピル型） */
+  background-color: #333333;
+  color: #ffffff;
+  border-radius: 50px;
   font-size: 0.75em;
-  letter-spacing: 0.5px;     /* 文字間隔を少し空ける */
-  font-family: monospace;    /* コードっぽさを出す */
+  letter-spacing: 0.5px;
+  font-family: monospace;
   border: 1px solid #333;
 }
 
-/* --- Access the Files 用の特別なカードデザイン --- */
-
+/* ==========================================================================
+   4. 特殊レイアウト（ファイルカード ＆ 2列スマートリスト）
+   ========================================================================== */
 .file-card {
-  /* ベースはプロジェクトカード(quarto-grid-item)と同じ考え方 */
   background-color: #ffffff;
   border: 1px solid #e0e0e0;
-  border-radius: 8px; /* 角丸を少しだけ強める */
+  border-radius: 8px;
   padding: 20px;
   height: 100%;
   display: flex;
-  flex-direction: column; /* 中身を縦に積む */
+  flex-direction: column;
   justify-content: center;
-  align-items: flex-start; /* 左寄せ */
-  position: relative; /* リンクを広げるため */
-  
-  /* アニメーション設定 */
+  align-items: flex-start;
+  position: relative;
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
-/* ホバー時の動き（プロジェクト一覧とは少し違う動きに） */
 .file-card:hover {
-  transform: translateY(-4px); /* 少し浮く */
-  box-shadow: 0 8px 25px rgba(0,0,0,0.1); /* 影を柔らかく広く */
-  border-color: #333; /* 枠線を黒くして強調 */
-  background-color: #fafafa; /* ほんの少し背景をグレーに */
+  transform: translateY(-4px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+  border-color: #333;
+  background-color: #fafafa;
 }
 
-/* アイコンのデザイン */
 .file-card-icon {
   font-size: 1.8em;
   color: #555;
   margin-bottom: 12px;
-  /* アイコンに背景色をつけて丸くする（プロジェクト一覧との差別化ポイント） */
   background-color: #f5f5f5;
   width: 50px;
   height: 50px;
@@ -132,11 +138,10 @@ body {
 }
 
 .file-card:hover .file-card-icon {
-  background-color: #333; /* ホバー時にアイコン背景を黒に */
-  color: #fff; /* アイコンを白に */
+  background-color: #333;
+  color: #fff;
 }
 
-/* タイトルのデザイン */
 .file-card-title {
   font-weight: 700;
   font-size: 1.1em;
@@ -144,7 +149,6 @@ body {
   color: #333;
 }
 
-/* 説明文のデザイン */
 .file-card-desc {
   font-size: 0.9em;
   color: #666;
@@ -152,7 +156,6 @@ body {
   line-height: 1.4;
 }
 
-/* リンクをカード全体に広げるおまじない */
 .file-card a::after {
   content: "";
   position: absolute;
@@ -162,31 +165,30 @@ body {
   height: 100%;
 }
 
-/* --- スマートリストデザイン（コンパクト2列版） --- */
-
+/* 2列スマートリスト表示 */
 .file-list-group {
-  display: grid; /* フレックスからグリッドに変更 */
-  grid-template-columns: 1fr 1fr; /* 左右均等に分割 */
-  gap: 12px; /* カード間の隙間 */
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
   margin-top: 15px;
 }
 
 .file-list-item {
   display: flex;
   align-items: center;
-  padding: 10px 12px; /* パディングを少し狭く */
+  padding: 10px 12px;
   text-decoration: none;
   color: #333;
-  background-color: #fff; /* 背景を白に */
-  border: 1px solid #e0e0e0; /* 下線ではなく、枠線で囲む */
-  border-radius: 6px; /* 角丸をつける */
+  background-color: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
   transition: all 0.2s ease;
 }
 
 .file-list-item:hover {
-  border-color: #333; /* ホバー時に枠線を濃く */
+  border-color: #333;
   box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-  transform: translateY(-1px); /* ほんの少し浮く */
+  transform: translateY(-1px);
   text-decoration: none;
   color: #000;
 }
@@ -201,16 +203,16 @@ body {
 
 .file-list-content {
   flex-grow: 1;
-  overflow: hidden; /* はみ出し防止 */
+  overflow: hidden;
 }
 
 .file-list-title {
   font-weight: 600;
-  font-size: 0.95em; /* フォントをわずかに小さく */
+  font-size: 0.95em;
   display: block;
-  white-space: nowrap; /* タイトルを1行に収める */
+  white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis; /* 長すぎたら...にする */
+  text-overflow: ellipsis;
 }
 
 .file-list-desc {
@@ -232,54 +234,21 @@ body {
   color: #333;
 }
 
-/* スマホでは1列に戻す設定（レスポンシブ） */
 @media (max-width: 768px) {
   .file-list-group {
-    grid-template-columns: 1fr; /* 1列に戻す */
+    grid-template-columns: 1fr;
   }
 }
 
-/* --- 見出しデザイン（最強版） --- */
-/* あらゆるパターンのh2を指定して強制的に上書きします */
+/* ==========================================================================
+   5. アカデミック見出し（h2の左側に黒いアクセントラインを引く）
+   ========================================================================== */
 h2, .h2, h2.anchored, section h2, .level2 h2 {
   padding-left: 15px !important;          
   border-left: 5px solid #333 !important; 
-  border-bottom: none !important; /* 元の下線を消す */
+  border-bottom: none !important; 
   color: #2c3e50 !important;              
   margin-top: 50px !important;            
   margin-bottom: 20px !important;         
   font-weight: 700 !important;
-}
-
-
-/* 1. 画面全体にサイバーな壁紙を固定表示 */
-body {
-  background-image: url('bg-cyber.jpg');
-  background-size: cover;
-  background-position: center center;
-  background-attachment: fixed;
-  background-repeat: no-repeat;
-}
-
-/* 2. 上部のナビゲーションバーを白くして見やすくする */
-.navbar {
-  background-color: rgba(255, 255, 255, 0.95) !important;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
-
-/* 3. 中央のテキストエリアを美しい白抜きカードにして浮かび上がらせる */
-#quarto-content, 
-.quarto-container,
-.about-links {
-  background-color: rgba(255, 255, 255, 0.93) !important; /* 93%不透明の白 */
-  border-radius: 16px !important;                          /* 角を丸く */
-  padding: 35px !important;                                 /* 内側の余白 */
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25) !important;   /* 立体的な影 */
-  margin-top: 30px !important;
-  margin-bottom: 30px !important;
-}
-
-/* 4. フッター（SNSリンク部分）の背景調整 */
-#quarto-margin-sidebar {
-  background: transparent !important;
 }
