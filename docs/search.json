@@ -214,7 +214,42 @@
     "href": "resume.html",
     "title": "Resume",
     "section": "",
-    "text": "&lt;p&gt;\nYour browser does not support PDFs. &lt;a href=\"Resume.pdf\"&gt;Download the PDF&lt;/a&gt;.\n&lt;/p&gt;"
+    "text": "Bachelor of Science in Social Data Science | Expected: March 2027\nKey Coursework: Advanced Statistics, Econometrics, Data Structure and Algorithms, Machine Learning\nAcademic Performance: High GPA with consistent excellence in quantitative models\n\n\n\n\n\nGeneral Course (Study Abroad Program), Statistics | September 2025 – June 2026\nKey Coursework: Stochastic Processes, Linear Regression, Econometric Theory, Computational Statistics\nAcademic Rigor: Completed advanced, mathematically rigorous curriculums at a world-class institution"
+  },
+  {
+    "objectID": "resume.html#education",
+    "href": "resume.html#education",
+    "title": "Resume",
+    "section": "",
+    "text": "Bachelor of Science in Social Data Science | Expected: March 2027\nKey Coursework: Advanced Statistics, Econometrics, Data Structure and Algorithms, Machine Learning\nAcademic Performance: High GPA with consistent excellence in quantitative models\n\n\n\n\n\nGeneral Course (Study Abroad Program), Statistics | September 2025 – June 2026\nKey Coursework: Stochastic Processes, Linear Regression, Econometric Theory, Computational Statistics\nAcademic Rigor: Completed advanced, mathematically rigorous curriculums at a world-class institution"
+  },
+  {
+    "objectID": "resume.html#research-interests",
+    "href": "resume.html#research-interests",
+    "title": "Resume",
+    "section": "Research Interests",
+    "text": "Research Interests\n\nQuantitative Marketing and Econometric Modeling\nSurvival Analysis and Duration Models in Business Data\nHigh-Dimensional Statistical Inference and Predictive Modeling\nDatabase Engineering and Scalable Data Pipelines"
+  },
+  {
+    "objectID": "resume.html#teaching-experience",
+    "href": "resume.html#teaching-experience",
+    "title": "Resume",
+    "section": "Teaching Experience",
+    "text": "Teaching Experience\n\nHiraoka Juku (Tokyo, Japan)\n\nEnglish Instructor (Part-time) | 2024 – 2025\nDelivered comprehensive English grammar and literature lectures to highly motivated student cohorts, fostering advanced linguistic proficiency\nManaged individual student performance data and provided tailored academic guidance to optimize learning outcomes\nCultivated analytical skills and logical reasoning among students through the evaluation of complex textual structures"
+  },
+  {
+    "objectID": "resume.html#selected-projects",
+    "href": "resume.html#selected-projects",
+    "title": "Resume",
+    "section": "Selected Projects",
+    "text": "Selected Projects\n\nYelp Business Survival Analysis\n\nBuilt an end-to-end reproducible statistical report using Quarto, analyzed business dataset via duration models\nFormulated survival curves and Cox proportional hazards models to identify key determinants of business longevity\nImplemented complete data preprocessing, statistical modeling, and visualization pipeline entirely in R\n\n\n\nRelational Database & Customer Modeling\n\nDesigned and executed a structured database project utilizing advanced SQL operations\nEngineered complex data queries incorporating window functions and data normalization techniques\nMaintained clean code repositories on GitHub to showcase rigorous data engineering workflows"
+  },
+  {
+    "objectID": "resume.html#technical-skills",
+    "href": "resume.html#technical-skills",
+    "title": "Resume",
+    "section": "Technical Skills",
+    "text": "Technical Skills\n\nLanguages: R, Python, SQL\nTools & Frameworks: Quarto, Git, GitHub, LaTeX, Docker\nOperating Systems & Environments: Linux, RStudio, Jupyter Notebook\n\n\n&lt;p&gt;\nYour browser does not support PDFs. &lt;a href=\"Resume.pdf\"&gt;Download the PDF&lt;/a&gt;.\n&lt;/p&gt;"
   },
   {
     "objectID": "posts/multinomial_logit/report.html",

@@ -1,8 +1,59 @@
 ---
 title: "Resume"
-format: html
+format:
+  html:
+    toc: true
+    toc-depth: 2
 ---
 
+## Education
+
+### **Hitotsubashi University** (Tokyo, Japan)
+* **Bachelor of Science in Social Data Science** | Expected: March 2027
+* **Key Coursework:** Advanced Statistics, Econometrics, Data Structure and Algorithms, Machine Learning
+* **Academic Performance:** High GPA with consistent excellence in quantitative models
+
+### **London School of Economics and Political Science (LSE)** (London, UK)
+* **General Course (Study Abroad Program), Statistics** | September 2025 – June 2026
+* **Key Coursework:** Stochastic Processes, Linear Regression, Econometric Theory, Computational Statistics
+* **Academic Rigor:** Completed advanced, mathematically rigorous curriculums at a world-class institution
+
+
+## Research Interests
+
+* Quantitative Marketing and Econometric Modeling
+* Survival Analysis and Duration Models in Business Data
+* High-Dimensional Statistical Inference and Predictive Modeling
+* Database Engineering and Scalable Data Pipelines
+
+
+## Teaching Experience
+
+### **Hiraoka Juku** (Tokyo, Japan)
+* **English Instructor (Part-time)** | 2024 – 2025
+* Delivered comprehensive English grammar and literature lectures to highly motivated student cohorts, fostering advanced linguistic proficiency
+* Managed individual student performance data and provided tailored academic guidance to optimize learning outcomes
+* Cultivated analytical skills and logical reasoning among students through the evaluation of complex textual structures
+
+
+## Selected Projects
+
+### **Yelp Business Survival Analysis**
+* Built an end-to-end reproducible statistical report using Quarto, analyzed business dataset via duration models
+* Formulated survival curves and Cox proportional hazards models to identify key determinants of business longevity
+* Implemented complete data preprocessing, statistical modeling, and visualization pipeline entirely in R
+
+### **Relational Database & Customer Modeling**
+* Designed and executed a structured database project utilizing advanced SQL operations
+* Engineered complex data queries incorporating window functions and data normalization techniques
+* Maintained clean code repositories on GitHub to showcase rigorous data engineering workflows
+
+
+## Technical Skills
+
+* **Languages:** R, Python, SQL
+* **Tools & Frameworks:** Quarto, Git, GitHub, LaTeX, Docker
+* **Operating Systems & Environments:** Linux, RStudio, Jupyter Notebook
 
 <iframe width="800" height="800" src="Resume.pdf" style="border: 1px solid #eee;">
     <p>Your browser does not support PDFs. 
