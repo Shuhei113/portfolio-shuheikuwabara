@@ -202,16 +202,17 @@ a:hover {
 }
 
 /* ==========================================================================
-   5. アカデミック見出し（h2の左側に黒いアクセントラインを引く）
+   5. アカデミック見出し（ダークモード最適化版）
    ========================================================================== */
 h2, .h2, h2.anchored, section h2, .level2 h2 {
   padding-left: 15px !important;          
-  border-left: 5px solid #333 !important; 
+  border-left: 5px solid #00b4d8 !important; /* 左側の線を鮮やかなシアンブルーに変更 */
   border-bottom: none !important; 
-  color: #2c3e50 !important;              
-  margin-top: 50px !important;            
-  margin-bottom: 20px !important;         
+  color: #ffffff !important;                 /* 見出しの文字色を純白に強制変更 */
+  margin-top: 60px !important;            
+  margin-bottom: 25px !important;         
   font-weight: 700 !important;
+  letter-spacing: 0.5px !important;
 }
 
 
@@ -241,3 +242,5 @@ h2, .h2, h2.anchored, section h2, .level2 h2 {
 .quarto-grid-item .listing-description {
   color: #ffffff !important;
 }
+
+
