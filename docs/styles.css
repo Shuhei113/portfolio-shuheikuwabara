@@ -1,5 +1,5 @@
 /* ==========================================================================
-   0. Global Fonts (両モード共通のモダンタイポグラフィ)
+   0. Global Fonts & Typography (両モード共通の洗練されたフォント)
    ========================================================================== */
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Outfit:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap');
 
@@ -13,44 +13,21 @@ h1, h2, h3, h4, .h1, .h2, .h3, .h4, .navbar-brand {
   letter-spacing: -0.4px !important;
 }
 
-code, .navbar-nav, .listing-categories .listing-category, .quarto-categories .quarto-category {
+code, .navbar-nav {
   font-family: 'Space Mono', monospace !important;
 }
 
-/* ==========================================================================
-   1. Default Styles (Light Mode Baseline - 優先順位：最弱)
-   ========================================================================== */
-/* 基本設定をシンプルに保つことで、ダークモードの属性がついた際に確実に上書きされるようにします */
-body {
-  background-color: #ffffff;
-  background-image: none;
-  color: #212529;
-}
-
-p, span, li, .anchored, h1, h2, h3, h4 {
-  color: #212529;
-}
-
-a {
-  color: #0056b3;
-  text-decoration: none;
-}
-a:hover {
-  text-decoration: underline;
-}
-
-#mouse-trail {
+/* ライトモード（デフォルト）の時は、審査官向けにライトトレイルを非表示 */
+html:not([data-mode="dark"]):not([data-bs-theme="dark"]) #mouse-trail {
   display: none !important;
 }
 
 /* ==========================================================================
-   2. Dark Mode Styles (優先順位：最強 - スイッチONで確実に白を塗り替える)
+   1. Dark Mode Cyber Neon (スイッチがONになった瞬間に元の世界を100%完全発動)
    ========================================================================== */
 
-/* 属性がどこに付与されても確実にディープブルーの背景画像を最前面に出す記述 */
-html[data-bs-theme="dark"] body, html[data-mode="dark"] body,
-body[data-bs-theme="dark"], body[data-mode="dark"],
-[data-bs-theme="dark"] body, [data-mode="dark"] body {
+/* --- 全面背景の宇宙化 --- */
+html[data-mode="dark"] body, html[data-bs-theme="dark"] body {
   background-image: url('background.jpg') !important;
   background-size: cover !important;
   background-position: center center !important;
@@ -60,163 +37,406 @@ body[data-bs-theme="dark"], body[data-mode="dark"],
   color: #ffffff !important;
 }
 
-/* Cosmoテーマが内包する不透明な白いコンテナの壁をすべて強制透明化 */
-[data-bs-theme="dark"] #quarto-content, [data-mode="dark"] #quarto-content,
-[data-bs-theme="dark"] .quarto-container, [data-mode="dark"] .quarto-container,
-[data-bs-theme="dark"] main, [data-mode="dark"] main,
-[data-bs-theme="dark"] main.content, [data-mode="dark"] main.content,
-[data-bs-theme="dark"] .page-columns, [data-mode="dark"] .page-columns,
-[data-bs-theme="dark"] .about-entity, [data-mode="dark"] .about-entity,
-[data-bs-theme="dark"] .quarto-about-solana, [data-mode="dark"] .quarto-about-solana,
-[data-bs-theme="dark"] .quarto-about-marquee, [data-mode="dark"] .quarto-about-marquee,
-[data-bs-theme="dark"] .about-contents, [data-mode="dark"] .about-contents,
-[data-bs-theme="dark"] .about-links, [data-mode="dark"] .about-links,
-[data-bs-theme="dark"] .quarto-layout-panel, [data-mode="dark"] .quarto-layout-panel,
-[data-bs-theme="dark"] #quarto-header, [data-mode="dark"] #quarto-header,
-[data-bs-theme="dark"] .quarto-title-block, [data-mode="dark"] .quarto-title-block {
+/* --- コンポーネントの強制白化 --- */
+html[data-mode="dark"] p, html[data-bs-theme="dark"] p,
+html[data-mode="dark"] span, html[data-bs-theme="dark"] span,
+html[data-mode="dark"] li, html[data-bs-theme="dark"] li,
+html[data-mode="dark"] .anchored, html[data-bs-theme="dark"] .anchored {
+  color: #ffffff !important;
+}
+
+/* --- 障害となる白いコンテナ領域をすべて一網打尽に透明化 --- */
+html[data-mode="dark"] #quarto-content, html[data-bs-theme="dark"] #quarto-content,
+html[data-mode="dark"] .quarto-container, html[data-bs-theme="dark"] .quarto-container,
+html[data-mode="dark"] main, html[data-bs-theme="dark"] main,
+html[data-mode="dark"] main.content, html[data-bs-theme="dark"] main.content,
+html[data-mode="dark"] .page-columns, html[data-bs-theme="dark"] .page-columns,
+html[data-mode="dark"] .about-entity, html[data-bs-theme="dark"] .about-entity,
+html[data-mode="dark"] .quarto-about-solana, html[data-bs-theme="dark"] .quarto-about-solana,
+html[data-mode="dark"] .quarto-about-marquee, html[data-bs-theme="dark"] .quarto-about-marquee,
+html[data-mode="dark"] .about-contents, html[data-bs-theme="dark"] .about-contents,
+html[data-mode="dark"] .about-links, html[data-bs-theme="dark"] .about-links,
+html[data-mode="dark"] .quarto-layout-panel, html[data-bs-theme="dark"] .quarto-layout-panel {
   background: transparent !important;
   background-color: transparent !important;
   box-shadow: none !important;
   border: none !important;
 }
 
-/* ダークモード選択時のテキスト完全白化 */
-[data-bs-theme="dark"] p, [data-mode="dark"] p,
-[data-bs-theme="dark"] span, [data-mode="dark"] span,
-[data-bs-theme="dark"] li, [data-mode="dark"] li,
-[data-bs-theme="dark"] .anchored, [data-mode="dark"] .anchored,
-[data-bs-theme="dark"] h1, [data-mode="dark"] h1,
-[data-bs-theme="dark"] h2, [data-mode="dark"] h2,
-[data-bs-theme="dark"] h3, [data-mode="dark"] h3,
-[data-bs-theme="dark"] h4, [data-mode="dark"] h4,
-[data-bs-theme="dark"] .title, [data-mode="dark"] .title,
-[data-bs-theme="dark"] .description, [data-mode="dark"] .description,
-[data-bs-theme="dark"] .quarto-title-meta, [data-mode="dark"] .quarto-title-meta,
-[data-bs-theme="dark"] .quarto-title-meta-heading, [data-mode="dark"] .quarto-title-meta-heading,
-[data-bs-theme="dark"] .quarto-title-meta-contents, [data-mode="dark"] .quarto-title-meta-contents,
-[data-bs-theme="dark"] .quarto-title-meta-contents a, [data-mode="dark"] .quarto-title-meta-contents a {
-  color: #ffffff !important;
-}
-
-/* ナビゲーションバーの維持 */
-[data-bs-theme="dark"] .navbar, [data-mode="dark"] .navbar,
-[data-bs-theme="dark"] .navbar.navbar-dark, [data-mode="dark"] .navbar.navbar-dark,
-[data-bs-theme="dark"] .bg-dark, [data-mode="dark"] .bg-dark {
+/* --- ナビゲーションバーのブレンド調整 --- */
+html[data-mode="dark"] .navbar, html[data-bs-theme="dark"] .navbar {
   background-color: rgba(11, 19, 43, 0.8) !important;
   backdrop-filter: blur(8px) !important;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
 }
-[data-bs-theme="dark"] .navbar a, [data-mode="dark"] .navbar a,
-[data-bs-theme="dark"] .navbar-title, [data-mode="dark"] .navbar-title,
-[data-bs-theme="dark"] .nav-link, [data-mode="dark"] .nav-link,
-[data-bs-theme="dark"] .navbar-brand, [data-mode="dark"] .navbar-brand {
+
+html[data-mode="dark"] .navbar a, html[data-bs-theme="dark"] .navbar a,
+html[data-mode="dark"] .navbar-title, html[data-bs-theme="dark"] .navbar-title,
+html[data-mode="dark"] .nav-link, html[data-bs-theme="dark"] .nav-link {
   color: #ffffff !important;
 }
 
-/* アカデミック見出し（シアンアクセント） */
-[data-bs-theme="dark"] h2, [data-mode="dark"] h2,
-[data-bs-theme="dark"] .h2, [data-mode="dark"] .h2,
-[data-bs-theme="dark"] h2.anchored, [data-mode="dark"] h2.anchored,
-[data-bs-theme="dark"] section h2, [data-mode="dark"] section h2,
-[data-bs-theme="dark"] .level2 h2, [data-mode="dark"] .level2 h2 {
-  padding-left: 15px !important;          
-  border-left: 5px solid #00b4d8 !important; 
-  border-bottom: none !important; 
-  margin-top: 60px !important;            
-  margin-bottom: 25px !important;         
+/* --- カテゴリータグのサイバーブルーネオン化 --- */
+html[data-mode="dark"] .listing-categories .listing-category, 
+html[data-bs-theme="dark"] .listing-categories .listing-category {
+  color: #ffffff !important;
+  background-color: rgba(78, 168, 222, 0.2) !important;
+  border: 1px solid #4ea8de !important;
+  border-radius: 4px !important;
+  font-family: 'Space Mono', monospace !important;
+  font-weight: 500 !important;
+}
+
+html[data-mode="dark"] .listing-categories .listing-category:hover, 
+html[data-bs-theme="dark"] .listing-categories .listing-category:hover {
+  background-color: rgba(78, 168, 222, 0.4) !important;
+  color: #ffffff !important;
+  text-decoration: none !important;
+}
+
+/* --- プロジェクトリスト（リスト形式）の白化 --- */
+html[data-mode="dark"] .listing-title, html[data-bs-theme="dark"] .listing-title,
+html[data-mode="dark"] .listing-description, html[data-bs-theme="dark"] .listing-description,
+html[data-mode="dark"] .listing-author, html[data-bs-theme="dark"] .listing-author,
+html[data-mode="dark"] .listing-date, html[data-bs-theme="dark"] .listing-date,
+html[data-mode="dark"] .listing-metadata, html[data-bs-theme="dark"] .listing-metadata {
+  color: #ffffff !important;
+}
+
+html[data-mode="dark"] .listing-item, html[data-bs-theme="dark"] .listing-item {
+  border-radius: 8px;
+  padding: 10px;
+  transition: background-color 0.2s ease;
+}
+
+html[data-mode="dark"] .listing-item:hover, html[data-bs-theme="dark"] .listing-item:hover {
+  background-color: rgba(255, 255, 255, 0.05) !important;
+}
+
+/* --- ハイパーリンクのサイバーネオン化 --- */
+html[data-mode="dark"] a, html[data-bs-theme="dark"] a {
+  color: #4ea8de !important;
+  text-decoration: none;
+}
+
+html[data-mode="dark"] a:hover, html[data-bs-theme="dark"] a:hover {
+  color: #90e0ef !important;
+  text-decoration: underline;
+}
+
+/* --- アカデミック見出しのシアンアクセント線 --- */
+html[data-mode="dark"] h2, html[data-bs-theme="dark"] h2,
+html[data-mode="dark"] .h2, html[data-bs-theme="dark"] .h2,
+html[data-mode="dark"] h2.anchored, html[data-bs-theme="dark"] h2.anchored,
+html[data-mode="dark"] section h2, html[data-bs-theme="dark"] section h2,
+html[data-mode="dark"] .level2 h2, html[data-bs-theme="dark"] .level2 h2 {
+  padding-left: 15px !important;
+  border-left: 5px solid #00b4d8 !important;
+  border-bottom: none !important;
+  color: #ffffff !important;
+  margin-top: 60px !important;
+  margin-bottom: 25px !important;
   font-weight: 700 !important;
   letter-spacing: 0.5px !important;
 }
 
-/* プロジェクトカード */
-[data-bs-theme="dark"] .quarto-grid-item, [data-mode="dark"] .quarto-grid-item,
-[data-bs-theme="dark"] .card, [data-mode="dark"] .card {
-  background-color: rgba(255, 255, 255, 0.04) !important; 
+/* --- プロジェクトカード（グリッド）のイージングホバー効果 --- */
+html[data-mode="dark"] .quarto-grid-item, html[data-bs-theme="dark"] .quarto-grid-item {
+  background-color: rgba(255, 255, 255, 0.04) !important;
   border: 1px solid rgba(255, 255, 255, 0.1) !important;
   border-radius: 12px !important;
-}
-[data-bs-theme="dark"] .quarto-grid-item:hover, [data-mode="dark"] .quarto-grid-item:hover {
-  transform: translateY(-8px) !important; 
-  background-color: rgba(255, 255, 255, 0.12) !important; 
-  border-color: #4ea8de !important; 
-  box-shadow: 0 15px 35px rgba(78, 168, 222, 0.25) !important; 
+  transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1),
+              box-shadow 0.3s cubic-bezier(0.25, 0.8, 0.25, 1),
+              background-color 0.3s ease !important;
 }
 
-/* タグ装飾 */
-[data-bs-theme="dark"] .listing-categories .listing-category, [data-mode="dark"] .listing-categories .listing-category,
-[data-bs-theme="dark"] .quarto-categories .quarto-category, [data-mode="dark"] .quarto-categories .quarto-category {
-  color: #ffffff !important;               
-  background-color: rgba(78, 168, 222, 0.2) !important; 
-  border: 1px solid #4ea8de !important;    
-  border-radius: 4px !important;
-  font-weight: 500 !important;
+html[data-mode="dark"] .quarto-grid-item:hover, html[data-bs-theme="dark"] .quarto-grid-item:hover {
+  transform: translateY(-8px) !important;
+  background-color: rgba(255, 255, 255, 0.12) !important;
+  border-color: #4ea8de !important;
+  box-shadow: 0 15px 35px rgba(78, 168, 222, 0.25) !important;
 }
 
-/* ソースコード・出力ブロック */
-[data-bs-theme="dark"] .cell-output, [data-mode="dark"] .cell-output,
-[data-bs-theme="dark"] .cell-output-stdout, [data-mode="dark"] .cell-output-stdout,
-[data-bs-theme="dark"] .cell-output pre, [data-mode="dark"] .cell-output pre,
-[data-bs-theme="dark"] pre:not(.sourceCode), [data-mode="dark"] pre:not(.sourceCode) {
-  background-color: rgba(0, 0, 0, 0.5) !important; 
-  color: #f8f9fa !important;                        
+html[data-mode="dark"] .quarto-grid-item .listing-title, html[data-bs-theme="dark"] .quarto-grid-item .listing-title,
+html[data-mode="dark"] .quarto-grid-item .listing-author, html[data-bs-theme="dark"] .quarto-grid-item .listing-author,
+html[data-mode="dark"] .quarto-grid-item .listing-date, html[data-bs-theme="dark"] .quarto-grid-item .listing-date,
+html[data-mode="dark"] .quarto-grid-item .listing-description, html[data-bs-theme="dark"] .quarto-grid-item .listing-description {
+  color: #ffffff !important;
+}
+
+html[data-mode="dark"] .quarto-grid-item .listing-categories .listing-category,
+html[data-bs-theme="dark"] .quarto-grid-item .listing-categories .listing-category {
+  color: #ffffff !important;
+}
+
+/* --- コードブロックと出力の黒透過引き締め --- */
+html[data-mode="dark"] .cell-output, html[data-bs-theme="dark"] .cell-output,
+html[data-mode="dark"] .cell-output-stdout, html[data-bs-theme="dark"] .cell-output-stdout,
+html[data-mode="dark"] .cell-output pre, html[data-bs-theme="dark"] .cell-output pre,
+html[data-mode="dark"] pre:not(.sourceCode), html[data-bs-theme="dark"] pre:not(.sourceCode) {
+  background-color: rgba(0, 0, 0, 0.5) !important;
+  color: #f8f9fa !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 8px !important;
+  padding: 15px !important;
+}
+
+html[data-mode="dark"] .sourceCode, html[data-bs-theme="dark"] .sourceCode,
+html[data-mode="dark"] pre.sourceCode, html[data-bs-theme="dark"] pre.sourceCode {
+  background-color: rgba(0, 0, 0, 0.4) !important;
   border: 1px solid rgba(255, 255, 255, 0.1) !important;
   border-radius: 8px !important;
 }
-[data-bs-theme="dark"] .sourceCode, [data-mode="dark"] .sourceCode,
-[data-bs-theme="dark"] pre.sourceCode, [data-mode="dark"] pre.sourceCode {
-  background-color: rgba(0, 0, 0, 0.4) !important; 
-  border: 1px solid rgba(255, 255, 255, 0.1) !important;
-  border-radius: 8px !important;
-}
 
-/* 目次（TOC） */
-[data-bs-theme="dark"] #quarto-sidebar, [data-mode="dark"] #quarto-sidebar,
-[data-bs-theme="dark"] .sidebar, [data-mode="dark"] .sidebar,
-[data-bs-theme="dark"] #TOC, [data-mode="dark"] #TOC,
-[data-bs-theme="dark"] nav[role="doc-toc"], [data-mode="dark"] nav[role="doc-toc"],
-[data-bs-theme="dark"] .quarto-secondary-nav, [data-mode="dark"] .quarto-secondary-nav,
-[data-bs-theme="dark"] .quarto-sidebar-toggle, [data-mode="dark"] .quarto-sidebar-toggle {
+/* --- 目次（TOC）とサイドバーのシアン発光 --- */
+html[data-mode="dark"] #quarto-sidebar, html[data-bs-theme="dark"] #quarto-sidebar,
+html[data-mode="dark"] .sidebar, html[data-bs-theme="dark"] .sidebar,
+html[data-mode="dark"] #TOC, html[data-bs-theme="dark"] #TOC,
+html[data-mode="dark"] nav[role="doc-toc"], html[data-bs-theme="dark"] nav[role="doc-toc"],
+html[data-mode="dark"] .quarto-secondary-nav, html[data-bs-theme="dark"] .quarto-secondary-nav,
+html[data-mode="dark"] .quarto-sidebar-toggle, html[data-bs-theme="dark"] .quarto-sidebar-toggle {
   background: transparent !important;
   background-color: transparent !important;
   border: none !important;
-}
-[data-bs-theme="dark"] #TOC a, [data-mode="dark"] #TOC a,
-[data-bs-theme="dark"] .sidebar a, [data-mode="dark"] .sidebar a,
-[data-bs-theme="dark"] .nav-link, [data-mode="dark"] .nav-link {
-  color: rgba(255, 255, 255, 0.65) !important; 
-}
-[data-bs-theme="dark"] #TOC a:hover, [data-mode="dark"] #TOC a:hover,
-[data-bs-theme="dark"] .sidebar a:hover, [data-mode="dark"] .sidebar a:hover,
-[data-bs-theme="dark"] #TOC .active, [data-mode="dark"] #TOC .active,
-[data-bs-theme="dark"] .sidebar .active, [data-mode="dark"] .sidebar .active {
-  color: #00b4d8 !important; 
+  box-shadow: none !important;
 }
 
-/* Resumeページリストマーカー */
-[data-bs-theme="dark"] .content ul li::before, [data-mode="dark"] .content ul li::before {
-  content: "▪" !important; 
+html[data-mode="dark"] #TOC a, html[data-bs-theme="dark"] #TOC a,
+html[data-mode="dark"] .sidebar a, html[data-bs-theme="dark"] .sidebar a,
+html[data-mode="dark"] .nav-link, html[data-bs-theme="dark"] .nav-link {
+  color: rgba(255, 255, 255, 0.65) !important;
+  transition: color 0.2s ease;
+}
+
+html[data-mode="dark"] #TOC a:hover, html[data-bs-theme="dark"] #TOC a:hover,
+html[data-mode="dark"] .sidebar a:hover, html[data-bs-theme="dark"] .sidebar a:hover,
+html[data-mode="dark"] #TOC .active, html[data-bs-theme="dark"] #TOC .active,
+html[data-mode="dark"] .sidebar .active, html[data-bs-theme="dark"] .sidebar .active {
+  color: #00b4d8 !important;
+  text-decoration: none !important;
+}
+
+/* --- Resumeページのリスト調整と■マーカー --- */
+html[data-mode="dark"] h3 img, html[data-bs-theme="dark"] h3 img,
+html[data-mode="dark"] .h3 img, html[data-bs-theme="dark"] .h3 img {
+  vertical-align: middle !important;
+  margin-right: 12px !important;
+  margin-top: -4px !important;
+  border-radius: 4px !important;
+}
+
+html[data-mode="dark"] h3, html[data-bs-theme="dark"] h3,
+html[data-mode="dark"] .h3, html[data-bs-theme="dark"] .h3 {
+  font-size: 1.35em !important;
+  letter-spacing: 0.5px !important;
+  margin-top: 35px !important;
+  margin-bottom: 15px !important;
+  font-weight: 700 !important;
+}
+
+html[data-mode="dark"] .content ul, html[data-bs-theme="dark"] .content ul {
+  list-style-type: none !important;
+  padding-left: 20px !important;
+}
+
+html[data-mode="dark"] .content ul li, html[data-bs-theme="dark"] .content ul li {
+  position: relative !important;
+  margin-bottom: 12px !important;
+  line-height: 1.6 !important;
+  color: #e2e8f0 !important;
+}
+
+html[data-mode="dark"] .content ul li::before, html[data-bs-theme="dark"] .content ul li::before {
+  content: "▪" !important;
   position: absolute !important;
   left: -20px !important;
-  color: #00b4d8 !important; 
+  color: #00b4d8 !important;
+  font-size: 1.1em !important;
+  top: -1px !important;
 }
 
-/* リンク色 */
-[data-bs-theme="dark"] a, [data-mode="dark"] a {
-  color: #4ea8de !important;
-}
-[data-bs-theme="dark"] a:hover, [data-mode="dark"] a:hover {
-  color: #90e0ef !important;
+html[data-mode="dark"] .content ul li strong, html[data-bs-theme="dark"] .content ul li strong {
+  font-family: 'Outfit', sans-serif !important;
 }
 
-/* ライトトレイルキャンバス */
-[data-bs-theme="dark"] #mouse-trail, [data-mode="dark"] #mouse-trail {
+/* --- トップページの大学名所属カードの発光演出 --- */
+html[data-mode="dark"] .home-affiliation, html[data-bs-theme="dark"] .home-affiliation {
+  display: flex !important;
+  align-items: center !important;
+  text-align: left !important;
+  margin: 16px auto !important;
+  width: 100% !important;
+  max-width: 440px !important;
+  gap: 18px !important;
+  padding: 14px 20px !important;
+  background-color: rgba(255, 255, 255, 0.02) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-radius: 12px !important;
+  transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1),
+              box-shadow 0.3s cubic-bezier(0.25, 0.8, 0.25, 1),
+              border-color 0.3s ease,
+              background-color 0.3s ease !important;
+}
+
+html[data-mode="dark"] .home-affiliation:hover, html[data-bs-theme="dark"] .home-affiliation:hover {
+  transform: translateY(-4px) !important;
+  background-color: rgba(255, 255, 255, 0.07) !important;
+  border-color: #00b4d8 !important;
+  box-shadow: 0 10px 25px rgba(0, 180, 216, 0.25) !important;
+}
+
+html[data-mode="dark"] .home-text a, html[data-bs-theme="dark"] .home-text a {
+  font-weight: 700 !important;
+  color: #ffffff !important;
+  text-decoration: none !important;
+  font-size: 1.05em !important;
+}
+
+html[data-mode="dark"] .home-text a:hover, html[data-bs-theme="dark"] .home-text a:hover {
+  color: #00b4d8 !important;
+  text-decoration: underline !important;
+}
+
+html[data-mode="dark"] .home-text .sub-text, html[data-bs-theme="dark"] .home-text .sub-text {
+  display: block !important;
+  font-size: 0.9em !important;
+  color: #00b4d8 !important;
+  font-weight: 500 !important;
+  margin-top: 2px !important;
+}
+
+/* --- マウス軌跡ライトトレイルのブレンドモード活性化 --- */
+html[data-mode="dark"] #mouse-trail, html[data-bs-theme="dark"] #mouse-trail {
   position: fixed !important;
   top: 0 !important;
   left: 0 !important;
   width: 100vw !important;
   height: 100vh !important;
-  pointer-events: none !important;  
-  z-index: -1 !important;           
-  mix-blend-mode: screen !important;  
+  pointer-events: none !important;
+  z-index: -1 !important;
+  mix-blend-mode: screen !important;
   display: block !important;
+}
+
+/* ==========================================================================
+   2. Legacy Components (ファイルスマートリスト - モード共通ルール)
+   ========================================================================== */
+.file-card {
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 20px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  position: relative;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+.file-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+  border-color: #333;
+  background-color: #fafafa;
+}
+.file-card-icon {
+  font-size: 1.8em;
+  color: #555;
+  margin-bottom: 12px;
+  background-color: #f5f5f5;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+.file-card:hover .file-card-icon {
+  background-color: #333;
+  color: #fff;
+}
+.file-card-title {
+  font-weight: 700;
+  font-size: 1.1em;
+  margin: 0 0 5px 0;
+  color: #333;
+}
+.file-card-desc {
+  font-size: 0.9em;
+  color: #666;
+  margin: 0;
+  line-height: 1.4;
+}
+.file-card a::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.file-list-group {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 15px;
+}
+.file-list-item {
+  display: flex;
+  align-items: center;
+  padding: 10px 12px;
+  text-decoration: none;
+  background-color: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+.file-list-item:hover {
+  border-color: #333;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  transform: translateY(-1px);
+  text-decoration: none;
+}
+.file-list-icon {
+  font-size: 1.1em;
+  margin-right: 12px;
+  width: 20px;
+  text-align: center;
+}
+.file-list-content {
+  flex-grow: 1;
+  overflow: hidden;
+}
+.file-list-title {
+  font-weight: 600;
+  font-size: 0.95em;
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.file-list-desc {
+  font-size: 0.8em;
+  font-weight: 400;
+  display: block;
+  line-height: 1.2;
+  margin-top: 2px;
+}
+.file-list-item * {
+  color: #2c3e50 !important;
+}
+.file-list-item:hover * {
+  color: #000000 !important;
+}
+.file-list-arrow {
+  color: #a0a0a0 !important;
+  font-size: 0.8em;
+  margin-left: 10px;
+}
+@media (max-width: 768px) {
+  .file-list-group {
+    grid-template-columns: 1fr;
+  }
 }

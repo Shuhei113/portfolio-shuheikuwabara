@@ -24,12 +24,13 @@ format:
   html:
     theme:
       light: cosmo
-      dark: dark
+      dark: flatly
     css: styles.css
     include-after-body: mouse-glow.html
     include-in-header:
       text: |
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+        
 editor: visual
 
 resources:
