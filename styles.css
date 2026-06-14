@@ -70,32 +70,67 @@ main.content,
   color: #ffffff !important;
 }
 
-/* ==========================================================================
-   4. Global Hyperlinks
-   ========================================================================== */
-a {
-  color: #4ea8de !important;
-  text-decoration: none;
-}
-
-a:hover {
-  color: #90e0ef !important;
-  text-decoration: underline;
-}
 
 /* ==========================================================================
-   5. Academic Section Headings (H2 Cyan Accent)
+   4. Quarto カテゴリー（タグ）のグローバルな視認性修正
    ========================================================================== */
-h2, .h2, h2.anchored, section h2, .level2 h2 {
-  padding-left: 15px !important;          
-  border-left: 5px solid #00b4d8 !important; 
-  border-bottom: none !important; 
-  color: #ffffff !important;                 
-  margin-top: 60px !important;            
-  margin-bottom: 25px !important;         
-  font-weight: 700 !important;
-  letter-spacing: 0.5px !important;
+/* 画像で見られるようなゴールド系の文字色は、ダークモードでは見づらいため、サイバーブルーのネオンに変更 */
+.listing-categories .listing-category {
+  color: #ffffff !important;               /* 文字を白にする */
+  background-color: rgba(78, 168, 222, 0.2) !important; /* 背景を薄いサイバーブルーに */
+  border: 1px solid #4ea8de !important;    /* 枠線をサイバーブルーに */
+  border-radius: 4px !important;
+  font-family: 'JetBrains Mono', monospace !important; /* フォントを等幅に */
+  font-weight: 500 !important;
 }
+
+/* ホバー時に少し明るく */
+.listing-categories .listing-category:hover {
+  background-color: rgba(78, 168, 222, 0.4) !important;
+  color: #ffffff !important;
+  text-decoration: none !important;
+}
+
+/* ==========================================================================
+   5. プロジェクトリスト（リスト形式）の視認性修正
+   ========================================================================== */
+/* 見出し、説明、メタデータ（著者、日付）の文字色を白にする */
+.listing-title,
+.listing-description,
+.listing-author,
+.listing-date,
+.listing-metadata {
+  color: #ffffff !important;
+}
+
+/* ==========================================================================
+   【確定修正】プロジェクト個別ページ・最上部ヘッダーの視認性徹底修正
+   ========================================================================== */
+/* 個別ページのタイトルと説明文（Description）を純白化 */
+.quarto-title-block .quarto-title .title,
+.quarto-title-block .description {
+  color: #ffffff !important;
+}
+
+/* 著者名や日付などのメタデータ領域もすべて白化 */
+.quarto-title-meta,
+.quarto-title-meta-heading,
+.quarto-title-meta-contents,
+.quarto-title-meta-contents a {
+  color: #ffffff !important;
+}
+
+/* 個別ページ上部にあるカテゴリータグ（R、MARKETING、STATISTICS）の視認性修正 */
+.quarto-categories .quarto-category {
+  color: #ffffff !important;                             /* 文字を白にする */
+  background-color: rgba(78, 168, 222, 0.15) !important; /* 背景を薄いサイバーブルーに */
+  border: 1px solid #4ea8de !important;                  /* 枠線をサイバーブルーに */
+  border-radius: 4px !important;
+  padding: 4px 10px !important;
+  font-family: 'JetBrains Mono', monospace !important;   /* フォントを等幅に */
+  font-weight: 500 !important;
+}
+
 
 /* ==========================================================================
    6. Project Grid Cards (Hover and Glow Effects)
