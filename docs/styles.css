@@ -18,25 +18,25 @@ code, .navbar-nav, .listing-categories .listing-category, .quarto-categories .qu
 }
 
 /* ==========================================================================
-   1. Default Styles (Light Mode Baseline)
+   1. Default Styles (Light Mode Baseline - 優先順位：最弱)
    ========================================================================== */
+/* 基本設定をシンプルに保つことで、ダークモードの属性がついた際に確実に上書きされるようにします */
 body {
-  background-color: #ffffff !important;
-  background-image: none !important;
-  color: #212529 !important;
+  background-color: #ffffff;
+  background-image: none;
+  color: #212529;
 }
 
 p, span, li, .anchored, h1, h2, h3, h4 {
-  color: #212529 !important;
+  color: #212529;
 }
 
 a {
-  color: #0056b3 !important;
+  color: #0056b3;
   text-decoration: none;
 }
-
 a:hover {
-  text-decoration: underline !important;
+  text-decoration: underline;
 }
 
 #mouse-trail {
@@ -44,12 +44,13 @@ a:hover {
 }
 
 /* ==========================================================================
-   2. Dark Mode Styles (Supporting multiple Quarto versions)
+   2. Dark Mode Styles (優先順位：最強 - スイッチONで確実に白を塗り替える)
    ========================================================================== */
 
-/* 背景画像の適用 */
-html[data-mode="dark"] body,
-html[data-bs-theme="dark"] body {
+/* 属性がどこに付与されても確実にディープブルーの背景画像を最前面に出す記述 */
+html[data-bs-theme="dark"] body, html[data-mode="dark"] body,
+body[data-bs-theme="dark"], body[data-mode="dark"],
+[data-bs-theme="dark"] body, [data-mode="dark"] body {
   background-image: url('background.jpg') !important;
   background-size: cover !important;
   background-position: center center !important;
@@ -59,67 +60,65 @@ html[data-bs-theme="dark"] body {
   color: #ffffff !important;
 }
 
-/* 不透明な背景の壁をすべて透明化 */
-html[data-mode="dark"] #quarto-content, html[data-bs-theme="dark"] #quarto-content,
-html[data-mode="dark"] .quarto-container, html[data-bs-theme="dark"] .quarto-container,
-html[data-mode="dark"] main, html[data-bs-theme="dark"] main,
-html[data-mode="dark"] main.content, html[data-bs-theme="dark"] main.content,
-html[data-mode="dark"] .page-columns, html[data-bs-theme="dark"] .page-columns,
-html[data-mode="dark"] .about-entity, html[data-bs-theme="dark"] .about-entity,
-html[data-mode="dark"] .quarto-about-solana, html[data-bs-theme="dark"] .quarto-about-solana,
-html[data-mode="dark"] .quarto-about-marquee, html[data-bs-theme="dark"] .quarto-about-marquee,
-html[data-mode="dark"] .about-contents, html[data-bs-theme="dark"] .about-contents,
-html[data-mode="dark"] .about-links, html[data-bs-theme="dark"] .about-links,
-html[data-mode="dark"] .quarto-layout-panel, html[data-bs-theme="dark"] .quarto-layout-panel,
-html[data-mode="dark"] #quarto-header, html[data-bs-theme="dark"] #quarto-header,
-html[data-mode="dark"] .quarto-title-block, html[data-bs-theme="dark"] .quarto-title-block {
+/* Cosmoテーマが内包する不透明な白いコンテナの壁をすべて強制透明化 */
+[data-bs-theme="dark"] #quarto-content, [data-mode="dark"] #quarto-content,
+[data-bs-theme="dark"] .quarto-container, [data-mode="dark"] .quarto-container,
+[data-bs-theme="dark"] main, [data-mode="dark"] main,
+[data-bs-theme="dark"] main.content, [data-mode="dark"] main.content,
+[data-bs-theme="dark"] .page-columns, [data-mode="dark"] .page-columns,
+[data-bs-theme="dark"] .about-entity, [data-mode="dark"] .about-entity,
+[data-bs-theme="dark"] .quarto-about-solana, [data-mode="dark"] .quarto-about-solana,
+[data-bs-theme="dark"] .quarto-about-marquee, [data-mode="dark"] .quarto-about-marquee,
+[data-bs-theme="dark"] .about-contents, [data-mode="dark"] .about-contents,
+[data-bs-theme="dark"] .about-links, [data-mode="dark"] .about-links,
+[data-bs-theme="dark"] .quarto-layout-panel, [data-mode="dark"] .quarto-layout-panel,
+[data-bs-theme="dark"] #quarto-header, [data-mode="dark"] #quarto-header,
+[data-bs-theme="dark"] .quarto-title-block, [data-mode="dark"] .quarto-title-block {
   background: transparent !important;
   background-color: transparent !important;
   box-shadow: none !important;
   border: none !important;
 }
 
-/* テキストカラーの強制白化 */
-html[data-mode="dark"] p, html[data-bs-theme="dark"] p,
-html[data-mode="dark"] span, html[data-bs-theme="dark"] span,
-html[data-mode="dark"] li, html[data-bs-theme="dark"] li,
-html[data-mode="dark"] .anchored, html[data-bs-theme="dark"] .anchored,
-html[data-mode="dark"] h1, html[data-bs-theme="dark"] h1,
-html[data-mode="dark"] h2, html[data-bs-theme="dark"] h2,
-html[data-mode="dark"] h3, html[data-bs-theme="dark"] h3,
-html[data-mode="dark"] h4, html[data-bs-theme="dark"] h4,
-html[data-mode="dark"] .quarto-title-block .quarto-title .title, html[data-bs-theme="dark"] .quarto-title-block .quarto-title .title,
-html[data-mode="dark"] .quarto-title-block .description, html[data-bs-theme="dark"] .quarto-title-block .description,
-html[data-mode="dark"] .quarto-title-meta, html[data-bs-theme="dark"] .quarto-title-meta,
-html[data-mode="dark"] .quarto-title-meta-heading, html[data-bs-theme="dark"] .quarto-title-meta-heading,
-html[data-mode="dark"] .quarto-title-meta-contents, html[data-bs-theme="dark"] .quarto-title-meta-contents,
-html[data-mode="dark"] .quarto-title-meta-contents a, html[data-bs-theme="dark"] .quarto-title-meta-contents a {
+/* ダークモード選択時のテキスト完全白化 */
+[data-bs-theme="dark"] p, [data-mode="dark"] p,
+[data-bs-theme="dark"] span, [data-mode="dark"] span,
+[data-bs-theme="dark"] li, [data-mode="dark"] li,
+[data-bs-theme="dark"] .anchored, [data-mode="dark"] .anchored,
+[data-bs-theme="dark"] h1, [data-mode="dark"] h1,
+[data-bs-theme="dark"] h2, [data-mode="dark"] h2,
+[data-bs-theme="dark"] h3, [data-mode="dark"] h3,
+[data-bs-theme="dark"] h4, [data-mode="dark"] h4,
+[data-bs-theme="dark"] .title, [data-mode="dark"] .title,
+[data-bs-theme="dark"] .description, [data-mode="dark"] .description,
+[data-bs-theme="dark"] .quarto-title-meta, [data-mode="dark"] .quarto-title-meta,
+[data-bs-theme="dark"] .quarto-title-meta-heading, [data-mode="dark"] .quarto-title-meta-heading,
+[data-bs-theme="dark"] .quarto-title-meta-contents, [data-mode="dark"] .quarto-title-meta-contents,
+[data-bs-theme="dark"] .quarto-title-meta-contents a, [data-mode="dark"] .quarto-title-meta-contents a {
   color: #ffffff !important;
 }
 
-/* ナビゲーションバー */
-html[data-mode="dark"] .navbar, html[data-bs-theme="dark"] .navbar,
-html[data-mode="dark"] .navbar.navbar-dark, html[data-bs-theme="dark"] .navbar.navbar-dark,
-html[data-mode="dark"] .bg-dark, html[data-bs-theme="dark"] .bg-dark {
+/* ナビゲーションバーの維持 */
+[data-bs-theme="dark"] .navbar, [data-mode="dark"] .navbar,
+[data-bs-theme="dark"] .navbar.navbar-dark, [data-mode="dark"] .navbar.navbar-dark,
+[data-bs-theme="dark"] .bg-dark, [data-mode="dark"] .bg-dark {
   background-color: rgba(11, 19, 43, 0.8) !important;
   backdrop-filter: blur(8px) !important;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
 }
-
-html[data-mode="dark"] .navbar a, html[data-bs-theme="dark"] .navbar a,
-html[data-mode="dark"] .navbar-title, html[data-bs-theme="dark"] .navbar-title,
-html[data-mode="dark"] .nav-link, html[data-bs-theme="dark"] .nav-link,
-html[data-mode="dark"] .navbar-dark .navbar-nav .nav-link, html[data-bs-theme="dark"] .navbar-dark .navbar-nav .nav-link,
-html[data-mode="dark"] .navbar-brand, html[data-bs-theme="dark"] .navbar-brand {
+[data-bs-theme="dark"] .navbar a, [data-mode="dark"] .navbar a,
+[data-bs-theme="dark"] .navbar-title, [data-mode="dark"] .navbar-title,
+[data-bs-theme="dark"] .nav-link, [data-mode="dark"] .nav-link,
+[data-bs-theme="dark"] .navbar-brand, [data-mode="dark"] .navbar-brand {
   color: #ffffff !important;
 }
 
 /* アカデミック見出し（シアンアクセント） */
-html[data-mode="dark"] h2, html[data-bs-theme="dark"] h2,
-html[data-mode="dark"] .h2, html[data-bs-theme="dark"] .h2,
-html[data-mode="dark"] h2.anchored, html[data-bs-theme="dark"] h2.anchored,
-html[data-mode="dark"] section h2, html[data-bs-theme="dark"] section h2,
-html[data-mode="dark"] .level2 h2, html[data-bs-theme="dark"] .level2 h2 {
+[data-bs-theme="dark"] h2, [data-mode="dark"] h2,
+[data-bs-theme="dark"] .h2, [data-mode="dark"] .h2,
+[data-bs-theme="dark"] h2.anchored, [data-mode="dark"] h2.anchored,
+[data-bs-theme="dark"] section h2, [data-mode="dark"] section h2,
+[data-bs-theme="dark"] .level2 h2, [data-mode="dark"] .level2 h2 {
   padding-left: 15px !important;          
   border-left: 5px solid #00b4d8 !important; 
   border-bottom: none !important; 
@@ -130,14 +129,13 @@ html[data-mode="dark"] .level2 h2, html[data-bs-theme="dark"] .level2 h2 {
 }
 
 /* プロジェクトカード */
-html[data-mode="dark"] .quarto-grid-item, html[data-bs-theme="dark"] .quarto-grid-item,
-html[data-mode="dark"] .card, html[data-bs-theme="dark"] .card {
+[data-bs-theme="dark"] .quarto-grid-item, [data-mode="dark"] .quarto-grid-item,
+[data-bs-theme="dark"] .card, [data-mode="dark"] .card {
   background-color: rgba(255, 255, 255, 0.04) !important; 
   border: 1px solid rgba(255, 255, 255, 0.1) !important;
   border-radius: 12px !important;
 }
-
-html[data-mode="dark"] .quarto-grid-item:hover, html[data-bs-theme="dark"] .quarto-grid-item:hover {
+[data-bs-theme="dark"] .quarto-grid-item:hover, [data-mode="dark"] .quarto-grid-item:hover {
   transform: translateY(-8px) !important; 
   background-color: rgba(255, 255, 255, 0.12) !important; 
   border-color: #4ea8de !important; 
@@ -145,8 +143,8 @@ html[data-mode="dark"] .quarto-grid-item:hover, html[data-bs-theme="dark"] .quar
 }
 
 /* タグ装飾 */
-html[data-mode="dark"] .listing-categories .listing-category, html[data-bs-theme="dark"] .listing-categories .listing-category,
-html[data-mode="dark"] .quarto-categories .quarto-category, html[data-bs-theme="dark"] .quarto-categories .quarto-category {
+[data-bs-theme="dark"] .listing-categories .listing-category, [data-mode="dark"] .listing-categories .listing-category,
+[data-bs-theme="dark"] .quarto-categories .quarto-category, [data-mode="dark"] .quarto-categories .quarto-category {
   color: #ffffff !important;               
   background-color: rgba(78, 168, 222, 0.2) !important; 
   border: 1px solid #4ea8de !important;    
@@ -155,50 +153,47 @@ html[data-mode="dark"] .quarto-categories .quarto-category, html[data-bs-theme="
 }
 
 /* ソースコード・出力ブロック */
-html[data-mode="dark"] .cell-output, html[data-bs-theme="dark"] .cell-output,
-html[data-mode="dark"] .cell-output-stdout, html[data-bs-theme="dark"] .cell-output-stdout,
-html[data-mode="dark"] .cell-output pre, html[data-bs-theme="dark"] .cell-output pre,
-html[data-mode="dark"] pre:not(.sourceCode), html[data-bs-theme="dark"] pre:not(.sourceCode) {
+[data-bs-theme="dark"] .cell-output, [data-mode="dark"] .cell-output,
+[data-bs-theme="dark"] .cell-output-stdout, [data-mode="dark"] .cell-output-stdout,
+[data-bs-theme="dark"] .cell-output pre, [data-mode="dark"] .cell-output pre,
+[data-bs-theme="dark"] pre:not(.sourceCode), [data-mode="dark"] pre:not(.sourceCode) {
   background-color: rgba(0, 0, 0, 0.5) !important; 
   color: #f8f9fa !important;                        
   border: 1px solid rgba(255, 255, 255, 0.1) !important;
   border-radius: 8px !important;
 }
-
-html[data-mode="dark"] .sourceCode, html[data-bs-theme="dark"] .sourceCode,
-html[data-mode="dark"] pre.sourceCode, html[data-bs-theme="dark"] pre.sourceCode {
+[data-bs-theme="dark"] .sourceCode, [data-mode="dark"] .sourceCode,
+[data-bs-theme="dark"] pre.sourceCode, [data-mode="dark"] pre.sourceCode {
   background-color: rgba(0, 0, 0, 0.4) !important; 
   border: 1px solid rgba(255, 255, 255, 0.1) !important;
   border-radius: 8px !important;
 }
 
 /* 目次（TOC） */
-html[data-mode="dark"] #quarto-sidebar, html[data-bs-theme="dark"] #quarto-sidebar,
-html[data-mode="dark"] .sidebar, html[data-bs-theme="dark"] .sidebar,
-html[data-mode="dark"] #TOC, html[data-bs-theme="dark"] #TOC,
-html[data-mode="dark"] nav[role="doc-toc"], html[data-bs-theme="dark"] nav[role="doc-toc"],
-html[data-mode="dark"] .quarto-secondary-nav, html[data-bs-theme="dark"] .quarto-secondary-nav,
-html[data-mode="dark"] .quarto-sidebar-toggle, html[data-bs-theme="dark"] .quarto-sidebar-toggle {
+[data-bs-theme="dark"] #quarto-sidebar, [data-mode="dark"] #quarto-sidebar,
+[data-bs-theme="dark"] .sidebar, [data-mode="dark"] .sidebar,
+[data-bs-theme="dark"] #TOC, [data-mode="dark"] #TOC,
+[data-bs-theme="dark"] nav[role="doc-toc"], [data-mode="dark"] nav[role="doc-toc"],
+[data-bs-theme="dark"] .quarto-secondary-nav, [data-mode="dark"] .quarto-secondary-nav,
+[data-bs-theme="dark"] .quarto-sidebar-toggle, [data-mode="dark"] .quarto-sidebar-toggle {
   background: transparent !important;
   background-color: transparent !important;
   border: none !important;
 }
-
-html[data-mode="dark"] #TOC a, html[data-bs-theme="dark"] #TOC a,
-html[data-mode="dark"] .sidebar a, html[data-bs-theme="dark"] .sidebar a,
-html[data-mode="dark"] .nav-link, html[data-bs-theme="dark"] .nav-link {
+[data-bs-theme="dark"] #TOC a, [data-mode="dark"] #TOC a,
+[data-bs-theme="dark"] .sidebar a, [data-mode="dark"] .sidebar a,
+[data-bs-theme="dark"] .nav-link, [data-mode="dark"] .nav-link {
   color: rgba(255, 255, 255, 0.65) !important; 
 }
-
-html[data-mode="dark"] #TOC a:hover, html[data-bs-theme="dark"] #TOC a:hover,
-html[data-mode="dark"] .sidebar a:hover, html[data-bs-theme="dark"] .sidebar a:hover,
-html[data-mode="dark"] #TOC .active, html[data-bs-theme="dark"] #TOC .active,
-html[data-mode="dark"] .sidebar .active, html[data-bs-theme="dark"] .sidebar .active {
+[data-bs-theme="dark"] #TOC a:hover, [data-mode="dark"] #TOC a:hover,
+[data-bs-theme="dark"] .sidebar a:hover, [data-mode="dark"] .sidebar a:hover,
+[data-bs-theme="dark"] #TOC .active, [data-mode="dark"] #TOC .active,
+[data-bs-theme="dark"] .sidebar .active, [data-mode="dark"] .sidebar .active {
   color: #00b4d8 !important; 
 }
 
 /* Resumeページリストマーカー */
-html[data-mode="dark"] .content ul li::before, html[data-bs-theme="dark"] .content ul li::before {
+[data-bs-theme="dark"] .content ul li::before, [data-mode="dark"] .content ul li::before {
   content: "▪" !important; 
   position: absolute !important;
   left: -20px !important;
@@ -206,16 +201,15 @@ html[data-mode="dark"] .content ul li::before, html[data-bs-theme="dark"] .conte
 }
 
 /* リンク色 */
-html[data-mode="dark"] a, html[data-bs-theme="dark"] a {
+[data-bs-theme="dark"] a, [data-mode="dark"] a {
   color: #4ea8de !important;
 }
-
-html[data-mode="dark"] a:hover, html[data-bs-theme="dark"] a:hover {
+[data-bs-theme="dark"] a:hover, [data-mode="dark"] a:hover {
   color: #90e0ef !important;
 }
 
 /* ライトトレイルキャンバス */
-html[data-mode="dark"] #mouse-trail, html[data-bs-theme="dark"] #mouse-trail {
+[data-bs-theme="dark"] #mouse-trail, [data-mode="dark"] #mouse-trail {
   position: fixed !important;
   top: 0 !important;
   left: 0 !important;
