@@ -17,21 +17,23 @@ about:
       href: mailto:shuhei519113@gmail.com
 ---
 
-Welcome! This portfolio introduces my academic background and interests.  
+Welcome! This portfolio introduces my academic background and interests.\
 My academic focus lies at the intersection of advanced statistics and marketing science.
 
-<div class="home-affiliation">
-  <img src="hitotsubashi.jpg" class="home-logo">
-  <div class="home-text">
-    ['27 Hitotsubashi University](https://www.hit-u.ac.jp/eng/)  
-    <span class="sub-text">Social Data Science</span>
-  </div>
-</div>
+\`\`\`{=html}
 
-<div class="home-affiliation">
-  <img src="lse.jpg" class="home-logo">
-  <div class="home-text">
-    ['26 London School of Economics](https://www.lse.ac.uk)  
-    <span class="sub-text">General Course, Statistics</span>
-  </div>
-</div>
+:::: home-affiliation
+<img src="hitotsubashi.jpg" class="home-logo"/>
+
+::: home-text
+<a href="[https://www.hit-u.ac.jp/eng/](https://www.hit-u.ac.jp/eng/)">'27 Hitotsubashi University</a> [Social Data Science]{.sub-text}
+:::
+::::
+
+:::: home-affiliation
+<img src="lse.jpg" class="home-logo"/>
+
+::: home-text
+<a href="[https://www.lse.ac.uk](https://www.lse.ac.uk)">'26 London School of Economics</a> [General Course, Statistics]{.sub-text}
+:::
+::::

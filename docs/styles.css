@@ -1,5 +1,10 @@
 /* ==========================================================================
-   1. 背景画像の設定（ぼかし無し・そのままクッキリ表示）
+   0. Google Fonts Import
+   ========================================================================== */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@600;700&display=swap');
+
+/* ==========================================================================
+   1. Global Styles & Typography
    ========================================================================== */
 body {
   background-image: url('background.jpg');
@@ -7,12 +12,33 @@ body {
   background-position: center center;
   background-attachment: fixed;
   background-repeat: no-repeat;
-  color: #ffffff !important; /* すべての基本文字を白に */
   background-color: #0b132b;
+  color: #ffffff !important;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+  -webkit-font-smoothing: antialiased;
+}
+
+.content {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+}
+
+/* Heading styles with Space Grotesk */
+h1, h2, h3, h4, .h1, .h2, .h3, .h4, .navbar-brand {
+  font-family: 'Space Grotesk', sans-serif !important;
+  letter-spacing: -0.3px !important;
+}
+
+p, span, li, .anchored {
+  color: #ffffff !important;
+}
+
+/* Monospace text styles */
+code, .navbar-nav {
+  font-family: 'JetBrains Mono', monospace !important;
 }
 
 /* ==========================================================================
-   2. 白いカードの残党を根こそぎ完全に透明化（透過）する
+   2. Layout Transparency (Removing default white cards)
    ========================================================================== */
 #quarto-content, 
 .quarto-container, 
@@ -32,9 +58,8 @@ main.content,
 }
 
 /* ==========================================================================
-   3. ナビゲーションバーとテキストカラーの調整
+   3. Navigation Bar
    ========================================================================== */
-/* 上部のバーは少し暗めの半透明にしてテック感を出す */
 .navbar {
   background-color: rgba(11, 19, 43, 0.8) !important;
   backdrop-filter: blur(8px);
@@ -45,23 +70,236 @@ main.content,
   color: #ffffff !important;
 }
 
-/* サイト内の見出しやテキストをすべて白に統一 */
-p, span, li, h1, h2, h3, h4, .h1, .h2, .h3, .h4, .anchored {
-  color: #ffffff !important;
-}
-
-/* リンクだけは埋もれないように鮮やかなサイバーブルーに */
+/* ==========================================================================
+   4. Global Hyperlinks
+   ========================================================================== */
 a {
   color: #4ea8de !important;
   text-decoration: none;
 }
+
 a:hover {
   color: #90e0ef !important;
   text-decoration: underline;
 }
 
 /* ==========================================================================
-   4. 特殊レイアウト（ファイルカード ＆ 2列スマートリスト）
+   5. Academic Section Headings (H2 Cyan Accent)
+   ========================================================================== */
+h2, .h2, h2.anchored, section h2, .level2 h2 {
+  padding-left: 15px !important;          
+  border-left: 5px solid #00b4d8 !important; 
+  border-bottom: none !important; 
+  color: #ffffff !important;                 
+  margin-top: 60px !important;            
+  margin-bottom: 25px !important;         
+  font-weight: 700 !important;
+  letter-spacing: 0.5px !important;
+}
+
+/* ==========================================================================
+   6. Project Grid Cards (Hover and Glow Effects)
+   ========================================================================== */
+.quarto-grid-item {
+  background-color: rgba(255, 255, 255, 0.04) !important; 
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 12px !important;
+  transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), 
+              box-shadow 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), 
+              background-color 0.3s ease !important;
+}
+
+.quarto-grid-item:hover {
+  transform: translateY(-8px) !important; 
+  background-color: rgba(255, 255, 255, 0.12) !important; 
+  border-color: #4ea8de !important; 
+  box-shadow: 0 15px 35px rgba(78, 168, 222, 0.25) !important; 
+}
+
+.quarto-grid-item .listing-title,
+.quarto-grid-item .listing-description {
+  color: #ffffff !important;
+}
+
+/* ==========================================================================
+   7. Code Blocks & Execution Outputs
+   ========================================================================== */
+.cell-output, 
+.cell-output-stdout, 
+.cell-output pre, 
+pre:not(.sourceCode) {
+  background-color: rgba(0, 0, 0, 0.5) !important; 
+  color: #f8f9fa !important;                        
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 8px !important;
+  padding: 15px !important;
+}
+
+.sourceCode, 
+pre.sourceCode {
+  background-color: rgba(0, 0, 0, 0.4) !important; 
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 8px !important;
+}
+
+/* ==========================================================================
+   8. Sidebar & Table of Contents (TOC)
+   ========================================================================== */
+#quarto-sidebar, 
+.sidebar, 
+#TOC, 
+nav[role="doc-toc"],
+.quarto-secondary-nav,
+.quarto-sidebar-toggle {
+  background: transparent !important;
+  background-color: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+#TOC a, 
+.sidebar a, 
+.nav-link {
+  color: rgba(255, 255, 255, 0.65) !important; 
+  transition: color 0.2s ease;
+}
+
+#TOC a:hover, 
+.sidebar a:hover, 
+#TOC .active,
+.sidebar .active {
+  color: #00b4d8 !important; 
+  text-decoration: none !important;
+}
+
+#text-table-of-contents, .data-toggle {
+  border-left: 3px solid #00b4d8 !important;
+}
+
+/* ==========================================================================
+   9. Resume Page Refinements (Square Markers & Logos)
+   ========================================================================== */
+h3 img, .h3 img {
+  vertical-align: middle !important;
+  margin-right: 12px !important;
+  margin-top: -4px !important;
+  border-radius: 4px !important; 
+}
+
+h3, .h3 {
+  font-size: 1.35em !important;
+  letter-spacing: 0.5px !important;
+  margin-top: 35px !important;
+  margin-bottom: 15px !important;
+  font-weight: 700 !important;
+}
+
+.content ul {
+  list-style-type: none !important;
+  padding-left: 20px !important;
+}
+
+.content ul li {
+  position: relative !important;
+  margin-bottom: 12px !important;
+  line-height: 1.6 !important;
+  color: #e2e8f0 !important; 
+}
+
+.content ul li::before {
+  content: "▪" !important; 
+  position: absolute !important;
+  left: -20px !important;
+  color: #00b4d8 !important; 
+  font-size: 1.1em !important;
+  top: -1px !important;
+}
+
+.content ul li strong, 
+.content ul li em,
+.content ul li span.sub-text {
+  font-family: 'Inter', sans-serif !important; 
+}
+
+/* ==========================================================================
+   10. Home Page Affiliation Cards (Glow & Float)
+   ========================================================================== */
+.home-affiliation {
+  display: flex !important; 
+  align-items: center !important;
+  text-align: left !important;
+  margin: 16px auto !important;
+  width: 100% !important;
+  max-width: 440px !important; 
+  gap: 18px !important;
+  padding: 14px 20px !important;               
+  background-color: rgba(255, 255, 255, 0.02) !important; 
+  border: 1px solid rgba(255, 255, 255, 0.08) !important; 
+  border-radius: 12px !important;              
+  transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), 
+              box-shadow 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), 
+              border-color 0.3s ease, 
+              background-color 0.3s ease !important;
+}
+
+.home-affiliation:hover {
+  transform: translateY(-4px) !important;      
+  background-color: rgba(255, 255, 255, 0.07) !important; 
+  border-color: #00b4d8 !important;            
+  box-shadow: 0 10px 25px rgba(0, 180, 216, 0.25) !important; 
+  cursor: pointer;
+}
+
+.home-logo {
+  width: 40px !important;
+  height: 40px !important;
+  object-fit: contain !important;
+  border-radius: 6px !important;
+  flex-shrink: 0 !important; 
+}
+
+.home-text {
+  display: flex !important;
+  flex-direction: column !important;
+  line-height: 1.4 !important;
+}
+
+.home-text a {
+  font-weight: 700 !important;
+  color: #ffffff !important;
+  text-decoration: none !important;
+  font-size: 1.05em !important;
+}
+
+.home-text a:hover {
+  color: #00b4d8 !important;
+  text-decoration: underline !important;
+}
+
+.home-text .sub-text {
+  display: block !important;
+  font-size: 0.9em !important;
+  color: #00b4d8 !important;
+  font-weight: 500 !important;
+  margin-top: 2px !important;
+}
+
+/* ==========================================================================
+   11. Mouse Trail Canvas
+   ========================================================================== */
+#mouse-trail {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  pointer-events: none !important;  
+  z-index: -1 !important;           
+  mix-blend-mode: screen !important;  
+}
+
+/* ==========================================================================
+   12. Legacy Components (Access the Files Smart List)
    ========================================================================== */
 .file-card {
   background-color: #ffffff;
@@ -126,7 +364,6 @@ a:hover {
   height: 100%;
 }
 
-/* 2列スマートリスト表示 */
 .file-list-group {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -139,7 +376,6 @@ a:hover {
   align-items: center;
   padding: 10px 12px;
   text-decoration: none;
-  color: #333;
   background-color: #fff;
   border: 1px solid #e0e0e0;
   border-radius: 6px;
@@ -151,12 +387,10 @@ a:hover {
   box-shadow: 0 2px 8px rgba(0,0,0,0.05);
   transform: translateY(-1px);
   text-decoration: none;
-  color: #000;
 }
 
 .file-list-icon {
   font-size: 1.1em;
-  color: #555;
   margin-right: 12px;
   width: 20px;
   text-align: center;
@@ -178,267 +412,28 @@ a:hover {
 
 .file-list-desc {
   font-size: 0.8em;
-  color: #777;
   font-weight: 400;
   display: block;
   line-height: 1.2;
   margin-top: 2px;
 }
 
-.file-list-arrow {
-  color: #ddd;
-  font-size: 0.8em;
-  margin-left: 10px;
+.file-list-item * {
+  color: #2c3e50 !important;
 }
 
-.file-list-item:hover .file-list-arrow {
-  color: #333;
+.file-list-item:hover * {
+  color: #000000 !important;
+}
+
+.file-list-arrow {
+  color: #a0a0a0 !important;
+  font-size: 0.8em;
+  margin-left: 10px;
 }
 
 @media (max-width: 768px) {
   .file-list-group {
     grid-template-columns: 1fr;
   }
-}
-
-/* ==========================================================================
-   5. アカデミック見出し（ダークモード最適化版）
-   ========================================================================== */
-h2, .h2, h2.anchored, section h2, .level2 h2 {
-  padding-left: 15px !important;          
-  border-left: 5px solid #00b4d8 !important; /* 左側の線を鮮やかなシアンブルーに変更 */
-  border-bottom: none !important; 
-  color: #ffffff !important;                 /* 見出しの文字色を純白に強制変更 */
-  margin-top: 60px !important;            
-  margin-bottom: 25px !important;         
-  font-weight: 700 !important;
-  letter-spacing: 0.5px !important;
-}
-
-
-/* ==========================================================================
-   4. プロジェクトカードのホバーエフェクト（ダークモード最適化版）
-   ========================================================================== */
-/* 通常時のカードの状態：背景をわずかに透けさせて上品に配置 */
-.quarto-grid-item {
-  background-color: rgba(255, 255, 255, 0.04) !important; 
-  border: 1px solid rgba(255, 255, 255, 0.1) !important;
-  border-radius: 12px !important;
-  transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), 
-              box-shadow 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), 
-              background-color 0.3s ease !important;
-}
-
-/* マウスが乗ったとき（Hover）の動的な演出 */
-.quarto-grid-item:hover {
-  transform: translateY(-8px) !important; /* 上に浮かび上がる動き */
-  background-color: rgba(255, 255, 255, 0.12) !important; /* カード自体を少し明るく */
-  border-color: #4ea8de !important; /* 枠線をサイバーブルーに */
-  box-shadow: 0 15px 35px rgba(78, 168, 222, 0.25) !important; /* ブルーの美しい影を落とす */
-}
-
-/* カード内のテキストカラーの固定 */
-.quarto-grid-item .listing-title,
-.quarto-grid-item .listing-description {
-  color: #ffffff !important;
-}
-
-/* ==========================================================================
-   6. 「Access the Files」（スマートリスト）の視認性徹底修正
-   ========================================================================== */
-/* 白いボックス内のテキスト（タイトル・説明文）を濃いグレーに強制固定 */
-.file-list-item * {
-  color: #2c3e50 !important;
-}
-
-/* マウスが乗ったとき（Hover）はよりはっきりとした黒にする */
-.file-list-item:hover * {
-  color: #000000 !important;
-}
-
-/* 右側の矢印アイコンの色が薄すぎる場合の調整 */
-.file-list-arrow {
-  color: #a0a0a0 !important;
-}
-
-/* 「Access the Files」などの見出しを完全に白化する */
-h2, h3, .h2, .h3, [id^="access-the-files"] {
-  color: #ffffff !important;
-}
-
-/* ==========================================================================
-   7. プロジェクト個別ページの表示崩れ徹底修正（ダークモード最適化）
-   ========================================================================== */
-
-/* 1. Rの出力結果（データ表示など）の背景を黒透過にし、文字を白にする */
-.cell-output, 
-.cell-output-stdout, 
-.cell-output pre, 
-pre:not(.sourceCode) {
-  background-color: rgba(0, 0, 0, 0.5) !important; /* 50%不透明の黒背景 */
-  color: #f8f9fa !important;                        /* 文字を明るい白に */
-  border: 1px solid rgba(255, 255, 255, 0.1) !important;
-  border-radius: 8px !important;
-  padding: 15px !important;
-}
-
-/* 2. 入力コードブロック（ソースコード）自体の背景も少し引き締める */
-.sourceCode, 
-pre.sourceCode {
-  background-color: rgba(0, 0, 0, 0.4) !important; 
-  border: 1px solid rgba(255, 255, 255, 0.1) !important;
-  border-radius: 8px !important;
-}
-
-/* 3. 左側サイドバー（目次・TOC）の白い背景を完全に消去して透明にする */
-#quarto-sidebar, 
-.sidebar, 
-#TOC, 
-nav[role="doc-toc"],
-.quarto-secondary-nav,
-.quarto-sidebar-toggle {
-  background: transparent !important;
-  background-color: transparent !important;
-  border: none !important;
-  box-shadow: none !important;
-}
-
-/* 4. 目次（TOC）内のリンク文字を白化し、ホバーでサイバーブルーにする */
-#TOC a, 
-.sidebar a, 
-.nav-link {
-  color: rgba(255, 255, 255, 0.65) !important; /* 通常時は少し落ち着いた白 */
-  transition: color 0.2s ease;
-}
-
-#TOC a:hover, 
-.sidebar a:hover, 
-#TOC .active,
-.sidebar .active {
-  color: #00b4d8 !important; /* マウスホバーや現在表示中のセクションは青く光らせる */
-  text-decoration: none !important;
-}
-
-
-/* ==========================================================================
-   8. Resumeページのディテール洗練化（フォント・マーカー・ロゴ調整）
-   ========================================================================== */
-
-/* 1. 大学ロゴ画像とテキストの美しい中央揃え */
-h3 img, .h3 img {
-  vertical-align: middle !important;
-  margin-right: 12px !important;
-  margin-top: -4px !important;
-  border-radius: 4px !important; /* ロゴの角を微かに丸めて馴染ませる */
-}
-
-/* 2. 大学名（h3）のフォントと余白の最適化 */
-h3, .h3 {
-  font-size: 1.35em !important;
-  letter-spacing: 0.5px !important;
-  margin-top: 35px !important;
-  margin-bottom: 15px !important;
-  font-weight: 700 !important;
-}
-
-/* 3. 箇条書き（リスト）のデフォルトの丸を消去 */
-.content ul {
-  list-style-type: none !important;
-  padding-left: 20px !important;
-}
-
-/* 4. リストの先頭にサイバーブルーのシャープなマーカーを配置 */
-.content ul li {
-  position: relative !important;
-  margin-bottom: 12px !important;
-  line-height: 1.6 !important;
-  color: #e2e8f0 !important; /* 本文をわずかに柔らかい白にして可読性を向上 */
-}
-
-.content ul li::before {
-  content: "▪" !important; /* シャープな四角形マーカー */
-  position: absolute !important;
-  left: -20px !important;
-  color: #00b4d8 !important; /* 見出しの線と同じシアンブルー */
-  font-size: 1.1em !important;
-  top: -1px !important;
-}
-
-/* 5. 右側の目次（TOC）タイトルの位置微調整 */
-#text-table-of-contents, .data-toggle {
-  border-left: 3px solid #00b4d8 !important;
-}
-
-/* ==========================================================================
-   9. トップページ（Home）所属セクションの完全最適化（発光エフェクト版）
-   ========================================================================== */
-/* 通常時：ごく薄いスケルトン枠のカードとして中央に配置 */
-.home-affiliation {
-  display: inline-flex !important; 
-  align-items: center !important;
-  text-align: left !important;
-  margin: 12px auto !important;
-  width: 100% !important;
-  max-width: 440px !important; 
-  gap: 18px !important;
-  padding: 12px 20px !important;               /* 内側に上品な余白を確保 */
-  background-color: rgba(255, 255, 255, 0.02) !important; /* 背景に溶け込む薄い透過 */
-  border: 1px solid rgba(255, 255, 255, 0.08) !important; /* 繊細な初期枠線 */
-  border-radius: 10px !important;              /* 角を丸めてモダンに */
-  transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), 
-              box-shadow 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), 
-              border-color 0.3s ease, 
-              background-color 0.3s ease !important;
-}
-
-/* ホバー時（Hover）：浮遊し、サイバーブルーに発光する演出 */
-.home-affiliation:hover {
-  transform: translateY(-5px) !important;      /* 上にしっかり浮かび上がる */
-  background-color: rgba(255, 255, 255, 0.07) !important; /* カードを少し明るく */
-  border-color: #00b4d8 !important;            /* 枠線がシアンブルーに変化 */
-  box-shadow: 0 10px 25px rgba(0, 180, 216, 0.25) !important; /* ブルーのネオン影を落とす */
-  cursor: pointer;
-}
-
-/* ロゴのサイズと形状の固定 */
-.home-logo {
-  width: 38px !important;
-  height: 38px !important;
-  object-fit: contain !important;
-  border-radius: 4px !important;
-}
-
-/* テキストの行間調整 */
-.home-text {
-  line-height: 1.4 !important;
-}
-
-/* 大学名リンクの装飾 */
-.home-text a {
-  font-weight: 700 !important;
-  color: #ffffff !important;
-  text-decoration: none !important;
-}
-
-/* 専攻名のテキスト（シアンブルーに変更） */
-.home-text .sub-text {
-  display: block !important;
-  font-size: 0.9em !important;
-  color: #00b4d8 !important;
-  font-weight: 500 !important;
-}
-
-
-/* ==========================================================================
-   10. マウス軌跡のサイバー・ライトトレイル（光の流線エフェクト）
-   ========================================================================== */
-#mouse-trail {
-  position: fixed !important;
-  top: 0 !important;
-  left: 0 !important;
-  width: 100vw !important;
-  height: 100vh !important;
-  pointer-events: none !important;  /* クリックやテキスト選択を絶対に邪魔しない */
-  z-index: -1 !important;           /* 背景画像と文字の間に敷き、文字の下をすり抜ける演出 */
-  mix-blend-mode: screen !important;  /* 深い紺色の背景と電脳線を美しく融合 */
 }
