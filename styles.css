@@ -1,141 +1,143 @@
 /* ==========================================================================
-   0. Google Fonts Import
+   0. Global Fonts (両モード共通のモダンタイポグラフィ)
    ========================================================================== */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Outfit:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap');
 
-/* ==========================================================================
-   1. Global Styles & Typography
-   ========================================================================== */
-body {
-  background-image: url('background.jpg');
-  background-size: cover;
-  background-position: center center;
-  background-attachment: fixed;
-  background-repeat: no-repeat;
-  background-color: #0b132b;
-  color: #ffffff !important;
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+body, .content {
+  font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif !important;
   -webkit-font-smoothing: antialiased;
 }
 
-.content {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
-}
-
-/* Heading styles with Space Grotesk */
 h1, h2, h3, h4, .h1, .h2, .h3, .h4, .navbar-brand {
-  font-family: 'Space Grotesk', sans-serif !important;
-  letter-spacing: -0.3px !important;
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
+  letter-spacing: -0.4px !important;
 }
 
-p, span, li, .anchored {
-  color: #ffffff !important;
-}
-
-/* Monospace text styles */
-code, .navbar-nav {
-  font-family: 'JetBrains Mono', monospace !important;
+code, .navbar-nav, .listing-categories .listing-category, .quarto-categories .quarto-category {
+  font-family: 'Space Mono', monospace !important;
 }
 
 /* ==========================================================================
-   2. Layout Transparency (Removing default white cards)
+   1. Light Mode Default (デフォルト：LSE風ホワイトミニマリズム)
    ========================================================================== */
-#quarto-content, 
-.quarto-container, 
-main, 
-main.content,
-.page-columns, 
-.about-entity, 
-.quarto-about-solana, 
-.quarto-about-marquee,
-.about-contents,
-.about-links,
-.quarto-layout-panel {
+html[data-mode="light"] body {
+  background-color: #ffffff !important;
+  background-image: none !important;
+  color: #212529 !important;
+}
+
+html[data-mode="light"] p, 
+html[data-mode="light"] span, 
+html[data-mode="light"] li, 
+html[data-mode="light"] .anchored,
+html[data-mode="light"] h1,
+html[data-mode="light"] h2,
+html[data-mode="light"] h3,
+html[data-mode="light"] h4 {
+  color: #212529 !important;
+}
+
+html[data-mode="light"] a {
+  color: #0056b3 !important;
+  text-decoration: none;
+}
+
+html[data-mode="light"] a:hover {
+  text-decoration: underline !important;
+}
+
+/* 審査官向けのシンプルさを保証するため、ライトモード時はライトトレイルを完全非表示 */
+html[data-mode="light"] #mouse-trail {
+  display: none !important;
+}
+
+/* ==========================================================================
+   2. Dark Mode Specific (切り替え時：こだわりのサイバーダーク)
+   ========================================================================== */
+/* Quarto標準ダークテーマが生成する不透明な壁をすべて透明化して破壊 */
+html[data-mode="dark"] #quarto-content, 
+html[data-mode="dark"] .quarto-container, 
+html[data-mode="dark"] main, 
+html[data-mode="dark"] main.content,
+html[data-mode="dark"] .page-columns, 
+html[data-mode="dark"] .about-entity, 
+html[data-mode="dark"] .quarto-about-solana, 
+html[data-mode="dark"] .quarto-about-marquee,
+html[data-mode="dark"] .about-contents,
+html[data-mode="dark"] .about-links,
+html[data-mode="dark"] .quarto-layout-panel,
+html[data-mode="dark"] #quarto-header,
+html[data-mode="dark"] .quarto-title-block {
   background: transparent !important;
   background-color: transparent !important;
   box-shadow: none !important;
   border: none !important;
 }
 
-/* ==========================================================================
-   3. Navigation Bar
-   ========================================================================== */
-.navbar {
+/* 最背面のbodyだけに背景画像を敷く */
+html[data-mode="dark"] body {
+  background-image: url('background.jpg') !important;
+  background-size: cover !important;
+  background-position: center center !important;
+  background-attachment: fixed !important;
+  background-repeat: no-repeat !important;
+  background-color: #0b132b !important;
+  color: #ffffff !important;
+}
+
+/* ダークモード時のテキスト強制白化 */
+html[data-mode="dark"] p, 
+html[data-mode="dark"] span, 
+html[data-mode="dark"] li, 
+html[data-mode="dark"] .anchored,
+html[data-mode="dark"] h1,
+html[data-mode="dark"] h2,
+html[data-mode="dark"] h3,
+html[data-mode="dark"] h4,
+html[data-mode="dark"] .quarto-title-block .quarto-title .title,
+html[data-mode="dark"] .quarto-title-block .description,
+html[data-mode="dark"] .quarto-title-meta,
+html[data-mode="dark"] .quarto-title-meta-heading,
+html[data-mode="dark"] .quarto-title-meta-contents,
+html[data-mode="dark"] .quarto-title-meta-contents a {
+  color: #ffffff !important;
+}
+
+/* ダークモード時のナビゲーションバー */
+html[data-mode="dark"] .navbar,
+html[data-mode="dark"] .navbar.navbar-dark,
+html[data-mode="dark"] .bg-dark {
   background-color: rgba(11, 19, 43, 0.8) !important;
-  backdrop-filter: blur(8px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(8px) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
 }
 
-.navbar a, .navbar-title, .nav-link {
+html[data-mode="dark"] .navbar a, 
+html[data-mode="dark"] .navbar-title, 
+html[data-mode="dark"] .nav-link,
+html[data-mode="dark"] .navbar-dark .navbar-nav .nav-link,
+html[data-mode="dark"] .navbar-brand {
   color: #ffffff !important;
 }
 
-
-/* ==========================================================================
-   4. Quarto カテゴリー（タグ）のグローバルな視認性修正
-   ========================================================================== */
-/* 画像で見られるようなゴールド系の文字色は、ダークモードでは見づらいため、サイバーブルーのネオンに変更 */
-.listing-categories .listing-category {
-  color: #ffffff !important;               /* 文字を白にする */
-  background-color: rgba(78, 168, 222, 0.2) !important; /* 背景を薄いサイバーブルーに */
-  border: 1px solid #4ea8de !important;    /* 枠線をサイバーブルーに */
-  border-radius: 4px !important;
-  font-family: 'JetBrains Mono', monospace !important; /* フォントを等幅に */
-  font-weight: 500 !important;
+/* ダークモード時のアカデミック見出し（シアンアクセント） */
+html[data-mode="dark"] h2, 
+html[data-mode="dark"] .h2, 
+html[data-mode="dark"] h2.anchored, 
+html[data-mode="dark"] section h2, 
+html[data-mode="dark"] .level2 h2 {
+  padding-left: 15px !important;          
+  border-left: 5px solid #00b4d8 !important; 
+  border-bottom: none !important; 
+  margin-top: 60px !important;            
+  margin-bottom: 25px !important;         
+  font-weight: 700 !important;
+  letter-spacing: 0.5px !important;
 }
 
-/* ホバー時に少し明るく */
-.listing-categories .listing-category:hover {
-  background-color: rgba(78, 168, 222, 0.4) !important;
-  color: #ffffff !important;
-  text-decoration: none !important;
-}
-
-/* ==========================================================================
-   5. プロジェクトリスト（リスト形式）の視認性修正
-   ========================================================================== */
-/* 見出し、説明、メタデータ（著者、日付）の文字色を白にする */
-.listing-title,
-.listing-description,
-.listing-author,
-.listing-date,
-.listing-metadata {
-  color: #ffffff !important;
-}
-
-/* ==========================================================================
-   【確定修正】プロジェクト個別ページ・最上部ヘッダーの視認性徹底修正
-   ========================================================================== */
-/* 個別ページのタイトルと説明文（Description）を純白化 */
-.quarto-title-block .quarto-title .title,
-.quarto-title-block .description {
-  color: #ffffff !important;
-}
-
-/* 著者名や日付などのメタデータ領域もすべて白化 */
-.quarto-title-meta,
-.quarto-title-meta-heading,
-.quarto-title-meta-contents,
-.quarto-title-meta-contents a {
-  color: #ffffff !important;
-}
-
-/* 個別ページ上部にあるカテゴリータグ（R、MARKETING、STATISTICS）の視認性修正 */
-.quarto-categories .quarto-category {
-  color: #ffffff !important;                             /* 文字を白にする */
-  background-color: rgba(78, 168, 222, 0.15) !important; /* 背景を薄いサイバーブルーに */
-  border: 1px solid #4ea8de !important;                  /* 枠線をサイバーブルーに */
-  border-radius: 4px !important;
-  padding: 4px 10px !important;
-  font-family: 'JetBrains Mono', monospace !important;   /* フォントを等幅に */
-  font-weight: 500 !important;
-}
-
-
-/* ==========================================================================
-   6. Project Grid Cards (Hover and Glow Effects)
-   ========================================================================== */
-.quarto-grid-item {
+/* ダークモード時のプロジェクトカード */
+html[data-mode="dark"] .quarto-grid-item,
+html[data-mode="dark"] .card {
   background-color: rgba(255, 255, 255, 0.04) !important; 
   border: 1px solid rgba(255, 255, 255, 0.1) !important;
   border-radius: 12px !important;
@@ -144,185 +146,85 @@ main.content,
               background-color 0.3s ease !important;
 }
 
-.quarto-grid-item:hover {
+html[data-mode="dark"] .quarto-grid-item:hover {
   transform: translateY(-8px) !important; 
   background-color: rgba(255, 255, 255, 0.12) !important; 
   border-color: #4ea8de !important; 
   box-shadow: 0 15px 35px rgba(78, 168, 222, 0.25) !important; 
 }
 
-.quarto-grid-item .listing-title,
-.quarto-grid-item .listing-description {
-  color: #ffffff !important;
+/* ダークモード時のタグ装飾 */
+html[data-mode="dark"] .listing-categories .listing-category,
+html[data-mode="dark"] .quarto-categories .quarto-category {
+  color: #ffffff !important;               
+  background-color: rgba(78, 168, 222, 0.2) !important; 
+  border: 1px solid #4ea8de !important;    
+  border-radius: 4px !important;
+  font-weight: 500 !important;
 }
 
-/* ==========================================================================
-   7. Code Blocks & Execution Outputs
-   ========================================================================== */
-.cell-output, 
-.cell-output-stdout, 
-.cell-output pre, 
-pre:not(.sourceCode) {
+/* ダークモード時のソースコード・出力ブロック */
+html[data-mode="dark"] .cell-output, 
+html[data-mode="dark"] .cell-output-stdout, 
+html[data-mode="dark"] .cell-output pre, 
+html[data-mode="dark"] pre:not(.sourceCode) {
   background-color: rgba(0, 0, 0, 0.5) !important; 
   color: #f8f9fa !important;                        
   border: 1px solid rgba(255, 255, 255, 0.1) !important;
   border-radius: 8px !important;
-  padding: 15px !important;
 }
 
-.sourceCode, 
-pre.sourceCode {
+html[data-mode="dark"] .sourceCode, 
+html[data-mode="dark"] pre.sourceCode {
   background-color: rgba(0, 0, 0, 0.4) !important; 
   border: 1px solid rgba(255, 255, 255, 0.1) !important;
   border-radius: 8px !important;
 }
 
-/* ==========================================================================
-   8. Sidebar & Table of Contents (TOC)
-   ========================================================================== */
-#quarto-sidebar, 
-.sidebar, 
-#TOC, 
-nav[role="doc-toc"],
-.quarto-secondary-nav,
-.quarto-sidebar-toggle {
+/* ダークモード時の目次（TOC） */
+html[data-mode="dark"] #quarto-sidebar, 
+html[data-mode="dark"] .sidebar, 
+html[data-mode="dark"] #TOC, 
+html[data-mode="dark"] nav[role="doc-toc"],
+html[data-mode="dark"] .quarto-secondary-nav,
+html[data-mode="dark"] .quarto-sidebar-toggle {
   background: transparent !important;
   background-color: transparent !important;
   border: none !important;
-  box-shadow: none !important;
 }
 
-#TOC a, 
-.sidebar a, 
-.nav-link {
+html[data-mode="dark"] #TOC a, 
+html[data-mode="dark"] .sidebar a, 
+html[data-mode="dark"] .nav-link {
   color: rgba(255, 255, 255, 0.65) !important; 
-  transition: color 0.2s ease;
 }
 
-#TOC a:hover, 
-.sidebar a:hover, 
-#TOC .active,
-.sidebar .active {
+html[data-mode="dark"] #TOC a:hover, 
+html[data-mode="dark"] .sidebar a:hover, 
+html[data-mode="dark"] #TOC .active,
+html[data-mode="dark"] .sidebar .active {
   color: #00b4d8 !important; 
-  text-decoration: none !important;
 }
 
-#text-table-of-contents, .data-toggle {
-  border-left: 3px solid #00b4d8 !important;
-}
-
-/* ==========================================================================
-   9. Resume Page Refinements (Square Markers & Logos)
-   ========================================================================== */
-h3 img, .h3 img {
-  vertical-align: middle !important;
-  margin-right: 12px !important;
-  margin-top: -4px !important;
-  border-radius: 4px !important; 
-}
-
-h3, .h3 {
-  font-size: 1.35em !important;
-  letter-spacing: 0.5px !important;
-  margin-top: 35px !important;
-  margin-bottom: 15px !important;
-  font-weight: 700 !important;
-}
-
-.content ul {
-  list-style-type: none !important;
-  padding-left: 20px !important;
-}
-
-.content ul li {
-  position: relative !important;
-  margin-bottom: 12px !important;
-  line-height: 1.6 !important;
-  color: #e2e8f0 !important; 
-}
-
-.content ul li::before {
+/* ダークモード時のResumeページリストマーカー */
+html[data-mode="dark"] .content ul li::before {
   content: "▪" !important; 
   position: absolute !important;
   left: -20px !important;
   color: #00b4d8 !important; 
-  font-size: 1.1em !important;
-  top: -1px !important;
 }
 
-.content ul li strong, 
-.content ul li em,
-.content ul li span.sub-text {
-  font-family: 'Inter', sans-serif !important; 
+/* ダークモード時のグローバルリンク色 */
+html[data-mode="dark"] a {
+  color: #4ea8de !important;
 }
 
-/* ==========================================================================
-   10. Home Page Affiliation Cards (Glow & Float)
-   ========================================================================== */
-.home-affiliation {
-  display: flex !important; 
-  align-items: center !important;
-  text-align: left !important;
-  margin: 16px auto !important;
-  width: 100% !important;
-  max-width: 440px !important; 
-  gap: 18px !important;
-  padding: 14px 20px !important;               
-  background-color: rgba(255, 255, 255, 0.02) !important; 
-  border: 1px solid rgba(255, 255, 255, 0.08) !important; 
-  border-radius: 12px !important;              
-  transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), 
-              box-shadow 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), 
-              border-color 0.3s ease, 
-              background-color 0.3s ease !important;
+html[data-mode="dark"] a:hover {
+  color: #90e0ef !important;
 }
 
-.home-affiliation:hover {
-  transform: translateY(-4px) !important;      
-  background-color: rgba(255, 255, 255, 0.07) !important; 
-  border-color: #00b4d8 !important;            
-  box-shadow: 0 10px 25px rgba(0, 180, 216, 0.25) !important; 
-  cursor: pointer;
-}
-
-.home-logo {
-  width: 40px !important;
-  height: 40px !important;
-  object-fit: contain !important;
-  border-radius: 6px !important;
-  flex-shrink: 0 !important; 
-}
-
-.home-text {
-  display: flex !important;
-  flex-direction: column !important;
-  line-height: 1.4 !important;
-}
-
-.home-text a {
-  font-weight: 700 !important;
-  color: #ffffff !important;
-  text-decoration: none !important;
-  font-size: 1.05em !important;
-}
-
-.home-text a:hover {
-  color: #00b4d8 !important;
-  text-decoration: underline !important;
-}
-
-.home-text .sub-text {
-  display: block !important;
-  font-size: 0.9em !important;
-  color: #00b4d8 !important;
-  font-weight: 500 !important;
-  margin-top: 2px !important;
-}
-
-/* ==========================================================================
-   11. Mouse Trail Canvas
-   ========================================================================== */
-#mouse-trail {
+/* ダークモード時のライトトレイルキャンバス */
+html[data-mode="dark"] #mouse-trail {
   position: fixed !important;
   top: 0 !important;
   left: 0 !important;
@@ -331,144 +233,5 @@ h3, .h3 {
   pointer-events: none !important;  
   z-index: -1 !important;           
   mix-blend-mode: screen !important;  
-}
-
-/* ==========================================================================
-   12. Legacy Components (Access the Files Smart List)
-   ========================================================================== */
-.file-card {
-  background-color: #ffffff;
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
-  padding: 20px;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-  position: relative;
-  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-}
-
-.file-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 25px rgba(0,0,0,0.1);
-  border-color: #333;
-  background-color: #fafafa;
-}
-
-.file-card-icon {
-  font-size: 1.8em;
-  color: #555;
-  margin-bottom: 12px;
-  background-color: #f5f5f5;
-  width: 50px;
-  height: 50px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  transition: all 0.3s ease;
-}
-
-.file-card:hover .file-card-icon {
-  background-color: #333;
-  color: #fff;
-}
-
-.file-card-title {
-  font-weight: 700;
-  font-size: 1.1em;
-  margin: 0 0 5px 0;
-  color: #333;
-}
-
-.file-card-desc {
-  font-size: 0.9em;
-  color: #666;
-  margin: 0;
-  line-height: 1.4;
-}
-
-.file-card a::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-}
-
-.file-list-group {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-  margin-top: 15px;
-}
-
-.file-list-item {
-  display: flex;
-  align-items: center;
-  padding: 10px 12px;
-  text-decoration: none;
-  background-color: #fff;
-  border: 1px solid #e0e0e0;
-  border-radius: 6px;
-  transition: all 0.2s ease;
-}
-
-.file-list-item:hover {
-  border-color: #333;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-  transform: translateY(-1px);
-  text-decoration: none;
-}
-
-.file-list-icon {
-  font-size: 1.1em;
-  margin-right: 12px;
-  width: 20px;
-  text-align: center;
-}
-
-.file-list-content {
-  flex-grow: 1;
-  overflow: hidden;
-}
-
-.file-list-title {
-  font-weight: 600;
-  font-size: 0.95em;
-  display: block;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.file-list-desc {
-  font-size: 0.8em;
-  font-weight: 400;
-  display: block;
-  line-height: 1.2;
-  margin-top: 2px;
-}
-
-.file-list-item * {
-  color: #2c3e50 !important;
-}
-
-.file-list-item:hover * {
-  color: #000000 !important;
-}
-
-.file-list-arrow {
-  color: #a0a0a0 !important;
-  font-size: 0.8em;
-  margin-left: 10px;
-}
-
-@media (max-width: 768px) {
-  .file-list-group {
-    grid-template-columns: 1fr;
-  }
+  display: block !important;
 }
