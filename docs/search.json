@@ -214,42 +214,28 @@
     "href": "resume.html",
     "title": "Resume",
     "section": "",
-    "text": "Bachelor of Science in Social Data Science | Expected: March 2027\nKey Coursework: Advanced Statistics, Econometrics, Data Structure and Algorithms, Machine Learning\nAcademic Performance: High GPA with consistent excellence in quantitative models\n\n\n\n\n\nGeneral Course (Study Abroad Program), Statistics | September 2025 – June 2026\nKey Coursework: Stochastic Processes, Linear Regression, Econometric Theory, Computational Statistics\nAcademic Rigor: Completed advanced, mathematically rigorous curriculums at a world-class institution"
+    "text": "Download CV (PDF)"
   },
   {
     "objectID": "resume.html#education",
     "href": "resume.html#education",
     "title": "Resume",
-    "section": "",
-    "text": "Bachelor of Science in Social Data Science | Expected: March 2027\nKey Coursework: Advanced Statistics, Econometrics, Data Structure and Algorithms, Machine Learning\nAcademic Performance: High GPA with consistent excellence in quantitative models\n\n\n\n\n\nGeneral Course (Study Abroad Program), Statistics | September 2025 – June 2026\nKey Coursework: Stochastic Processes, Linear Regression, Econometric Theory, Computational Statistics\nAcademic Rigor: Completed advanced, mathematically rigorous curriculums at a world-class institution"
+    "section": "Education",
+    "text": "Education\n\n Hitotsubashi University | Tokyo, Japan\n\nBachelor of Science in Social Data Science | Expected: March 2027\nAchieved the highest entrance examination score across all departments and maintained aGPA of 4.06/4.3\nRelevant Modules: Sets and Topology I, Introduction to Probability, Linear Algebra I, Linear Algebra II, Calculus I, Calculus II, Regression Analysis I, Causal Inference, Practical Machine Learning I, Practical Machine Learning II, Marketing Science\nDissertation (Work in Progress): Constructing Bias-Adjusted Rating Metrics to Capture True Restaurant Popularity supervised by Dr. Ryo Kato.\n\n\n\n London School of Economics and Political Science | London\n\nGeneral Course, Statistics | September 2025 – June 2026\nAwarded a full scholarship from Hitotsubashi University to participate in the General Course\nRelevant Modules: ST202 (Probability, Distribution Theory and Inference), ST227 (Survival Models), ST300 (Regression and Generalised Linear Models), ST307 (Aspects of Market Research), DS202A (Data Science for Social Scientists), MG205 (Econometrics: Theory and Applications)"
   },
   {
-    "objectID": "resume.html#research-interests",
-    "href": "resume.html#research-interests",
+    "objectID": "resume.html#teaching-and-additional-experience",
+    "href": "resume.html#teaching-and-additional-experience",
     "title": "Resume",
-    "section": "Research Interests",
-    "text": "Research Interests\n\nQuantitative Marketing and Econometric Modeling\nSurvival Analysis and Duration Models in Business Data\nHigh-Dimensional Statistical Inference and Predictive Modeling\nDatabase Engineering and Scalable Data Pipelines"
+    "section": "Teaching and Additional Experience",
+    "text": "Teaching and Additional Experience\n\nTeaching Assistant\nHitotsubashi University | Sept. 2024 – Jan. 2025\n\nSupported faculty in the Introduction to Social Data Science II course by mentoring students on survey methodology and questionnaire design, supporting analyzing collected survey data, and providing constructive feedback on academic presentations\n\n\n\nSelected Student Contributor\nHitotsubashi University\n\nPromoted the academic department to prospective students by serving as a panelist for open campus sessions broadcast on YouTube, participated in a student and faculty discussion published in a Toyo Keizai magazine, and authored a seminar introduction for the official university booklet"
   },
   {
-    "objectID": "resume.html#teaching-experience",
-    "href": "resume.html#teaching-experience",
+    "objectID": "resume.html#skills",
+    "href": "resume.html#skills",
     "title": "Resume",
-    "section": "Teaching Experience",
-    "text": "Teaching Experience\n\nHiraoka Juku (Tokyo, Japan)\n\nEnglish Instructor (Part-time) | 2024 – 2025\nDelivered comprehensive English grammar and literature lectures to highly motivated student cohorts, fostering advanced linguistic proficiency\nManaged individual student performance data and provided tailored academic guidance to optimize learning outcomes\nCultivated analytical skills and logical reasoning among students through the evaluation of complex textual structures"
-  },
-  {
-    "objectID": "resume.html#selected-projects",
-    "href": "resume.html#selected-projects",
-    "title": "Resume",
-    "section": "Selected Projects",
-    "text": "Selected Projects\n\nYelp Business Survival Analysis\n\nBuilt an end-to-end reproducible statistical report using Quarto, analyzed business dataset via duration models\nFormulated survival curves and Cox proportional hazards models to identify key determinants of business longevity\nImplemented complete data preprocessing, statistical modeling, and visualization pipeline entirely in R\n\n\n\nRelational Database & Customer Modeling\n\nDesigned and executed a structured database project utilizing advanced SQL operations\nEngineered complex data queries incorporating window functions and data normalization techniques\nMaintained clean code repositories on GitHub to showcase rigorous data engineering workflows"
-  },
-  {
-    "objectID": "resume.html#technical-skills",
-    "href": "resume.html#technical-skills",
-    "title": "Resume",
-    "section": "Technical Skills",
-    "text": "Technical Skills\n\nLanguages: R, Python, SQL\nTools & Frameworks: Quarto, Git, GitHub, LaTeX, Docker\nOperating Systems & Environments: Linux, RStudio, Jupyter Notebook\n\n\n&lt;p&gt;\nYour browser does not support PDFs. &lt;a href=\"Resume.pdf\"&gt;Download the PDF&lt;/a&gt;.\n&lt;/p&gt;"
+    "section": "Skills",
+    "text": "Skills\n\nProgramming Languages: R, Python, SQL\nTools: Quarto, Git, GitHub, LaTeX\nLanguages: Japanese (native), English (advanced), Chinese (intermediate)"
   },
   {
     "objectID": "posts/multinomial_logit/report.html",
@@ -501,6 +487,6 @@
     "href": "index.html",
     "title": "Shuhei Kuwabara",
     "section": "",
-    "text": "Welcome to this portfolio website showcasing academic milestones and quantitative research achievements. The core academic focus lies in the application of statistical approaches to marketing science.\n\nAffiliation\n ’27 Hitotsubashi University (Social Data Science)\n ’26 London School of Economics (General Course, Statistics)\n\n\nFurther Information\nExplore the Projects section for detailed empirical analyses or examine the Resume page for comprehensive qualifications."
+    "text": "My core academic focus lies in the application of statistical approaches to marketing science.\n\nAffiliation\n ’27 Hitotsubashi University (Social Data Science)\n ’26 London School of Economics (General Course, Statistics)\n\n\nFurther Information\nExplore the Projects section for detailed empirical analyses or examine the Resume page for comprehensive qualifications."
   }
 ]

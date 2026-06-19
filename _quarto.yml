@@ -2,7 +2,6 @@ project:
   type: website
   output-dir: docs
   resources:
-    - background.jpg
     - mouse-glow.html
 website:
   title: "Shuhei Kuwabara"
@@ -22,9 +21,7 @@ website:
 
 format:
   html:
-    theme:
-      light: cosmo
-      dark: flatly
+    theme: cosmo
     css: styles.css
     include-after-body: mouse-glow.html
     include-in-header:
@@ -34,6 +31,5 @@ format:
 editor: visual
 
 resources:
-  - multinomial_logit/report.qmd  # ← ここは実ファイル名のまま！
+  - multinomial_logit/report.qmd
   - data/chapter_06_choice.csv
-

@@ -6,57 +6,46 @@ format:
     toc-depth: 2
 ---
 
+<a href="Resume.pdf" class="btn" download="Shuhei_Kuwabara_Resume.pdf">
+    <i class="fa-solid fa-file-pdf"></i> Download CV (PDF)
+</a>
+
 ## Education
 
 ### ![](hitotsubashi.jpg){width=27px} **Hitotsubashi University** | Tokyo, Japan
 
 * **Bachelor of Science in Social Data Science** | Expected: March 2027
-* **Key Coursework:** Advanced Statistics, Econometrics, Data Structure and Algorithms, Machine Learning
-* **Academic Performance:** High GPA with consistent excellence in quantitative models
+* Achieved the highest entrance examination score across all departments and maintained aGPA of 4.06/4.3
+* **Relevant Modules:** Sets and Topology I, Introduction to Probability, Linear Algebra I, Linear Algebra II, Calculus I,
+Calculus II, Regression Analysis I, Causal Inference, Practical Machine Learning I, Practical Machine Learning II, Marketing Science
+* **Dissertation (Work in Progress):** *Constructing Bias-Adjusted Rating Metrics to Capture True Restaurant Popularity* supervised by Dr. Ryo Kato.
 
-### ![](lse.jpg){width=27px} **London School of Economics and Political Science** | London, UK
-* **General Course (Study Abroad Program), Statistics** | September 2025 – June 2026
-* **Key Coursework:** Stochastic Processes, Linear Regression, Econometric Theory, Computational Statistics
-* **Academic Rigor:** Completed advanced, mathematically rigorous curriculums at a world-class institution
+### ![](lse.jpg){width=27px} **London School of Economics and Political Science** | London
+* **General Course, Statistics** | September 2025 – June 2026
+* Awarded a full scholarship from Hitotsubashi University to participate in the General Course
+* **Relevant Modules:** ST202 (Probability, Distribution Theory and Inference), ST227 (Survival Models), ST300
+(Regression and Generalised Linear Models), ST307 (Aspects of Market Research), DS202A (Data Science for
+Social Scientists), MG205 (Econometrics: Theory and Applications)
 
+## Teaching and Additional Experience
+### Teaching Assistant
+*Hitotsubashi University* | Sept. 2024 – Jan. 2025
 
-## Research Interests
+* Supported faculty in the Introduction to Social Data Science II course by mentoring students on survey methodology
+and questionnaire design, supporting analyzing collected survey data, and providing constructive feedback on
+academic presentations
 
-* Quantitative Marketing and Econometric Modeling
-* Survival Analysis and Duration Models in Business Data
-* High-Dimensional Statistical Inference and Predictive Modeling
-* Database Engineering and Scalable Data Pipelines
+### Selected Student Contributor
+*Hitotsubashi University*
 
-
-## Teaching Experience
-
-### **Hiraoka Juku** (Tokyo, Japan)
-* **English Instructor (Part-time)** | 2024 – 2025
-* Delivered comprehensive English grammar and literature lectures to highly motivated student cohorts, fostering advanced linguistic proficiency
-* Managed individual student performance data and provided tailored academic guidance to optimize learning outcomes
-* Cultivated analytical skills and logical reasoning among students through the evaluation of complex textual structures
-
-
-## Selected Projects
-
-### **Yelp Business Survival Analysis**
-* Built an end-to-end reproducible statistical report using Quarto, analyzed business dataset via duration models
-* Formulated survival curves and Cox proportional hazards models to identify key determinants of business longevity
-* Implemented complete data preprocessing, statistical modeling, and visualization pipeline entirely in R
-
-### **Relational Database & Customer Modeling**
-* Designed and executed a structured database project utilizing advanced SQL operations
-* Engineered complex data queries incorporating window functions and data normalization techniques
-* Maintained clean code repositories on GitHub to showcase rigorous data engineering workflows
+* Promoted the academic department to prospective students by serving as a panelist for open campus sessions
+broadcast on YouTube, participated in a student and faculty discussion published in a Toyo Keizai magazine, and
+authored a seminar introduction for the official university booklet
 
 
-## Technical Skills
+## Skills
 
-* **Languages:** R, Python, SQL
-* **Tools & Frameworks:** Quarto, Git, GitHub, LaTeX, Docker
-* **Operating Systems & Environments:** Linux, RStudio, Jupyter Notebook
+* **Programming Languages:** R, Python, SQL
+* **Tools:** Quarto, Git, GitHub, LaTeX
+* **Languages:** Japanese (native), English (advanced), Chinese (intermediate)
 
-<iframe width="800" height="800" src="Resume.pdf" style="border: 1px solid #eee;">
-    <p>Your browser does not support PDFs. 
-    <a href="Resume.pdf">Download the PDF</a>.</p>
-</iframe>

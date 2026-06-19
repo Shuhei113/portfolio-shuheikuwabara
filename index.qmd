@@ -19,7 +19,7 @@ about:
 
 ::: {style="text-align: left; max-width: 580px; margin: 35px auto 0 auto; line-height: 1.7;"}
 
-Welcome to this portfolio website showcasing academic milestones and quantitative research achievements. The core academic focus lies in the application of statistical approaches to marketing science.
+My core academic focus lies in the application of statistical approaches to marketing science.
 
 ### Affiliation
 
