@@ -1,6 +1,7 @@
 ---
-title: "Shuhei Kuwabara"
-image: icon.jpg
+title: Shuhei Kuwabara
+title-block-rendered: false
+image: false
 about:
   template: jolla
   image-width: 20em
@@ -17,7 +18,13 @@ about:
       href: mailto:shuhei519113@gmail.com
 ---
 
+<div class="banner-container"><img src="hitotsubashi5.jpg" alt="Hitotsubashi University" class="academic-banner"></div>
+
 ::: {style="text-align: left; max-width: 580px; margin: 35px auto 0 auto; line-height: 1.7;"}
+
+## Shuhei Kuwabara
+
+### Academic Background
 
 My core academic focus lies in the application of statistical approaches to marketing science.
 

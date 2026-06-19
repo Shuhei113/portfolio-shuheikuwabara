@@ -15,9 +15,10 @@ website:
         href: resume.qmd
       
     right:
-      - about.qmd
       - icon: github
         href: https://github.com/Shuhei113/portfolio-Shuhei
+      - icon: linkedin
+        href: https://www.linkedin.com/in/shuhei-kuwabara-a04925399
 
 format:
   html:

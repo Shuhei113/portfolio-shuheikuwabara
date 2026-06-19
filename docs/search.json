@@ -7,13 +7,6 @@
     "text": "About this blog"
   },
   {
-    "objectID": "projects.html",
-    "href": "projects.html",
-    "title": "Projects",
-    "section": "",
-    "text": "Marketing Science: Multinomial Logit & Latent Class Analysis\n\n\n\nR\n\nMarketing\n\nStatistics\n\n\n\nSegmentation and brand choice analysis using Latent Class Models.\n\n\n\nShuhei Kuwabara\n\n\nNov 13, 2025\n\n\n\n\n\n\n\n\n\n\n\n\n\nMarketing Science: Survival & Factor Analysis\n\n\n\nR\n\nMarketing\n\nStatistics\n\n\n\nPredicting customer churn using Cox Proportional Hazards Model and Factor Analysis.\n\n\n\nShuhei Kuwabara\n\n\nJan 23, 2026\n\n\n\n\n\n\n\n\n\n\n\n\n\nSleep Health & Lifestyle Analysis\n\n\n\nR\n\nMachine Learning\n\nRegression\n\nClassification\n\n\n\nPredicting sleep duration and quality using Elastic Net and Random Forest.\n\n\n\nShuhei Kuwabara\n\n\nJan 22, 2026\n\n\n\n\n\n\n\n\n\n\n\n\n\nText Mining UN General Debates (1946-2024)\n\n\n\nR\n\nNLP\n\nText Mining\n\nUnsupervised Learning\n\n\n\nAnalyzing thematic shifts in 10,000+ UN speeches using LDA Topic Modeling and PCA.\n\n\n\nShuhei Kuwabara\n\n\nJan 23, 2026\n\n\n\n\n\n\nNo matching items"
-  },
-  {
     "objectID": "posts/regression_classification/index.html",
     "href": "posts/regression_classification/index.html",
     "title": "Sleep Health & Lifestyle Analysis",
@@ -483,10 +476,10 @@
     "text": "Q4.4 Communicating findings responsibly to a non-technical audience\nCommunicating sleep-prediction findings to non-technical audiences requires an emphasis on clarity, humility, and responsible interpretation. Technical details such as model architecture or tuning should be simplified into intuitive explanations.\n\n“The model looks for patterns across lifestyle factors to estimate the likelihood of achieving sufficient sleep.”\n\nIt is crucial to distinguish correlations from causation and explicitly state that the model identifies statistical associations, not deterministic rules. Uncertainty should be highlighted by explaining that predictions may be inaccurate for some individuals and should not be used as medical diagnoses or performance evaluations. To avoid reinforcing stereotypes, model outputs should be framed in terms of general tendencies rather than inherent characteristics of specific groups. Most importantly, communication should focus on actionable, supportive insights.\n\n“Higher stress levels were consistently associated with shorter sleep in this dataset.”\n\nrather than\n\n“People with high stress do not sleep adequately”.\n\nBy foregrounding transparency and empowerment, the findings can be communicated in a way that promotes understanding without overstating the model’s capabilities."
   },
   {
-    "objectID": "index.html",
-    "href": "index.html",
+    "objectID": "index.html#shuhei-kuwabara",
+    "href": "index.html#shuhei-kuwabara",
     "title": "Shuhei Kuwabara",
-    "section": "",
-    "text": "My core academic focus lies in the application of statistical approaches to marketing science.\n\nAffiliation\n ’27 Hitotsubashi University (Social Data Science)\n ’26 London School of Economics (General Course, Statistics)\n\n\nFurther Information\nExplore the Projects section for detailed empirical analyses or examine the Resume page for comprehensive qualifications."
+    "section": "Shuhei Kuwabara",
+    "text": "Shuhei Kuwabara\n\nAcademic Background\nMy core academic focus lies in the application of statistical approaches to marketing science.\n\n\nAffiliation\n ’27 Hitotsubashi University (Social Data Science)\n ’26 London School of Economics (General Course, Statistics)\n\n\nFurther Information\nExplore the Projects section for detailed empirical analyses or examine the Resume page for comprehensive qualifications."
   }
 ]

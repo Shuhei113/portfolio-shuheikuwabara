@@ -2,8 +2,7 @@
 title: "Resume"
 format:
   html:
-    toc: true
-    toc-depth: 2
+    toc: false
 ---
 
 <a href="Resume.pdf" class="btn" download="Shuhei_Kuwabara_Resume.pdf">

@@ -5281,14 +5281,14 @@ body, .content {
 font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
 -webkit-font-smoothing: antialiased;
 background-color: #ffffff !important;
-color: #212529 !important;
-line-height: 1.75 !important;
+color: #212529 !important; 
+line-height: 1.75 !important; 
 }
 
 h1, h2, h3, h4, .h1, .h2, .h3, .h4, .navbar-brand {
 font-family: 'Lora', serif !important;
 color: #000000 !important;
-letter-spacing: -0.2px !important;
+letter-spacing: -0.2px !important; 
 }
 h3, .h3 {
 letter-spacing: 0px !important;
@@ -5296,8 +5296,17 @@ letter-spacing: 0px !important;
 code, .navbar-nav {
 font-family: 'JetBrains Mono', monospace !important;
 }
+h1.title, h1 {
+font-size: 2.5em !important;
+font-weight: 700 !important;
+margin-top: 10px !important;
+margin-bottom: 25px !important;
+letter-spacing: -0.6px !important;
+}
 
 
+html,
+body,
 #quarto-content, .quarto-container, main, .page-columns, .about-entity, .quarto-about-solana, .quarto-about-marquee,
 .about-contents,
 .about-links,
@@ -5314,13 +5323,22 @@ border: none !important;
 }
 
 .level2 {
-margin-top: 70px !important;
-margin-bottom: 40px !important;
+margin-top: 55px !important;
+margin-bottom: 35px !important;
+}
+.navbar-brand,
+.navbar-nav .nav-link,
+.nav-item a,
+.navbar-container a {
+font-family: 'Lora', serif !important;
+font-weight: 500 !important; 
+font-size: 1.05em !important; 
+letter-spacing: -0.2px !important; 
 }
 
 .navbar {
 background-color: #ffffff !important;
-border-bottom: 1px solid #e5e7eb !important; 
+border-bottom: 1px solid #8a95a5 !important; 
 box-shadow: none !important;
 }
 .navbar a, .navbar-title, .nav-link, .navbar-brand {
@@ -5337,11 +5355,39 @@ text-decoration: underline !important;
 }
 
 h2, .h2, h2.anchored, section h2, .level2 h2 {
-padding-left: 0px !important; 
-padding-bottom: 6px !important; 
-border-left: none !important; 
-border-bottom: 1px solid black !important; 
+padding-left: 0px !important;
+padding-bottom: 8px !important; 
+border-left: none !important;
+border-bottom: 1px solid #8a95a5 !important; 
 font-weight: 700 !important;
+margin-top: 50px !important;
+margin-bottom: 25px !important;
+}
+
+
+.btn-outline-primary, .btn {
+font-family: 'Inter', sans-serif !important;
+font-size: 0.85em !important; 
+font-weight: 500 !important;
+letter-spacing: 0.2px !important;
+color: #212529 !important; 
+background-color: #ffffff !important;
+border: 1px solid #e5e7eb !important; 
+padding: 6px 14px !important;
+border-radius: 6px !important;
+box-shadow: none !important;
+transition: all 0.2s ease !important;
+display: inline-flex !important;
+align-items: center !important;
+gap: 8px !important;
+text-decoration: none !important;
+}
+
+.btn-outline-primary:hover, .btn:hover {
+border-color: #0056b3 !important;
+color: #0056b3 !important;
+background-color: rgba(0, 86, 179, 0.02) !important;
+text-decoration: none !important;
 }
 
 
@@ -5375,6 +5421,7 @@ background-color: #f8f9fa !important;
 color: #212529 !important;
 border: 1px solid #e5e7eb !important;
 border-radius: 6px !important;
+padding: 15px !important;
 }
 .sourceCode, pre.sourceCode {
 background-color: #f8f9fa !important;
@@ -5388,14 +5435,15 @@ padding-left: 20px !important;
 .content ul li {
 position: relative !important;
 margin-bottom: 12px !important;
-color: #212529 !important;
+color: black !important;
 }
+
 .content ul li::before {
-content: "▪" !important; position: absolute !important;
+content: "•" !important; position: absolute !important;
 left: -20px !important;
-color: #0056b3 !important; 
-font-size: 0.9em !important;
-top: 1px !important;
+color: !important; 
+font-size: 1.1em !important;
+top: -2px !important;
 }
 
 h3 img, .h3 img {
@@ -5431,22 +5479,204 @@ color: #000000 !important;
 .home-text .sub-text {
 color: #0056b3 !important;
 }
-
 #mouse-trail {
 display: none !important;
+}
+
+
+.file-list-group {
+display: grid !important;
+grid-template-columns: 1fr 1fr !important;
+gap: 12px !important;
+margin-top: 20px !important;
+margin-bottom: 20px !important;
+}
+
+.file-list-item {
+display: flex !important;
+align-items: center !important;
+padding: 12px 16px !important;
+text-decoration: none !important;
+background-color: #ffffff !important;
+border: 1px solid #e5e7eb !important;
+border-radius: 8px !important;
+transition: all 0.2s ease !important;
+}
+
+.file-list-item:hover {
+border-color: #0056b3 !important;
+box-shadow: none !important;
+text-decoration: none !important;
+}
+
+.file-list-icon {
+font-size: 1.2em !important;
+margin-right: 14px !important;
+width: 24px !important;
+text-align: center !important;
+flex-shrink: 0 !important;
+}
+
+.file-list-content {
+flex-grow: 1 !important;
+overflow: hidden !important;
+}
+
+.file-list-title {
+font-family: 'Inter', sans-serif !important;
+font-weight: 600 !important;
+font-size: 0.95em !important;
+display: block !important;
+white-space: nowrap !important;
+overflow: hidden !important;
+text-overflow: ellipsis !important;
+}
+
+.file-list-desc {
+font-family: 'Inter', sans-serif !important;
+font-size: 0.82em !important;
+font-weight: 400 !important;
+display: block !important;
+line-height: 1.3 !important;
+margin-top: 3px !important;
+}
+
+.file-list-arrow {
+font-size: 0.85em !important;
+margin-left: 12px !important;
+flex-shrink: 0 !important;
+transition: transform 0.2s ease !important;
+}
+.file-list-item:hover .file-list-arrow {
+transform: translateX(2px) !important;
+}
+
+.file-list-item * {
+color: #212529 !important;
+}
+
+.file-list-item:hover .file-list-title {
+color: #0056b3 !important; 
 }
 
 .file-card {
 background-color: #ffffff !important;
 border: 1px solid #e5e7eb !important;
 border-radius: 8px !important;
+padding: 24px !important;
+display: flex !important;
+flex-direction: column !important;
+position: relative !important;
 }
-.file-list-item {
-background-color: #ffffff !important;
-border: 1px solid #e5e7eb !important;
+
+@media (max-width: 768px) {
+.file-list-group {
+grid-template-columns: 1fr !important;
 }
-.file-list-item * {
-color: #212529 !important;
+}
+
+
+h1.title, .about-entity h1, main h1:first-of-type {
+font-family: 'Lora', serif !important;
+font-size: 2.6em !important; 
+font-weight: 600 !important;
+color: #000000 !important;
+letter-spacing: -0.5px !important;
+margin-top: 70px !important; 
+margin-bottom: 35px !important;
+text-align: center !important;
+}
+
+.about-contents p:first-of-type,
+main.content > p:first-of-type,
+.lead {
+font-family: 'Lora', serif !important;
+font-style: italic !important; 
+font-size: 1.35em !important;
+color: #374151 !important; 
+line-height: 1.7 !important;
+max-width: 560px !important; 
+margin-left: auto !important;
+margin-right: auto !important;
+text-align: center !important; 
+margin-bottom: 65px !important; 
+}
+
+
+#title-block-header,
+.quarto-title,
+#title-block-header .title,
+.quarto-title .title {
+text-align: left !important;
+margin-left: 0 !important;
+padding-left: 0 !important;
+}
+
+h1.title, .about-entity h1, main h1:first-of-type {
+text-align: left !important;
+margin-top: 10px !important;
+margin-bottom: 18px !important;
+padding-bottom: 0 !important;
+}
+.banner-container {
+max-width: 620px !important;
+height: 160px !important; margin-top: 0px !important; margin-bottom: 35px !important; border-radius: 8px !important; overflow: hidden !important; border: 1px solid #babcbf !important; }
+.banner-container p {
+margin: 0 !important;
+padding: 0 !important;
+height: 100% !important;
+}
+.academic-banner {
+width: 100% !important;
+height: 160px !important;
+object-fit: cover !important;
+object-position: center 40% !important;
+filter: contrast(96%) brightness(98%);
+display: block !important; }
+
+.quarto-title-block .quarto-title,
+.quarto-title-block .title,
+header#title-block-header.quarto-title-block,
+#title-block-header {
+text-align: left !important;
+margin-left: 0 !important;
+padding-left: 0 !important;
+}
+
+
+#title-block-header,
+.quarto-title-block,
+.quarto-title-banner,
+.about-entity header {
+max-width: 100% !important;
+margin: 0 !important;
+padding: 0 !important;
+}
+
+h1.title,
+.quarto-title .title,
+.about-entity h1,
+main h1:first-of-type {
+display: block !important;
+max-width: 620px !important; 
+margin-left: auto !important; 
+margin-right: auto !important; 
+padding-left: 20px !important; 
+padding-right: 20px !important;
+text-align: left !important; 
+box-sizing: border-box !important;
+margin-top: 50px !important;
+margin-bottom: 20px !important;
+}
+
+#title-block-header,
+.quarto-title-block,
+.about-entity header {
+display: none !important;
+}
+
+.navbar-brand {
+display: none !important;
 }</style>
 </head>
 
@@ -5481,12 +5711,13 @@ color: #212529 !important;
   </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
-  <li class="nav-item">
-    <a class="nav-link" href="../../about.html"> 
-<span class="menu-text">About</span></a>
-  </li>  
   <li class="nav-item compact">
     <a class="nav-link" href="https://github.com/Shuhei113/portfolio-Shuhei"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/shuhei-kuwabara-a04925399"> <i class="bi bi-linkedin" role="img">
 </i> 
 <span class="menu-text"></span></a>
   </li>  

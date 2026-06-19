@@ -10,15 +10,15 @@ body, .content {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
   -webkit-font-smoothing: antialiased;
   background-color: #ffffff !important;
-  color: #212529 !important;
-  line-height: 1.75 !important;
+  color: #212529 !important; /* 目に優しい高品位チャコール */
+  line-height: 1.75 !important; /* 本文に行間を持たせて視覚的開放感を確保 */
 }
 
-/* 伝統的で美しいセリフ体見出し */
+/* 伝統的で美しいセリフ体（明朝体スタイル）の見出し */
 h1, h2, h3, h4, .h1, .h2, .h3, .h4, .navbar-brand {
   font-family: 'Lora', serif !important;
   color: #000000 !important;
-  letter-spacing: -0.2px !important;
+  letter-spacing: -0.2px !important; /* 文字間を美しく引き締める */
 }
 
 h3, .h3 {
@@ -28,10 +28,21 @@ h3, .h3 {
 code, .navbar-nav {
   font-family: 'JetBrains Mono', monospace !important;
 }
+
+h1.title, h1 {
+  font-size: 2.5em !important;
+  font-weight: 700 !important;
+  margin-top: 10px !important;
+  margin-bottom: 25px !important;
+  letter-spacing: -0.6px !important;
+}
+
 /* ==========================================================================
-   2. 贅沢な余白とフラットレイアウト
+   2. 構造改革：すべての不透明な障害壁を完全透明化（常時発動）
    ========================================================================== */
 /* テンプレ感を出す境界線やコンテナの影をすべて排除 */
+html,
+body,
 #quarto-content, 
 .quarto-container, 
 main, 
@@ -55,16 +66,26 @@ main,
 
 /* セクション間の余白を大胆に広げて品格を出す */
 .level2 {
-  margin-top: 70px !important;
-  margin-bottom: 40px !important;
+  margin-top: 55px !important;
+  margin-bottom: 35px !important;
+}
+
+.navbar-brand,
+.navbar-nav .nav-link,
+.nav-item a,
+.navbar-container a {
+  font-family: 'Lora', serif !important;
+  font-weight: 500 !important; /* 太すぎず細すぎない上品なウェイト */
+  font-size: 1.05em !important; /* 視認性を確保するサイズ */
+  letter-spacing: -0.2px !important; /* 文字間隔の微調整 */
 }
 
 /* ==========================================================================
-   3. ナビゲーション ＆ ミニマムなアクセント線
+   3. ナビゲーション ＆ 上品な下線デザイン
    ========================================================================== */
 .navbar {
   background-color: #ffffff !important;
-  border-bottom: 1px solid #e5e7eb !important; /* 0.5px級 Surveyグレーの極薄ヘアライン */
+  border-bottom: 1px solid #8a95a5 !important; /* 0.5px級の極薄ヘアライン */
   box-shadow: none !important;
 }
 
@@ -82,17 +103,49 @@ a:hover {
   text-decoration: underline !important;
 }
 
-/* アカデミックな見出し：上品な下線デザイン */
+/* 決定版：左の縦線を完全に消去し、美しいオックスフォードブルーの下線デザインへ */
 h2, .h2, h2.anchored, section h2, .level2 h2 {
-  padding-left: 0px !important;               /* 左側の余白をリセット */
-  padding-bottom: 6px !important;             /* 文字と下線の間の美しい隙間 */
-  border-left: none !important;               /* 左側の縦線を消去 */
-  border-bottom: 1px solid black !important; /* 知的なオックスフォードブルーの細い下線 */
+  padding-left: 0px !important;
+  padding-bottom: 8px !important; /* 文字と下線の間の美しい隙間 */
+  border-left: none !important;
+  border-bottom: 1px solid  #8a95a5 !important; /* 知的なオックスフォードブルーの細い下線 */
   font-weight: 700 !important;
+  margin-top: 50px !important;
+  margin-bottom: 25px !important;
 }
 
 /* ==========================================================================
-   4. フラットなカードデザイン（グリッド）
+   4. ダウンロードボタン（CV / Resume）の洗練
+   ========================================================================== */
+/* ボタンの主張を抑え、建築の設計図のような細く静かな佇まいに変更 */
+.btn-outline-primary, .btn {
+  font-family: 'Inter', sans-serif !important;
+  font-size: 0.85em !important; /* 少し小さくして知的に */
+  font-weight: 500 !important;
+  letter-spacing: 0.2px !important;
+  color: #212529 !important; /* 初期状態は黒に近いチャコール */
+  background-color: #ffffff !important;
+  border: 1px solid #e5e7eb !important; /* 周囲の薄いグレーの線に完全に馴染ませる */
+  padding: 6px 14px !important;
+  border-radius: 6px !important;
+  box-shadow: none !important;
+  transition: all 0.2s ease !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  text-decoration: none !important;
+}
+
+/* マウスを乗せたときだけスッと美しいオックスフォードブルーに変化 */
+.btn-outline-primary:hover, .btn:hover {
+  border-color: #0056b3 !important;
+  color: #0056b3 !important;
+  background-color: rgba(0, 86, 179, 0.02) !important;
+  text-decoration: none !important;
+}
+
+/* ==========================================================================
+   5. プロジェクトカード（グリッド表示用）
    ========================================================================== */
 /* 影や立体感を捨て、ミニマルな枠線だけで囲む */
 .quarto-grid-item, .card {
@@ -124,7 +177,7 @@ h2, .h2, h2.anchored, section h2, .level2 h2 {
 }
 
 /* ==========================================================================
-   5. Rの実行出力結果・コードブロック
+   6. Rの実行出力結果・コードブロック
    ========================================================================== */
 .cell-output, 
 .cell-output-stdout, 
@@ -134,6 +187,7 @@ pre:not(.sourceCode) {
   color: #212529 !important;
   border: 1px solid #e5e7eb !important;
   border-radius: 6px !important;
+  padding: 15px !important;
 }
 
 .sourceCode, pre.sourceCode {
@@ -142,7 +196,7 @@ pre:not(.sourceCode) {
 }
 
 /* ==========================================================================
-   6. Resumeページの洗練（シャープな四角形マーカー）
+   7. Resumeページのディテール（リストアイテム ＆ 所属カード）
    ========================================================================== */
 .content ul {
   list-style-type: none !important;
@@ -152,16 +206,17 @@ pre:not(.sourceCode) {
 .content ul li {
   position: relative !important;
   margin-bottom: 12px !important;
-  color: #212529 !important;
+  color: black !important;
 }
 
+/* 青い四角を廃止し、主張しない上品なグレーの丸へ変更 */
 .content ul li::before {
-  content: "▪" !important; 
+  content: "•" !important; 
   position: absolute !important;
   left: -20px !important;
-  color: #0056b3 !important; /* マーカーもブルーに統一 */
-  font-size: 0.9em !important;
-  top: 1px !important;
+  color:  !important; /* 目立ちすぎない知的なスレートグレー */
+  font-size: 1.1em !important;
+  top: -2px !important;
 }
 
 /* 大学名ロゴ画像 */
@@ -202,23 +257,242 @@ h3 img, .h3 img {
   color: #0056b3 !important;
 }
 
-/* ミニマリズムに伴い、Web要素の強いマウストレイルは完全に無効化 */
 #mouse-trail {
   display: none !important;
 }
 
 /* ==========================================================================
-   7. Legacy Components (ファイルリスト共通)
+   8. 完全復元：「Access the Files」（スマートリスト）のレイアウト構造
    ========================================================================== */
+/* 外枠のグリッドコンテナ構造（2列配置） */
+.file-list-group {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 12px !important;
+  margin-top: 20px !important;
+  margin-bottom: 20px !important;
+}
+
+/* 各リストアイテムの横並び、内側余白、枠線の完全描写 */
+.file-list-item {
+  display: flex !important;
+  align-items: center !important;
+  padding: 12px 16px !important;
+  text-decoration: none !important;
+  background-color: #ffffff !important;
+  border: 1px solid #e5e7eb !important;
+  border-radius: 8px !important;
+  transition: all 0.2s ease !important;
+}
+
+/* ホバー時は静かに枠線だけをオックスフォードブルーに */
+.file-list-item:hover {
+  border-color: #0056b3 !important;
+  box-shadow: none !important;
+  text-decoration: none !important;
+}
+
+/* アイコンの位置固定 */
+.file-list-icon {
+  font-size: 1.2em !important;
+  margin-right: 14px !important;
+  width: 24px !important;
+  text-align: center !important;
+  flex-shrink: 0 !important;
+}
+
+/* テキストコンテナ */
+.file-list-content {
+  flex-grow: 1 !important;
+  overflow: hidden !important;
+}
+
+/* ファイルタイトル */
+.file-list-title {
+  font-family: 'Inter', sans-serif !important;
+  font-weight: 600 !important;
+  font-size: 0.95em !important;
+  display: block !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+
+/* ファイル説明文 */
+.file-list-desc {
+  font-family: 'Inter', sans-serif !important;
+  font-size: 0.82em !important;
+  font-weight: 400 !important;
+  display: block !important;
+  line-height: 1.3 !important;
+  margin-top: 3px !important;
+}
+
+/* 矢印（＞）の配置 */
+.file-list-arrow {
+  font-size: 0.85em !important;
+  margin-left: 12px !important;
+  flex-shrink: 0 !important;
+  transition: transform 0.2s ease !important;
+}
+
+.file-list-item:hover .file-list-arrow {
+  transform: translateX(2px) !important;
+}
+
+/* 白いボックス内のすべての文字色をアカデミックチャコールに固定 */
+.file-list-item * {
+  color: #212529 !important;
+}
+
+/* ホバー時に文字色を美しく強調 */
+.file-list-item:hover .file-list-title {
+  color: #0056b3 !important; /* タイトルをオックスフォードブルーに */
+}
+
+/* 個別ファイルカード（大ボックス用）のバックアップ */
 .file-card {
   background-color: #ffffff !important;
   border: 1px solid #e5e7eb !important;
   border-radius: 8px !important;
+  padding: 24px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  position: relative !important;
 }
-.file-list-item {
-  background-color: #ffffff !important;
-  border: 1px solid #e5e7eb !important;
+
+/* レスポンシブ対応：スマホ画面では1列に自動フォールバック */
+@media (max-width: 768px) {
+  .file-list-group {
+    grid-template-columns: 1fr !important;
+  }
 }
-.file-list-item * {
-  color: #212529 !important;
+
+/* ==========================================================================
+   9. トップページ（Home）テキスト主体の極限洗練（画像なし特化型）
+   ========================================================================== */
+/* 名前のサイズを引き上げ、上部に高貴な余白を確保 */
+h1.title, .about-entity h1, main h1:first-of-type {
+  font-family: 'Lora', serif !important;
+  font-size: 2.6em !important; /* 存在感を出すために少し拡大 */
+  font-weight: 600 !important;
+  color: #000000 !important;
+  letter-spacing: -0.5px !important;
+  margin-top: 70px !important; /* 上部に美しい空気感を生み出す余白 */
+  margin-bottom: 35px !important;
+  text-align: center !important;
+}
+
+/* 紹介文を完全な「コア・ステートメント」として中央に美しく配置 */
+.about-contents p:first-of-type,
+main.content > p:first-of-type,
+.lead {
+  font-family: 'Lora', serif !important;
+  font-style: italic !important; /* 学術的な伝統を感じさせるイタリック仕様 */
+  font-size: 1.35em !important;
+  color: #374151 !important; /* 漆黒よりわずかに柔らかいスレートブラック */
+  line-height: 1.7 !important;
+  max-width: 560px !important; /* 綺麗に2行で完結するように横幅を制限 */
+  margin-left: auto !important;
+  margin-right: auto !important;
+  text-align: center !important; /* 中央に軸線を通す */
+  margin-bottom: 65px !important; /* 下部コンテンツとの境界を綺麗に離す */
+}
+
+/* ==========================================================================
+   11. アカデミック・横長バナー（一橋大学専用）
+   ========================================================================== */
+/* Quartoの固有タイトルブロックを強制的に左寄せにする設定 */
+#title-block-header,
+.quarto-title,
+#title-block-header .title,
+.quarto-title .title {
+  text-align: left !important;
+  margin-left: 0 !important;
+  padding-left: 0 !important;
+}
+
+/* 既存の設定も合わせて最適化 */
+h1.title, .about-entity h1, main h1:first-of-type {
+  text-align: left !important;
+  margin-top: 10px !important;
+  margin-bottom: 18px !important;
+  padding-bottom: 0 !important;
+}
+
+.banner-container {
+  max-width: 620px !important;
+  height: 160px !important;       
+  margin-top: 0px !important;     
+  margin-bottom: 35px !important; 
+  border-radius: 8px !important; 
+  overflow: hidden !important;     
+  border: 1px solid #babcbf !important; 
+}
+
+.banner-container p {
+  margin: 0 !important;
+  padding: 0 !important;
+  height: 100% !important;
+}
+
+.academic-banner {
+  width: 100% !important;
+  height: 160px !important;
+  object-fit: cover !important;
+  object-position: center 40% !important;
+  filter: contrast(96%) brightness(98%);
+  display: block !important;       
+}
+
+/* QuartoのAboutページ特有のタイトルブロックを強制的に左寄せにする */
+.quarto-title-block .quarto-title,
+.quarto-title-block .title,
+header#title-block-header.quarto-title-block,
+#title-block-header {
+  text-align: left !important;
+  margin-left: 0 !important;
+  padding-left: 0 !important;
+}
+
+/* ==========================================================================
+   12. タイトル（名前）の完全左寄せ・アライメント修正（絶対同期版）
+   ========================================================================== */
+/* 暴走した外枠（親要素）の干渉をすべて安全にリセット */
+#title-block-header,
+.quarto-title-block,
+.quarto-title-banner,
+.about-entity header {
+  max-width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* 名前（H1）そのものに、本文コンテナと「全く同じ幅・配置・インデント」を直接強制 */
+h1.title,
+.quarto-title .title,
+.about-entity h1,
+main h1:first-of-type {
+  display: block !important;
+  max-width: 620px !important;       /* 本文の最大横幅と完全一致 */
+  margin-left: auto !important;       /* どんな環境でも画面の真ん中に強制配置 */
+  margin-right: auto !important;      /* どんな環境でも画面の真ん中に強制配置 */
+  padding-left: 20px !important;      /* バナーや本文の左余白（インデント）と1ミリの狂いもなく一致 */
+  padding-right: 20px !important;
+  text-align: left !important;        /* 絞り込んだ枠内での左寄せ */
+  box-sizing: border-box !important;
+  margin-top: 50px !important;
+  margin-bottom: 20px !important;
+}
+
+/* テンプレートが強制出力する上部のタイトルエリアを完全に消去 */
+#title-block-header,
+.quarto-title-block,
+.about-entity header {
+  display: none !important;
+}
+
+/* ナビゲーションバー左上のサイトタイトル（ロゴエリア）を非表示化 */
+.navbar-brand {
+  display: none !important;
 }
