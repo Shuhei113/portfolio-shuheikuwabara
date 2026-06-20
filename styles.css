@@ -6,12 +6,11 @@
 /* ==========================================================================
    1. グローバルフォント ＆ 呼吸するタイポグラフィ
    ========================================================================== */
-body, .content {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
-  -webkit-font-smoothing: antialiased;
-  background-color: #ffffff !important;
-  color: #212529 !important; /* 目に優しい高品位チャコール */
-  line-height: 1.75 !important; /* 本文に行間を持たせて視覚的開放感を確保 */
+body {
+  font-family: 'Lora', serif;
+  color: #242729;          /* 深みのあるダークグレー */
+  line-height: 1.8;        /* セリフ体は行間を広げると美しさが際立つ */
+  letter-spacing: 0.01em;
 }
 
 /* 伝統的で美しいセリフ体（明朝体スタイル）の見出し */

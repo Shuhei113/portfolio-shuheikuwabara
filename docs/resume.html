@@ -69,6 +69,35 @@ ul.task-list li input[type="checkbox"] {
 }</script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -155,7 +184,7 @@ ul.task-list li input[type="checkbox"] {
 <h3 class="anchored" data-anchor-id="hitotsubashi-university-tokyo-japan"><img src="hitotsubashi.jpg" class="img-fluid" width="27"> <strong>Hitotsubashi University</strong> | Tokyo, Japan</h3>
 <ul>
 <li><strong>Bachelor of Science in Social Data Science</strong> | Expected: March 2027</li>
-<li>Achieved the highest entrance examination score across all departments and maintained aGPA of 4.06/4.3</li>
+<li>Achieved the highest entrance examination score across all departments and maintained a GPA of 4.06/4.3</li>
 <li><strong>Relevant Modules:</strong> Sets and Topology I, Introduction to Probability, Linear Algebra I, Linear Algebra II, Calculus I, Calculus II, Regression Analysis I, Causal Inference, Practical Machine Learning I, Practical Machine Learning II, Marketing Science</li>
 <li><strong>Dissertation (Work in Progress):</strong> <em>Constructing Bias-Adjusted Rating Metrics to Capture True Restaurant Popularity</em> supervised by Dr.&nbsp;Ryo Kato.</li>
 </ul>
@@ -175,14 +204,48 @@ ul.task-list li input[type="checkbox"] {
 <h3 class="anchored" data-anchor-id="teaching-assistant">Teaching Assistant</h3>
 <p><em>Hitotsubashi University</em> | Sept.&nbsp;2024 – Jan.&nbsp;2025</p>
 <ul>
-<li>Supported faculty in the Introduction to Social Data Science II course by mentoring students on survey methodology and questionnaire design, supporting analyzing collected survey data, and providing constructive feedback on academic presentations</li>
+<li><p>Supported faculty in the Introduction to Social Data Science II course</p></li>
+<li><p>Mentored students on survey methodology, questionnaire design and data analysis</p></li>
+<li><p>Provided constructive feedback on academic presentations</p></li>
 </ul>
 </section>
 <section id="selected-student-contributor" class="level3">
 <h3 class="anchored" data-anchor-id="selected-student-contributor">Selected Student Contributor</h3>
 <p><em>Hitotsubashi University</em></p>
 <ul>
-<li>Promoted the academic department to prospective students by serving as a panelist for open campus sessions broadcast on YouTube, participated in a student and faculty discussion published in a Toyo Keizai magazine, and authored a seminar introduction for the official university booklet</li>
+<li><p>Promoted the academic department to prospective students by serving as a panelist for open campus sessions broadcast on YouTube</p></li>
+<li><p>Participated in a student and faculty discussion published in a Toyo Keizai magazine</p></li>
+<li><p>Authored a seminar introduction for the official university booklet</p></li>
+</ul>
+</section>
+<section id="international-student-coordinator" class="level3">
+<h3 class="anchored" data-anchor-id="international-student-coordinator">International Student Coordinator</h3>
+<p><em>University Boxing Club (Hitotsubashi)</em></p>
+<ul>
+<li><p>Served as the primary liaison for international students to streamline communication and foster a diverse team environment</p></li>
+<li><p>Designed inclusive training frameworks tailored for international exchange students</p></li>
+<li><p>Competed in four official tournaments</p></li>
+</ul>
+</section>
+</section>
+<section id="projects" class="level2">
+<h2 class="anchored" data-anchor-id="projects">Projects</h2>
+<section id="predictive-modeling-of-sleep-health" class="level3">
+<h3 class="anchored" data-anchor-id="predictive-modeling-of-sleep-health">Predictive Modeling of Sleep Health</h3>
+<p><em>London School of Economics</em> | Nov.&nbsp;2025</p>
+<ul>
+<li>Achieved a First Class equivalent score (80/100) for the DS202A assessment at LSE</li>
+<li>Developed a machine learning pipeline using R to analyze sleep data from 374 individuals</li>
+<li>Built predictive models implementing Regularized Regression and Random Forest Classifiers</li>
+</ul>
+</section>
+<section id="text-mining-un-general-debates" class="level3">
+<h3 class="anchored" data-anchor-id="text-mining-un-general-debates">Text Mining UN General Debates</h3>
+<p><em>London School of Economics</em> | Dec.&nbsp;2025</p>
+<ul>
+<li>Achieved a First Class equivalent score (72/100) for the DS202A assessment at LSE</li>
+<li>Applied NLP techniques to a corpus of 10,952 UN speeches to analyze thematic shifts</li>
+<li>Employed unsupervised learning methods including LDA Topic Modeling and PCA to uncover macro-level trends</li>
 </ul>
 </section>
 </section>
@@ -190,7 +253,7 @@ ul.task-list li input[type="checkbox"] {
 <h2 class="anchored" data-anchor-id="skills">Skills</h2>
 <ul>
 <li><strong>Programming Languages:</strong> R, Python, SQL</li>
-<li><strong>Tools:</strong> Quarto, Git, GitHub, LaTeX</li>
+<li><strong>Tools:</strong> Quarto, Git, GitHub, <span class="math inline">\(\LaTeX\)</span></li>
 <li><strong>Languages:</strong> Japanese (native), English (advanced), Chinese (intermediate)</li>
 </ul>
 
