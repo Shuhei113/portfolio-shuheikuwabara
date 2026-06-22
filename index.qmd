@@ -30,7 +30,7 @@ My core academic focus lies in the application of statistical approaches to mark
 
 ### Affiliation
 
-![](hitotsubashi.jpg){width="32px" style="vertical-align: middle; margin-right: 8px; border-radius: 4px;"} **'27 Hitotsubashi University** (Social Data Science)
+![](hitotsubashi.jpg){width="32px" style="vertical-align: middle; margin-right: 8px; border-radius: 4px;"} **'27 Hitotsubashi University** (BSc in Social Data Science)
 
 ![](lse.jpg){width="32px" style="vertical-align: middle; margin-right: 8px; border-radius: 4px;"} **'26 London School of Economics** (General Course, Statistics)
 

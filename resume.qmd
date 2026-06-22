@@ -5,22 +5,35 @@ format:
     toc: false
 ---
 
-<a href="Resume.pdf" class="btn" download="Shuhei_Kuwabara_Resume.pdf">
-    <i class="fa-solid fa-file-pdf"></i> Download CV (PDF)
-</a>
+## Resume (PDF)
+Download [here](Resume.pdf)
 
 ## Education
 
-### ![](hitotsubashi.jpg){width=27px} **Hitotsubashi University** | Tokyo, Japan
 
-* **Bachelor of Science in Social Data Science** | Expected: March 2027
+### ![](hitotsubashi.jpg){width=27px} **Hitotsubashi University** 
+
+<table style="width: 100%; border: none !important; border-collapse: collapse; margin: 0;">
+  <tr style="border: none !important;">
+    <td style="text-align: left; border: none !important; padding: 0;"><strong>  Bachelor of Science in Social Data Science</strong></td>
+    <td style="text-align: right; border: none !important; padding: 0; white-space: nowrap;"><em> Apr. 2023 - Mar. 2027</em></td>
+  </tr>
+</table>
+
 * Achieved the highest entrance examination score across all departments and maintained a GPA of 4.06/4.3
 * **Relevant Modules:** Sets and Topology I, Introduction to Probability, Linear Algebra I, Linear Algebra II, Calculus I,
 Calculus II, Regression Analysis I, Causal Inference, Practical Machine Learning I, Practical Machine Learning II, Marketing Science
 * **Dissertation (Work in Progress):** *Constructing Bias-Adjusted Rating Metrics to Capture True Restaurant Popularity* supervised by Dr. Ryo Kato.
 
-### ![](lse.jpg){width=27px} **London School of Economics and Political Science** | London
-* **General Course, Statistics** | September 2025 – June 2026
+### ![](lse.jpg){width=27px} **London School of Economics and Political Science** 
+
+<table style="width: 100%; border: none !important; border-collapse: collapse; margin: 0;">
+  <tr style="border: none !important;">
+    <td style="text-align: left; border: none !important; padding: 0;"><strong>  General Course, Department of Statistics</strong></td>
+    <td style="text-align: right; border: none !important; padding: 0; white-space: nowrap;"><em> Sep. 2025 – Jun. 2026</em></td>
+  </tr>
+</table>
+
 * Awarded a full scholarship from Hitotsubashi University to participate in the General Course
 * **Relevant Modules:** ST202 (Probability, Distribution Theory and Inference), ST227 (Survival Models), ST300
 (Regression and Generalised Linear Models), ST307 (Aspects of Market Research), DS202A (Data Science for
@@ -28,27 +41,32 @@ Social Scientists), MG205 (Econometrics: Theory and Applications)
 
 ## Teaching and Additional Experience
 ### Teaching Assistant
-*Hitotsubashi University* | Sept. 2024 – Jan. 2025
 
-* Supported faculty in the Introduction to Social Data Science II course 
+<table style="width: 100%; border: none !important; border-collapse: collapse; margin: 0;">
+  <tr style="border: none !important;">
+    <td style="text-align: left; border: none !important; padding: 0;"><strong>  Hitotsubashi University</strong></td>
+    <td style="text-align: right; border: none !important; padding: 0; white-space: nowrap;"><em> Sep. 2024 – Jan. 2025</em></td>
+  </tr>
+</table>
+
+* Supported faculty in administering the Introduction to Social Data Science II course 
 
 * Mentored students on survey methodology, questionnaire design and data analysis
 
-* Provided constructive feedback on
-academic presentations
+* Provided constructive feedback on academic presentations and contributed to final grading
 
-### Selected Student Contributor
-*Hitotsubashi University*
+### Invited Student Contributor
+**Hitotsubashi University**
 
-* Promoted the academic department to prospective students by serving as a panelist for open campus sessions
+* Promoted the academic department to prospective students by serving as a panelist for two open campus sessions
 broadcast on YouTube
 
-* Participated in a student and faculty discussion published in a Toyo Keizai magazine
+* Participated in a student and faculty discussion published in a *Toyo Keizai* magazine
 
-* Authored a seminar introduction for the official university booklet
+* Authored a seminar introduction for the official university booklet 
 
 ### International Student Coordinator
-*University Boxing Club (Hitotsubashi)*
+**Hitotsubashi University Boxing Club**
 
 * Served as the primary liaison for international students to streamline communication and foster a diverse team environment
 
@@ -60,12 +78,17 @@ broadcast on YouTube
 
 
 
-
 ## Projects
 
 ### Predictive Modeling of Sleep Health
 
-*London School of Economics* | Nov. 2025
+<table style="width: 100%; border: none !important; border-collapse: collapse; margin: 0;">
+  <tr style="border: none !important;">
+    <td style="text-align: left; border: none !important; padding: 0;"><strong>  London School of Economics</strong></td>
+    <td style="text-align: right; border: none !important; padding: 0; white-space: nowrap;"><em> Nov. 2025</em></td>
+  </tr>
+</table>
+
 
 * Achieved a First Class equivalent score (80/100) for the DS202A assessment at LSE
 * Developed a machine learning pipeline using R to analyze sleep data from 374 individuals
@@ -73,7 +96,13 @@ broadcast on YouTube
 
 ### Text Mining UN General Debates
 
-*London School of Economics* | Dec. 2025
+<table style="width: 100%; border: none !important; border-collapse: collapse; margin: 0;">
+  <tr style="border: none !important;">
+    <td style="text-align: left; border: none !important; padding: 0;"><strong>  London School of Economics</strong></td>
+    <td style="text-align: right; border: none !important; padding: 0; white-space: nowrap;"><em> Dec. 2025</em></td>
+  </tr>
+</table>
+
 
 * Achieved a First Class equivalent score (72/100) for the DS202A assessment at LSE
 * Applied NLP techniques to a corpus of 10,952 UN speeches to analyze thematic shifts

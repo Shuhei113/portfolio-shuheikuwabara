@@ -207,28 +207,35 @@
     "href": "resume.html",
     "title": "Resume",
     "section": "",
-    "text": "Download CV (PDF)"
+    "text": "Download here"
+  },
+  {
+    "objectID": "resume.html#resume-pdf",
+    "href": "resume.html#resume-pdf",
+    "title": "Resume",
+    "section": "",
+    "text": "Download here"
   },
   {
     "objectID": "resume.html#education",
     "href": "resume.html#education",
     "title": "Resume",
     "section": "Education",
-    "text": "Education\n\n Hitotsubashi University | Tokyo, Japan\n\nBachelor of Science in Social Data Science | Expected: March 2027\nAchieved the highest entrance examination score across all departments and maintained a GPA of 4.06/4.3\nRelevant Modules: Sets and Topology I, Introduction to Probability, Linear Algebra I, Linear Algebra II, Calculus I, Calculus II, Regression Analysis I, Causal Inference, Practical Machine Learning I, Practical Machine Learning II, Marketing Science\nDissertation (Work in Progress): Constructing Bias-Adjusted Rating Metrics to Capture True Restaurant Popularity supervised by Dr. Ryo Kato.\n\n\n\n London School of Economics and Political Science | London\n\nGeneral Course, Statistics | September 2025 – June 2026\nAwarded a full scholarship from Hitotsubashi University to participate in the General Course\nRelevant Modules: ST202 (Probability, Distribution Theory and Inference), ST227 (Survival Models), ST300 (Regression and Generalised Linear Models), ST307 (Aspects of Market Research), DS202A (Data Science for Social Scientists), MG205 (Econometrics: Theory and Applications)"
+    "text": "Education\n\n Hitotsubashi University\n\n\n\n Bachelor of Science in Social Data Science\n\n\n Apr. 2023 - Mar. 2027\n\n\n\n\nAchieved the highest entrance examination score across all departments and maintained a GPA of 4.06/4.3\nRelevant Modules: Sets and Topology I, Introduction to Probability, Linear Algebra I, Linear Algebra II, Calculus I, Calculus II, Regression Analysis I, Causal Inference, Practical Machine Learning I, Practical Machine Learning II, Marketing Science\nDissertation (Work in Progress): Constructing Bias-Adjusted Rating Metrics to Capture True Restaurant Popularity supervised by Dr. Ryo Kato.\n\n\n\n London School of Economics and Political Science\n\n\n\n General Course, Department of Statistics\n\n\n Sep. 2025 – Jun. 2026\n\n\n\n\nAwarded a full scholarship from Hitotsubashi University to participate in the General Course\nRelevant Modules: ST202 (Probability, Distribution Theory and Inference), ST227 (Survival Models), ST300 (Regression and Generalised Linear Models), ST307 (Aspects of Market Research), DS202A (Data Science for Social Scientists), MG205 (Econometrics: Theory and Applications)"
   },
   {
     "objectID": "resume.html#teaching-and-additional-experience",
     "href": "resume.html#teaching-and-additional-experience",
     "title": "Resume",
     "section": "Teaching and Additional Experience",
-    "text": "Teaching and Additional Experience\n\nTeaching Assistant\nHitotsubashi University | Sept. 2024 – Jan. 2025\n\nSupported faculty in the Introduction to Social Data Science II course\nMentored students on survey methodology, questionnaire design and data analysis\nProvided constructive feedback on academic presentations\n\n\n\nSelected Student Contributor\nHitotsubashi University\n\nPromoted the academic department to prospective students by serving as a panelist for open campus sessions broadcast on YouTube\nParticipated in a student and faculty discussion published in a Toyo Keizai magazine\nAuthored a seminar introduction for the official university booklet\n\n\n\nInternational Student Coordinator\nUniversity Boxing Club (Hitotsubashi)\n\nServed as the primary liaison for international students to streamline communication and foster a diverse team environment\nDesigned inclusive training frameworks tailored for international exchange students\nCompeted in four official tournaments"
+    "text": "Teaching and Additional Experience\n\nTeaching Assistant\n\n\n\n Hitotsubashi University\n\n\n Sep. 2024 – Jan. 2025\n\n\n\n\nSupported faculty in administering the Introduction to Social Data Science II course\nMentored students on survey methodology, questionnaire design and data analysis\nProvided constructive feedback on academic presentations and contributed to final grading\n\n\n\nInvited Student Contributor\nHitotsubashi University\n\nPromoted the academic department to prospective students by serving as a panelist for two open campus sessions broadcast on YouTube\nParticipated in a student and faculty discussion published in a Toyo Keizai magazine\nAuthored a seminar introduction for the official university booklet\n\n\n\nInternational Student Coordinator\nHitotsubashi University Boxing Club\n\nServed as the primary liaison for international students to streamline communication and foster a diverse team environment\nDesigned inclusive training frameworks tailored for international exchange students\nCompeted in four official tournaments"
   },
   {
     "objectID": "resume.html#projects",
     "href": "resume.html#projects",
     "title": "Resume",
     "section": "Projects",
-    "text": "Projects\n\nPredictive Modeling of Sleep Health\nLondon School of Economics | Nov. 2025\n\nAchieved a First Class equivalent score (80/100) for the DS202A assessment at LSE\nDeveloped a machine learning pipeline using R to analyze sleep data from 374 individuals\nBuilt predictive models implementing Regularized Regression and Random Forest Classifiers\n\n\n\nText Mining UN General Debates\nLondon School of Economics | Dec. 2025\n\nAchieved a First Class equivalent score (72/100) for the DS202A assessment at LSE\nApplied NLP techniques to a corpus of 10,952 UN speeches to analyze thematic shifts\nEmployed unsupervised learning methods including LDA Topic Modeling and PCA to uncover macro-level trends"
+    "text": "Projects\n\nPredictive Modeling of Sleep Health\n\n\n\n London School of Economics\n\n\n Nov. 2025\n\n\n\n\nAchieved a First Class equivalent score (80/100) for the DS202A assessment at LSE\nDeveloped a machine learning pipeline using R to analyze sleep data from 374 individuals\nBuilt predictive models implementing Regularized Regression and Random Forest Classifiers\n\n\n\nText Mining UN General Debates\n\n\n\n London School of Economics\n\n\n Dec. 2025\n\n\n\n\nAchieved a First Class equivalent score (72/100) for the DS202A assessment at LSE\nApplied NLP techniques to a corpus of 10,952 UN speeches to analyze thematic shifts\nEmployed unsupervised learning methods including LDA Topic Modeling and PCA to uncover macro-level trends"
   },
   {
     "objectID": "resume.html#skills",
@@ -487,6 +494,6 @@
     "href": "index.html#shuhei-kuwabara",
     "title": "Shuhei Kuwabara",
     "section": "Shuhei Kuwabara",
-    "text": "Shuhei Kuwabara\n\nAcademic Background\nMy core academic focus lies in the application of statistical approaches to marketing science.\n\n\nAffiliation\n ’27 Hitotsubashi University (Social Data Science)\n ’26 London School of Economics (General Course, Statistics)\n\n\nFurther Information\nExplore the Projects section for detailed empirical analyses or examine the Resume page for comprehensive qualifications."
+    "text": "Shuhei Kuwabara\n\nAcademic Background\nMy core academic focus lies in the application of statistical approaches to marketing science.\n\n\nAffiliation\n ’27 Hitotsubashi University (BSc in Social Data Science)\n ’26 London School of Economics (General Course, Statistics)\n\n\nFurther Information\nExplore the Projects section for detailed empirical analyses or examine the Resume page for comprehensive qualifications."
   }
 ]
